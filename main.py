@@ -2,6 +2,14 @@ import discord
 import logging
 from discord.ext import commands
 from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the value of the DISCORD_TOKEN variable
+discord_token = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
@@ -90,4 +98,4 @@ async def time_spent(ctx, member: discord.Member = None):
             await ctx.send(messages[key_type].format(time_spent=time_spent))
 
 # Run the bot
-bot.run('') #add your discord secret here
+bot.run(discord_token)
