@@ -1,50 +1,93 @@
 import discord
+import logging
 from discord.ext import commands
 from datetime import datetime, timedelta
 
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
-# Dictionary to store join times
-join_times = {}
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Constants
+KEY_SUFFIX_CHANNEL = '_channel'
+KEY_SUFFIX_MUTE = '_mute'
+KEY_SUFFIX_DEAFEN = '_deafen'
+KEY_SUFFIX_STREAM = '_stream'
+
+# Dictionary to store timestamps of state changes
+timestamps = {}
 # Dictionary to store total time spent
-total_times = {}
+time_sums = {}
 
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user}')
-    print(f'Intents configured: {bot.intents}')
 
 @bot.event
 async def on_voice_state_update(member, before, after):
-    # Check if the user has joined a voice channel
-    if before.channel is None and after.channel is not None:
-        join_times[member.id] = datetime.utcnow()
-        print(f"{member.name} joined {after.channel.name} at {join_times[member.id]}")
 
-    # Check if the user has left a voice channel
-    elif before.channel is not None and after.channel is None:
-        if member.id in join_times:
-            join_time = join_times.pop(member.id)
-            time_spent = datetime.utcnow() - join_time
-            if member.id not in total_times:
-                total_times[member.id] = timedelta()
-            total_times[member.id] += time_spent
-            print(f"{member.name} left {before.channel.name} after {time_spent}")
+    def handle_state_change(key_suffix, state_name, before, after):
+        key = f"{member.id}{key_suffix}"
+        if getattr(after, state_name) and key not in timestamps:
+            timestamps[key] = datetime.now()
+            logger.info(f"{member.name} {state_name} at {timestamps[key]}")
+        elif not getattr(after, state_name) and key in timestamps:
+            start_time = timestamps.pop(key)
+            time_spent = datetime.now() - start_time
+            if key not in time_sums:
+                time_sums[key] = timedelta()
+            time_sums[key] += time_spent
+            logger.info(f"{member.name} {state_name} ended after {time_spent}")
+
+    # Channel has changed
+    if before.channel != after.channel:
+        key = f"{member.id}{KEY_SUFFIX_CHANNEL}"
+        if before.channel is None:
+            timestamps[key] = datetime.now()
+            logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
+        elif after.channel is None:
+            if key in timestamps:
+                join_time = timestamps.pop(key)
+                time_spent = datetime.now() - join_time
+                if key not in time_sums:
+                    time_sums[key] = timedelta()
+                time_sums[key] += time_spent
+                logger.info(f"{member.name} left {before.channel.name} after {time_spent}")
+            after.self_mute = False
+            after.self_deaf = False
+            after.self_stream = False
+        else:
+            logger.info(f"{member.name} switched from {before.channel.name} to {after.channel.name}")
+
+    # Handle state changes
+    handle_state_change(KEY_SUFFIX_MUTE, 'self_mute', before, after)
+    handle_state_change(KEY_SUFFIX_DEAFEN, 'self_deaf', before, after)
+    handle_state_change(KEY_SUFFIX_STREAM, 'self_stream', before, after)
 
 @bot.command(name='time_spent')
 async def time_spent(ctx, member: discord.Member = None):
     if member is None:
         member = ctx.author
-    if member.id in total_times:
-        time_spent = total_times[member.id]
-        await ctx.send(f"{member.name} has spent {time_spent} in voice channels.")
-    else:
-        await ctx.send(f"{member.name} has not spent any time in voice channels.")
 
-@bot.command(name='hello')
-async def hello(ctx):
-    print("hello")
-    await ctx.send("Hello!")
+    keys = {
+        'channel': f'{member.id}{KEY_SUFFIX_CHANNEL}',
+        'mute': f'{member.id}{KEY_SUFFIX_MUTE}',
+        'deafen': f'{member.id}{KEY_SUFFIX_DEAFEN}',
+        'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
+    }
+
+    messages = {
+        'channel': f"{member.name} has spent {{time_spent}} in voice channels.",
+        'mute': f"{member.name} has spent {{time_spent}} muted.",
+        'deafen': f"{member.name} has spent {{time_spent}} deafened.",
+        'stream': f"{member.name} has spent {{time_spent}} streaming."
+    }
+
+    for key_type, key in keys.items():
+        if key in time_sums:
+            time_spent = time_sums[key]
+            await ctx.send(messages[key_type].format(time_spent=time_spent))
 
 # Run the bot
 bot.run('') #add your discord secret here
