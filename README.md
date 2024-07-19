@@ -12,13 +12,15 @@ You need to have Python installed. You can download it from [here](https://www.p
 
 Install the required packages using pip:
 
-```sh
+```shell
 pip install discord
+```
+```shell
 pip install python-dotenv
 ```
 
 ### run the bot locally
-```sh
+```shell
 py ./main.py
 ```
 
