@@ -61,7 +61,7 @@ tail -f nohup.out
 ps aux | grep python3
 ```
 
-6. kill an instance where `<instance>` is the instance number you can find from the output of step 5
+6. kill a process where `[PID]` is the process ID you can find from the output of step 5
 ```shell
-kill <instance>
+kill [PID]
 ```
