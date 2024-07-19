@@ -94,13 +94,19 @@ async def time_spent(ctx, member: discord.Member = None):
     }
 
     for key_type, key in keys.items():
+        time_spent = timedelta()
         if key in time_sums:
-            time_spent = time_sums[key]
-            formatted_time = format_time_spent(time_spent)
-            await ctx.send(messages[key_type].format(time_spent=formatted_time))
+            time_spent += time_sums[key]
+        if key in timestamps:
+            join_time = timestamps[key]
+            time_spent += datetime.now() - join_time
+        formatted_time = format_time_spent(time_spent)
+        await ctx.send(messages[key_type].format(time_spent=formatted_time))
 
 @bot.command(name='most_time_spent')
-async def time_spent_channel(ctx, time_type: str):
+async def most_time_spent(ctx, time_type: str = None):
+    if time_type is None:
+        time_type = 'voice'
     valid_types = ['voice', 'muted', 'deafened', 'streaming']
     suffixes = {
         'voice': KEY_SUFFIX_CHANNEL,
@@ -114,9 +120,16 @@ async def time_spent_channel(ctx, time_type: str):
         return
 
     suffix = suffixes[time_type]
-    filtered_times = {key: value for key, value in time_sums.items() if key.endswith(suffix)}
+    filtered_time_sums = {key: value for key, value in time_sums.items() if key.endswith(suffix)}
+    filtered_timestamps = {key: value for key, value in timestamps.items() if key.endswith(suffix)}
 
-    sorted_times = sorted(filtered_times.items(), key=lambda item: item[1], reverse=True)
+    for key, timestamp in filtered_timestamps.items():
+        if key not in filtered_time_sums:
+            filtered_time_sums[key] = datetime.now() - timestamp
+        else:
+            filtered_time_sums[key] += datetime.now() - timestamp
+
+    sorted_times = sorted(filtered_time_sums.items(), key=lambda item: item[1], reverse=True)
 
     if not sorted_times:
         await ctx.send(f"No data found for {time_type}.")
