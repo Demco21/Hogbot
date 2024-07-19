@@ -56,7 +56,7 @@ nohup python3 -u main.py &
 tail -f nohup.out
 ```
 
-5. check the running instances
+5. check the running processes
 ```shell
 ps aux | grep python3
 ```
