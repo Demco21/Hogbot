@@ -19,6 +19,13 @@ pip install discord
 pip install python-dotenv
 ```
 
+### Set up environment file
+create a file named `.env` and add the following keys:<br>
+1. `ENV=` where values can be `_DEV` or `_PROD`<br>
+2. `DISCORD_TOKEN_DEV=` value of your dev discord token<br>
+3. `DISCORD_TOKEN_PROD=` value of your prod discord token<br>
+
+
 ### run the bot locally
 ```shell
 py ./main.py
