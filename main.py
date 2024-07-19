@@ -1,6 +1,6 @@
 import discord
 import logging
-from discord.ext import commands
+from discord.ext import commands, tasks
 from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
@@ -9,7 +9,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get the value of the DISCORD_TOKEN variable
-discord_token = os.getenv('DISCORD_TOKEN')
+env_token_suffix = os.getenv('ENV')
+discord_token = os.getenv('DISCORD_TOKEN' + env_token_suffix)
 
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
@@ -30,23 +31,23 @@ time_sums = {}
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user}')
+    logger.info(f'Logged in as {bot.user}')
 
 @bot.event
 async def on_voice_state_update(member, before, after):
 
-    def handle_state_change(key_suffix, state_name, before, after):
+    def handle_boolean_state_change(key_suffix, state_attr, state):
         key = f"{member.id}{key_suffix}"
-        if getattr(after, state_name) and key not in timestamps:
+        if getattr(state, state_attr) and key not in timestamps:
             timestamps[key] = datetime.now()
-            logger.info(f"{member.name} {state_name} at {timestamps[key]}")
-        elif not getattr(after, state_name) and key in timestamps:
+            logger.info(f"{member.name} {state_attr} started at {timestamps[key]}")
+        elif not getattr(state, state_attr) and key in timestamps:
             start_time = timestamps.pop(key)
             time_spent = datetime.now() - start_time
             if key not in time_sums:
                 time_sums[key] = timedelta()
             time_sums[key] += time_spent
-            logger.info(f"{member.name} {state_name} ended after {time_spent}")
+            logger.info(f"{member.name} {state_attr} ended after {time_spent}")
 
     # Channel has changed
     if before.channel != after.channel:
@@ -69,9 +70,9 @@ async def on_voice_state_update(member, before, after):
             logger.info(f"{member.name} switched from {before.channel.name} to {after.channel.name}")
 
     # Handle state changes
-    handle_state_change(KEY_SUFFIX_MUTE, 'self_mute', before, after)
-    handle_state_change(KEY_SUFFIX_DEAFEN, 'self_deaf', before, after)
-    handle_state_change(KEY_SUFFIX_STREAM, 'self_stream', before, after)
+    handle_boolean_state_change(KEY_SUFFIX_MUTE, 'self_mute', after)
+    handle_boolean_state_change(KEY_SUFFIX_DEAFEN, 'self_deaf', after)
+    handle_boolean_state_change(KEY_SUFFIX_STREAM, 'self_stream', after)
 
 @bot.command(name='time_spent')
 async def time_spent(ctx, member: discord.Member = None):
@@ -95,7 +96,59 @@ async def time_spent(ctx, member: discord.Member = None):
     for key_type, key in keys.items():
         if key in time_sums:
             time_spent = time_sums[key]
-            await ctx.send(messages[key_type].format(time_spent=time_spent))
+            formatted_time = format_time_spent(time_spent)
+            await ctx.send(messages[key_type].format(time_spent=formatted_time))
+
+@bot.command(name='most_time_spent')
+async def time_spent_channel(ctx, time_type: str):
+    valid_types = ['voice', 'muted', 'deafened', 'streaming']
+    suffixes = {
+        'voice': KEY_SUFFIX_CHANNEL,
+        'muted': KEY_SUFFIX_MUTE,
+        'deafened': KEY_SUFFIX_DEAFEN,
+        'streaming': KEY_SUFFIX_STREAM
+    }
+
+    if time_type not in valid_types:
+        await ctx.send("Invalid type! Please choose from 'voice', 'muted', 'deafened', or 'streaming'.")
+        return
+
+    suffix = suffixes[time_type]
+    filtered_times = {key: value for key, value in time_sums.items() if key.endswith(suffix)}
+
+    sorted_times = sorted(filtered_times.items(), key=lambda item: item[1], reverse=True)
+
+    if not sorted_times:
+        await ctx.send(f"No data found for {time_type}.")
+        return
+
+    message_lines = [f"Most {time_type} time spent:"]
+    for key, time_spent in sorted_times:
+        member_id = key.replace(suffix, '')
+        member = ctx.guild.get_member(int(member_id))
+        if member:
+            formatted_time = format_time_spent(time_spent)
+            message_lines.append(f"{member.name}: {formatted_time}")
+
+    await ctx.send("\n".join(message_lines))
+
+def format_time_spent(time_spent):
+    total_seconds = int(time_spent.total_seconds())
+    days, remainder = divmod(total_seconds, 86400)
+    hours, remainder = divmod(remainder, 3600)
+    minutes, seconds = divmod(remainder, 60)
+
+    formatted_time_parts = []
+    if days > 0:
+        formatted_time_parts.append(f"{days} Day(s)")
+    if hours > 0:
+        formatted_time_parts.append(f"{hours} Hour(s)")
+    if minutes > 0:
+        formatted_time_parts.append(f"{minutes} Minute(s)")
+    formatted_time_parts.append(f"{seconds} Second(s)")
+
+    formatted_time = " ".join(formatted_time_parts)
+    return formatted_time
 
 # Run the bot
 bot.run(discord_token)
