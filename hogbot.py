@@ -1,85 +1,98 @@
 import discord
 import logging
-from discord.ext import commands, tasks
-from datetime import datetime, timedelta
 import os
+from discord.ext import commands, tasks
+from logging.handlers import RotatingFileHandler
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Get the value of the DISCORD_TOKEN variable
-env_token_suffix = os.getenv('ENV')
-discord_token = os.getenv('DISCORD_TOKEN' + env_token_suffix)
+# Environment variables
+ENV_TOKEN_SUFFIX = os.getenv('ENV')
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN' + ENV_TOKEN_SUFFIX)
+AFK_CHANNEL_NAME = os.getenv('AFK_CHANNEL_NAME')
 
+# Set up bot config
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 # Set up logging
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = RotatingFileHandler(
+    filename='discord.log',
+    mode='a',
+    maxBytes=5*1024*1024,  # 5 MB
+    backupCount=2,         # Keep up to 2 backup files
+    encoding='utf-8',
+    delay=0
+)
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 # Constants
 KEY_SUFFIX_VOICE = '_voice'
 KEY_SUFFIX_MUTE = '_mute'
 KEY_SUFFIX_DEAFEN = '_deafen'
 KEY_SUFFIX_STREAM = '_stream'
-AFK_CHANNEL_NAME = os.getenv('AFK_CHANNEL_NAME')
 
-# Dictionary to store timestamps of state changes
-timestamps = {}
-# Dictionary to store total time spent
-time_sums = {}
+timestamps = {} # Dictionary to store timestamps of state changes
+time_sums = {} # Dictionary to store total time spent
 
 @bot.event
 async def on_ready():
-    logger.info(f'Logged in as {bot.user}')
+    logger.info(f'Logged in as {bot.user} at {datetime.now()}')
 
 @bot.event
 async def on_voice_state_update(member, before, after):
-
-    def handle_boolean_state_change(key_suffix, state_attr, state):
-        key = f"{member.id}{key_suffix}"
-        if getattr(state, state_attr) and key not in timestamps:
-            timestamps[key] = datetime.now()
-            logger.info(f"{member.name} {state_attr} started at {timestamps[key]}")
-        elif not getattr(state, state_attr) and key in timestamps:
-            start_time = timestamps.pop(key)
-            time_spent = datetime.now() - start_time
-            if key not in time_sums:
-                time_sums[key] = timedelta()
-            time_sums[key] += time_spent
-            logger.info(f"{member.name} {state_attr} ended after {time_spent}")
-
-    # Channel has changed
-    if before.channel != after.channel:
-        key = f"{member.id}{KEY_SUFFIX_VOICE}"
-        #just connected to server in non-AFK channel, so start voice timer
-        if before.channel is None and after.channel.name != AFK_CHANNEL_NAME:
-            timestamps[key] = datetime.now()
-            logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
-        #switched from AFK channel into non-AFK channel, so start voice timer
-        elif before.channel is not None and before.channel.name == AFK_CHANNEL_NAME and after.channel is not None:
-            timestamps[key] = datetime.now()
-            logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
-        #disconnected from server or joined AFK channel, so stop all timers
-        elif after.channel is None or after.channel.name == AFK_CHANNEL_NAME:
-            if key in timestamps:
-                join_time = timestamps.pop(key)
-                time_spent = datetime.now() - join_time
+    try:
+        def handle_boolean_state_change(key_suffix, state_attr, state):
+            key = f"{member.id}{key_suffix}"
+            if getattr(state, state_attr) and key not in timestamps:
+                timestamps[key] = datetime.now()
+                logger.info(f"{member.name} {state_attr} started at {timestamps[key]}")
+            elif not getattr(state, state_attr) and key in timestamps:
+                start_time = timestamps.pop(key)
+                time_spent = datetime.now() - start_time
                 if key not in time_sums:
                     time_sums[key] = timedelta()
                 time_sums[key] += time_spent
-                logger.info(f"{member.name} left {before.channel.name} after {time_spent}")
-            after.self_mute = False
-            after.self_deaf = False
-            after.self_stream = False
-        else:
-            logger.info(f"{member.name} switched from {before.channel.name} to {after.channel.name}")
+                logger.info(f"{member.name} {state_attr} ended after {time_spent}")
 
-    # Handle state changes
-    handle_boolean_state_change(KEY_SUFFIX_MUTE, 'self_mute', after)
-    handle_boolean_state_change(KEY_SUFFIX_DEAFEN, 'self_deaf', after)
-    handle_boolean_state_change(KEY_SUFFIX_STREAM, 'self_stream', after)
+        # Channel has changed
+        if before.channel != after.channel:
+            key = f"{member.id}{KEY_SUFFIX_VOICE}"
+            # just connected to server in non-AFK channel, so start voice timer
+            if before.channel is None and after.channel and after.channel.name != AFK_CHANNEL_NAME:
+                timestamps[key] = datetime.now()
+                logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
+            # switched from AFK channel into non-AFK channel, so start voice timer
+            elif before.channel and before.channel.name == AFK_CHANNEL_NAME and after.channel:
+                timestamps[key] = datetime.now()
+                logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
+            # disconnected from server or joined AFK channel, so stop all timers
+            elif after.channel is None or (after.channel and after.channel.name == AFK_CHANNEL_NAME):
+                if key in timestamps:
+                    join_time = timestamps.pop(key)
+                    time_spent = datetime.now() - join_time
+                    if key not in time_sums:
+                        time_sums[key] = timedelta()
+                    time_sums[key] += time_spent
+                    logger.info(f"{member.name} left {before.channel.name} after {time_spent}")
+                after.self_mute = False
+                after.self_deaf = False
+                after.self_stream = False
+            else:
+                logger.info(f"{member.name} switched from {before.channel.name} to {after.channel.name}")
+
+        # Handle boolean state changes
+        handle_boolean_state_change(KEY_SUFFIX_MUTE, 'self_mute', after)
+        handle_boolean_state_change(KEY_SUFFIX_DEAFEN, 'self_deaf', after)
+        handle_boolean_state_change(KEY_SUFFIX_STREAM, 'self_stream', after)
+
+    except Exception as e:
+        logger.error(f"Error in on_voice_state_update: {e}")
 
 @bot.command(name='time_spent')
 async def time_spent(ctx, member: discord.Member = None):
@@ -171,4 +184,4 @@ def format_time_spent(time_spent):
     return formatted_time
 
 # Run the bot
-bot.run(discord_token)
+bot.run(DISCORD_TOKEN)
