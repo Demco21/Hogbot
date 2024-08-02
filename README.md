@@ -1,4 +1,4 @@
-# Hogpen Monitor
+# Hogbot
 
 Simple Discord bot to monitor how long people spend in Discord voice channels, and time spent muted, deafened, or streaming.
 

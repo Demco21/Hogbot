@@ -19,10 +19,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Constants
-KEY_SUFFIX_CHANNEL = '_channel'
+KEY_SUFFIX_VOICE = '_voice'
 KEY_SUFFIX_MUTE = '_mute'
 KEY_SUFFIX_DEAFEN = '_deafen'
 KEY_SUFFIX_STREAM = '_stream'
+AFK_CHANNEL_NAME = os.getenv('AFK_CHANNEL_NAME')
 
 # Dictionary to store timestamps of state changes
 timestamps = {}
@@ -51,11 +52,17 @@ async def on_voice_state_update(member, before, after):
 
     # Channel has changed
     if before.channel != after.channel:
-        key = f"{member.id}{KEY_SUFFIX_CHANNEL}"
-        if before.channel is None:
+        key = f"{member.id}{KEY_SUFFIX_VOICE}"
+        #just connected to server in non-AFK channel, so start voice timer
+        if before.channel is None and after.channel.name != AFK_CHANNEL_NAME:
             timestamps[key] = datetime.now()
             logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
-        elif after.channel is None:
+        #switched from AFK channel into non-AFK channel, so start voice timer
+        elif before.channel is not None and before.channel.name == AFK_CHANNEL_NAME and after.channel is not None:
+            timestamps[key] = datetime.now()
+            logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
+        #disconnected from server or joined AFK channel, so stop all timers
+        elif after.channel is None or after.channel.name == AFK_CHANNEL_NAME:
             if key in timestamps:
                 join_time = timestamps.pop(key)
                 time_spent = datetime.now() - join_time
@@ -80,7 +87,7 @@ async def time_spent(ctx, member: discord.Member = None):
         member = ctx.author
 
     keys = {
-        'channel': f'{member.id}{KEY_SUFFIX_CHANNEL}',
+        'channel': f'{member.id}{KEY_SUFFIX_VOICE}',
         'mute': f'{member.id}{KEY_SUFFIX_MUTE}',
         'deafen': f'{member.id}{KEY_SUFFIX_DEAFEN}',
         'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
@@ -109,7 +116,7 @@ async def most_time_spent(ctx, time_type: str = None):
         time_type = 'voice'
     valid_types = ['voice', 'muted', 'deafened', 'streaming']
     suffixes = {
-        'voice': KEY_SUFFIX_CHANNEL,
+        'voice': KEY_SUFFIX_VOICE,
         'muted': KEY_SUFFIX_MUTE,
         'deafened': KEY_SUFFIX_DEAFEN,
         'streaming': KEY_SUFFIX_STREAM
