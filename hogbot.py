@@ -218,7 +218,7 @@ async def appoint_chancellor(ctx, sorted_times, suffix):
             logger.info('Chancellor role not found!')
         else:
             await remove_role_for_all(ctx, chancellor)
-            #await member.add_roles(chancellor)
+            await member.add_roles(chancellor)
             await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {member.name} !')
     else:
         await ctx.send('No Chancellor found.')
