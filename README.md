@@ -24,11 +24,12 @@ create a file named `.env` and add the following keys:<br>
 1. `ENV=` where values can be `_DEV` or `_PROD`<br>
 2. `DISCORD_TOKEN_DEV=` value of your dev discord token<br>
 3. `DISCORD_TOKEN_PROD=` value of your prod discord token<br>
+4. `AFK_CHANNEL_NAME=` value of your AFK channel name so timers know to stop for this channel
 
 
 ### run the bot locally
 ```shell
-py ./main.py
+py ./hogbot.py
 ```
 
 ### running on AWS
@@ -42,13 +43,13 @@ sudo su
 2. run the bot using python3
 
 ```shell
-python3 main.py
+python3 hogbot.py
 ```
 
 3. to run the bot in the background use nohup
 
 ```shell
-nohup python3 -u main.py &
+nohup python3 -u hogbot.py &
 ```
 
 4. check the log output
