@@ -255,7 +255,7 @@ async def scheduled_chancellor():
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
-scheduler.add_job(scheduled_chancellor, CronTrigger(day_of_week='fri', hour=17, minute=16))
+scheduler.add_job(scheduled_chancellor, CronTrigger(day_of_week='sun', hour=0, minute=1))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
