@@ -1,6 +1,6 @@
 # Hogbot
 
-Simple Discord bot to monitor how long people spend in Discord voice channels, and time spent muted, deafened, or streaming. Hogbot will on a weekly basis (every sunday morning) report to a designated channel how long each memeber has spent in a voice channel. The top memeber will receive a designated role.
+Simple Discord bot to monitor how long people spend in Discord voice channels, and time spent muted, deafened, or streaming. Hogbot will on a weekly basis (every sunday morning) report to a designated channel how long each memeber has spent in a voice channel. The top memeber will receive a designated role of Chancellor.
 
 ## Getting Started
 
@@ -29,7 +29,8 @@ create a file named `.env` and add the following keys:<br>
 3. `DISCORD_TOKEN_PROD=` value of your prod discord token<br>
 4. `AFK_CHANNEL_ID=` ID value of your AFK channel so timers know to stop for this channel<br>
 5. `HOGBOT_CHANNEL_ID=` ID value of the channel you'd like for Hogbot to push automated messages to<br>
-5. `SPECIAL_ROLE_ID=` ID value of the role you'd like for Hogbot to give to the memeber who spent the most time in a voice channel this week<br>
+5. `CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
+6. `HOGBOT_USER_ID=` ID of Hogbot itself
 
 ### run the bot locally
 ```shell
