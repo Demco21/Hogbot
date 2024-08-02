@@ -201,12 +201,12 @@ async def list_time_spent(ctx, time_sums, time_type: str = None):
         # check if called by hogbot then we know it is scheduled job and we can check the winner
         if ctx.author.id == HOGBOT_USER_ID:
             logger.info('hogbot id detected, announce winner')
-            await announce_winner(ctx, sorted_times, suffix)
+            await appoint_chancellor(ctx, sorted_times, suffix)
 
     except Exception as e:
         logger.error(f"Error in list_time_spent: {e}")
 
-async def announce_winner(ctx, sorted_times, suffix):
+async def appoint_chancellor(ctx, sorted_times, suffix):
     winner = sorted_times[0]
     key = winner[0]
     member_id = key.replace(suffix, '')
@@ -216,11 +216,17 @@ async def announce_winner(ctx, sorted_times, suffix):
         chancellor = ctx.guild.get_role(CHANCELLOR_ROLE_ID)
         if chancellor is None:
             logger.info('Chancellor role not found!')
-        elif chancellor not in member.roles:
-            await member.add_roles(chancellor)
+        else:
+            await remove_role_for_all(ctx, chancellor)
+            #await member.add_roles(chancellor)
             await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {member.name} !')
     else:
         await ctx.send('No Chancellor found.')
+
+async def remove_role_for_all(ctx, role):
+    for member in ctx.guild.members:
+        if role in member.roles:
+            await member.remove_roles(role)
 
 def format_time_spent(time_spent):
     total_seconds = int(time_spent.total_seconds())
