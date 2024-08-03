@@ -32,6 +32,7 @@ create a file named `.env` and add the following keys:<br>
 5. `CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
 6. `HOGBOT_USER_ID=` ID of Hogbot itself
 
+## Running the bot
 ### Run the bot locally
 ```shell
 py ./hogbot.py
@@ -40,49 +41,50 @@ py ./hogbot.py
 ### Running on AWS
 
 1. switch to the root user
-
 ```shell
 sudo su
 ```
-
-2. run the bot using python3
-
-```shell
-python3 hogbot.py
-```
-
-3. to run the bot in the background use nohup
-
+2. Run the bot in the background use nohup (recommended)
 ```shell
 nohup python3 -u hogbot.py &
 ```
-
-4. check the log output
+3. You can also run the bot directly using python3 (optional)
+```shell
+python3 hogbot.py
+```
+4. Check the log output
 ```shell
 tail -f nohup.out
 ```
-
-5. check the running processes
+5. Check the running processes
 ```shell
 ps aux | grep python3
 ```
-
-6. kill a process where `[PID]` is the process ID you can find from the output of step 5
+6. To kill a process where `[PID]` is the process ID you can find from the output of step 5
 ```shell
 kill [PID]
 ```
 
-### Commands
+## Commands
 While the bot is running you can enter the following commands into a discord text channel
 ```shell
-!thisweek [optional name]
+!thisweek [name]
 ```
 ```shell
-!lifetime [optional name]
+!lifetime [name]
 ```
 ```shell
-!thisweek_all [optional voice|muted|deafened|streaming]
+!thisweek_all [type]
 ```
 ```shell
-!lifetime_all [optional voice|muted|deafened|streaming]
+!lifetime_all [type]
 ```
+### Arguments
+* [name] (optional): The username of the member for which times will be listed for. 
+    * If blank, defaults to self.
+* [type] (optional): The type of event to get times for. Valid values are:
+    * voice - Time spent in voice channels.
+    * muted - Time spent muted in voice channels.
+    * deafened - Time spent deafened in voice channels.
+    * streaming - Time spent streaming in voice channels.
+    * If blank, defaults to voice.
