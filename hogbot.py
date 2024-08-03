@@ -122,34 +122,6 @@ async def lifetime_spent(ctx, member: discord.Member = None):
 async def time_spent_this_week(ctx, member: discord.Member = None):
     await time_spent(ctx, this_week_time_sums, member)
 
-async def time_spent(ctx, time_sums, member: discord.Member = None):
-    if member is None:
-        member = ctx.author
-    
-    keys = {
-        'channel': f'{member.id}{KEY_SUFFIX_VOICE}',
-        'mute': f'{member.id}{KEY_SUFFIX_MUTE}',
-        'deafen': f'{member.id}{KEY_SUFFIX_DEAFEN}',
-        'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
-    }
-
-    messages = {
-        'channel': f"{member.name} has spent {{time_spent}} in voice channels.",
-        'mute': f"{member.name} has spent {{time_spent}} muted.",
-        'deafen': f"{member.name} has spent {{time_spent}} deafened.",
-        'stream': f"{member.name} has spent {{time_spent}} streaming."
-    }
-
-    for key_type, key in keys.items():
-        time_spent = timedelta()
-        if key in time_sums:
-            time_spent += time_sums[key]
-        if key in timestamps:
-            join_time = timestamps[key]
-            time_spent += datetime.now() - join_time
-        formatted_time = format_time_spent(time_spent)
-        await ctx.send(messages[key_type].format(time_spent=formatted_time))
-
 @bot.command(name='lifetime_all')
 async def list_lifetime_voice_times(ctx, time_type: str = None):
     await list_time_spent(ctx, lifetime_sums, time_type)
@@ -157,6 +129,38 @@ async def list_lifetime_voice_times(ctx, time_type: str = None):
 @bot.command(name='thisweek_all')
 async def list_this_week_voice_times(ctx, time_type: str = None):
     await list_time_spent(ctx, this_week_time_sums, time_type)
+
+async def time_spent(ctx, time_sums, member: discord.Member = None):
+    try:
+        if member is None:
+            member = ctx.author
+        
+        keys = {
+            'channel': f'{member.id}{KEY_SUFFIX_VOICE}',
+            'mute': f'{member.id}{KEY_SUFFIX_MUTE}',
+            'deafen': f'{member.id}{KEY_SUFFIX_DEAFEN}',
+            'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
+        }
+
+        messages = {
+            'channel': f"{member.name} has spent {{time_spent}} in voice channels.",
+            'mute': f"{member.name} has spent {{time_spent}} muted.",
+            'deafen': f"{member.name} has spent {{time_spent}} deafened.",
+            'stream': f"{member.name} has spent {{time_spent}} streaming."
+        }
+
+        for key_type, key in keys.items():
+            time_spent = timedelta()
+            if key in time_sums:
+                time_spent += time_sums[key]
+            if key in timestamps:
+                join_time = timestamps[key]
+                time_spent += datetime.now() - join_time
+            formatted_time = format_time_spent(time_spent)
+            await ctx.send(messages[key_type].format(time_spent=formatted_time))
+    except Exception as e:
+        logger.error(f'Error in time_spent: {e}')
+
 
 async def list_time_spent(ctx, time_sums, time_type: str = None):
     try:

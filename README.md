@@ -32,12 +32,12 @@ create a file named `.env` and add the following keys:<br>
 5. `CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
 6. `HOGBOT_USER_ID=` ID of Hogbot itself
 
-### run the bot locally
+### Run the bot locally
 ```shell
 py ./hogbot.py
 ```
 
-### running on AWS
+### Running on AWS
 
 1. switch to the root user
 
@@ -70,4 +70,19 @@ ps aux | grep python3
 6. kill a process where `[PID]` is the process ID you can find from the output of step 5
 ```shell
 kill [PID]
+```
+
+### Commands
+While the bot is running you can enter the following commands into a discord text channel
+```shell
+!thisweek [optional name]
+```
+```shell
+!lifetime [optional name]
+```
+```shell
+!thisweek_all [optional voice|muted|deafened|streaming]
+```
+```shell
+!lifetime_all [optional voice|muted|deafened|streaming]
 ```
