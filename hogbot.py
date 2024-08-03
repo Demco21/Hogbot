@@ -1,7 +1,7 @@
 import discord
 import logging
 import os
-from discord.ext import commands, tasks
+from discord.ext import commands
 from logging.handlers import RotatingFileHandler
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -84,21 +84,15 @@ async def on_voice_state_update(member, before, after):
                 logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
             # disconnected from server or joined AFK channel, so stop all timers
             elif after.channel is None or (after.channel and after.channel.id == AFK_CHANNEL_ID):
-                if key in timestamps:
-                    join_time = timestamps.pop(key)
-                    time_spent = datetime.now() - join_time
-                    if key not in lifetime_sums:
-                        lifetime_sums[key] = timedelta()
-                    lifetime_sums[key] += time_spent
-                    if key not in this_week_time_sums:
-                        this_week_time_sums[key] = timedelta()
-                    this_week_time_sums[key] += time_spent
-                    logger.info(f"{member.name} left {before.channel.name} after {time_spent}")
+                time_spent = pop_voice_timestamp_and_calculate(key)
+                logger.info(f"{member.name} left {before.channel.name} after {time_spent}")
                 after.self_mute = False
                 after.self_deaf = False
                 after.self_stream = False
             else:
                 logger.info(f"{member.name} switched from {before.channel.name} to {after.channel.name}")
+                if key not in timestamps:
+                    timestamps[key] = datetime.now()
 
         # Handle boolean state changes
         handle_boolean_state_change(KEY_SUFFIX_MUTE, 'self_mute', after)
@@ -108,11 +102,23 @@ async def on_voice_state_update(member, before, after):
     except Exception as e:
         logger.error(f"Error in on_voice_state_update: {e}")
 
-@bot.command(name='lifetime_spent')
+def pop_voice_timestamp_and_calculate(key):
+    if key in timestamps:
+        join_time = timestamps.pop(key)
+        time_spent = datetime.now() - join_time
+        if key not in lifetime_sums:
+            lifetime_sums[key] = timedelta()
+        lifetime_sums[key] += time_spent
+        if key not in this_week_time_sums:
+            this_week_time_sums[key] = timedelta()
+        this_week_time_sums[key] += time_spent
+        return time_spent
+
+@bot.command(name='lifetime')
 async def lifetime_spent(ctx, member: discord.Member = None):
     await time_spent(ctx, lifetime_sums, member)
 
-@bot.command(name='time_spent_this_week')
+@bot.command(name='thisweek')
 async def time_spent_this_week(ctx, member: discord.Member = None):
     await time_spent(ctx, this_week_time_sums, member)
 
@@ -144,13 +150,13 @@ async def time_spent(ctx, time_sums, member: discord.Member = None):
         formatted_time = format_time_spent(time_spent)
         await ctx.send(messages[key_type].format(time_spent=formatted_time))
 
-@bot.command(name='list_this_week')
-async def list_this_week(ctx, time_type: str = None):
-    await list_time_spent(ctx, this_week_time_sums, time_type)
-
-@bot.command(name='list_lifetime')
-async def list_this_week(ctx, time_type: str = None):
+@bot.command(name='lifetime_all')
+async def list_lifetime_voice_times(ctx, time_type: str = None):
     await list_time_spent(ctx, lifetime_sums, time_type)
+
+@bot.command(name='thisweek_all')
+async def list_this_week_voice_times(ctx, time_type: str = None):
+    await list_time_spent(ctx, this_week_time_sums, time_type)
 
 async def list_time_spent(ctx, time_sums, time_type: str = None):
     try:
@@ -197,11 +203,7 @@ async def list_time_spent(ctx, time_sums, time_type: str = None):
                 message_lines.append(f"{member.name}: {formatted_time}")
 
         await ctx.send("\n".join(message_lines))
-
-        # check if called by hogbot then we know it is scheduled job and we can check the winner
-        if ctx.author.id == HOGBOT_USER_ID:
-            logger.info('hogbot id detected, announce winner')
-            await appoint_chancellor(ctx, sorted_times, suffix)
+        return sorted_times
 
     except Exception as e:
         logger.error(f"Error in list_time_spent: {e}")
@@ -246,22 +248,38 @@ def format_time_spent(time_spent):
     formatted_time = " ".join(formatted_time_parts)
     return formatted_time
 
-async def scheduled_chancellor():
+def reset_active_timestamps(ctx):
+    for member in ctx.guild.members:
+        key = f"{member.id}{KEY_SUFFIX_VOICE}"
+        if key in timestamps:
+            pop_voice_timestamp_and_calculate(key)
+            timestamps[key] = datetime.now()
+
+def clear_time_sums():
+    global this_week_time_sums
+    this_week_time_sums = {}
+
+async def end_week():
     try:
         logger.info(f'scheduler kicked off at {datetime.now()} looking for channel {HOGBOT_CHANNEL_ID}')
         channel = bot.get_channel(HOGBOT_CHANNEL_ID)
         if channel:
             logger.info('channel found')
             ctx = await bot.get_context(await channel.send('A new Chancellor is to be appointed...'), cls=commands.Context)
-            await list_time_spent(ctx, this_week_time_sums)
+            reset_active_timestamps(ctx)
+            sorted_times = await list_time_spent(ctx, this_week_time_sums)
+            if sorted_times:
+                logger.info('hogbot id detected, announce winner')
+                await appoint_chancellor(ctx, sorted_times, KEY_SUFFIX_VOICE)
         else:
             logger.info('channel not found')
+        clear_time_sums()
     except Exception as e:
-        logger.error(f"Error in scheduled_chancellor: {e}")
+        logger.error(f"Error in end_week: {e}")
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
-scheduler.add_job(scheduled_chancellor, CronTrigger(day_of_week='sun', hour=0, minute=1))
+scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=4, minute=1))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
