@@ -291,7 +291,7 @@ async def end_week():
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
-scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=0, minute=14))
+scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=4, minute=1))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
