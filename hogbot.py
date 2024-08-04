@@ -212,10 +212,7 @@ async def list_time_spent(ctx, time_sums, time_type: str = None):
     except Exception as e:
         logger.error(f"Error in list_time_spent: {e}")
 
-async def appoint_chancellor(ctx, sorted_times, suffix):
-    winner = sorted_times[0]
-    key = winner[0]
-    member_id = key.replace(suffix, '')
+async def appoint_chancellor(ctx, member_id):
     member = ctx.guild.get_member(int(member_id))
     if member:
         logger.info(f'chancellor id: {CHANCELLOR_ROLE_ID}')
@@ -265,21 +262,32 @@ def clear_time_sums():
 
 async def end_week():
     try:
-        logger.info(f'scheduler kicked off at {datetime.now()} looking for channel {HOGBOT_CHANNEL_ID}')
+        logger.info(f'Scheduler kicked off at {datetime.now()}, looking for channel {HOGBOT_CHANNEL_ID}')
         channel = bot.get_channel(HOGBOT_CHANNEL_ID)
-        if channel:
-            logger.info('channel found')
-            ctx = await bot.get_context(await channel.send('A new Chancellor is to be appointed...'), cls=commands.Context)
-            reset_active_timestamps(ctx)
-            sorted_times = await list_time_spent(ctx, this_week_time_sums)
-            if sorted_times:
-                logger.info('hogbot id detected, announce winner')
-                await appoint_chancellor(ctx, sorted_times, KEY_SUFFIX_VOICE)
-        else:
-            logger.info('channel not found')
+
+        if not channel:
+            logger.warning('Channel not found')
+            return
+        
+        logger.info('Channel found')
+        ctx_message = await channel.send('A new Chancellor is to be appointed...')
+        ctx = await bot.get_context(ctx_message, cls=commands.Context)
+        
+        reset_active_timestamps(ctx)
+        sorted_times = await list_time_spent(ctx, this_week_time_sums)
+        
+        if not sorted_times:
+            logger.info('No sorted times found')
+            return
+        
+        chancellor = sorted_times[0]
+        chancellor_id = chancellor[0].replace(KEY_SUFFIX_VOICE, '')
+        logger.info(f'Chancellor ID found, announcing winner: {chancellor_id}')
+        await appoint_chancellor(ctx, chancellor_id)
         clear_time_sums()
+        
     except Exception as e:
-        logger.error(f"Error in end_week: {e}")
+        logger.error(f"Error in end_week: {e}", exc_info=True)
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
