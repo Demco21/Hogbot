@@ -14,7 +14,7 @@ load_dotenv()
 # Environment variables
 ENV_TOKEN_SUFFIX = os.getenv('ENV')
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN' + ENV_TOKEN_SUFFIX)
-AFK_CHANNEL_ID = os.getenv('AFK_CHANNEL_ID')
+AFK_CHANNEL_ID = int(os.getenv('AFK_CHANNEL_ID'))
 HOGBOT_CHANNEL_ID = int(os.getenv('HOGBOT_CHANNEL_ID'))
 HOGBOT_USER_ID = int(os.getenv('HOGBOT_USER_ID'))
 CHANCELLOR_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
@@ -115,19 +115,19 @@ def pop_voice_timestamp_and_calculate(key):
         return time_spent
 
 @bot.command(name='lifetime')
-async def lifetime_spent(ctx, member: discord.Member = None):
+async def lifetime_spent_for_member(ctx, member: discord.Member = None):
     await time_spent_member(ctx, lifetime_sums, member)
 
 @bot.command(name='thisweek')
-async def time_spent_this_week(ctx, member: discord.Member = None):
+async def time_spent_this_week_for_member(ctx, member: discord.Member = None):
     await time_spent_member(ctx, this_week_time_sums, member)
 
 @bot.command(name='lifetime_all')
-async def list_lifetime_voice_times(ctx, time_type: str = None):
+async def lifetime_spent_all_members(ctx, time_type: str = None):
     await time_spent_all_members(ctx, lifetime_sums, time_type)
 
 @bot.command(name='thisweek_all')
-async def list_this_week_voice_times(ctx, time_type: str = None):
+async def time_spent_this_week_all_members(ctx, time_type: str = None):
     await time_spent_all_members(ctx, this_week_time_sums, time_type)
 
 async def time_spent_member(ctx, time_sums, member: discord.Member = None):
@@ -274,7 +274,7 @@ async def end_week():
         ctx = await bot.get_context(ctx_message, cls=commands.Context)
         
         reset_active_timestamps(ctx)
-        sorted_times = await list_time_spent(ctx, this_week_time_sums)
+        sorted_times = await time_spent_all_members(ctx, this_week_time_sums)
         
         if not sorted_times:
             logger.info('No sorted times found')
@@ -291,7 +291,7 @@ async def end_week():
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
-scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=4, minute=1))
+scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=0, minute=14))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
