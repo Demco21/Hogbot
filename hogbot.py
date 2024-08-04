@@ -116,21 +116,21 @@ def pop_voice_timestamp_and_calculate(key):
 
 @bot.command(name='lifetime')
 async def lifetime_spent(ctx, member: discord.Member = None):
-    await time_spent(ctx, lifetime_sums, member)
+    await time_spent_member(ctx, lifetime_sums, member)
 
 @bot.command(name='thisweek')
 async def time_spent_this_week(ctx, member: discord.Member = None):
-    await time_spent(ctx, this_week_time_sums, member)
+    await time_spent_member(ctx, this_week_time_sums, member)
 
 @bot.command(name='lifetime_all')
 async def list_lifetime_voice_times(ctx, time_type: str = None):
-    await list_time_spent(ctx, lifetime_sums, time_type)
+    await time_spent_all_members(ctx, lifetime_sums, time_type)
 
 @bot.command(name='thisweek_all')
 async def list_this_week_voice_times(ctx, time_type: str = None):
-    await list_time_spent(ctx, this_week_time_sums, time_type)
+    await time_spent_all_members(ctx, this_week_time_sums, time_type)
 
-async def time_spent(ctx, time_sums, member: discord.Member = None):
+async def time_spent_member(ctx, time_sums, member: discord.Member = None):
     try:
         if member is None:
             member = ctx.author
@@ -162,7 +162,7 @@ async def time_spent(ctx, time_sums, member: discord.Member = None):
         logger.error(f'Error in time_spent: {e}')
 
 
-async def list_time_spent(ctx, time_sums, time_type: str = None):
+async def time_spent_all_members(ctx, time_sums, time_type: str = None):
     try:
         if time_type is None:
             time_type = 'voice'
@@ -210,7 +210,7 @@ async def list_time_spent(ctx, time_sums, time_type: str = None):
         return sorted_times
 
     except Exception as e:
-        logger.error(f"Error in list_time_spent: {e}")
+        logger.error(f"Error in time_spent_all_members: {e}")
 
 async def appoint_chancellor(ctx, member_id):
     member = ctx.guild.get_member(int(member_id))
