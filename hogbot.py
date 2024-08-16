@@ -1,6 +1,7 @@
 import discord
 import logging
 import os
+import json
 from discord.ext import commands
 from logging.handlers import RotatingFileHandler
 from datetime import datetime, timedelta
@@ -18,6 +19,7 @@ AFK_CHANNEL_ID = int(os.getenv('AFK_CHANNEL_ID'))
 HOGBOT_CHANNEL_ID = int(os.getenv('HOGBOT_CHANNEL_ID'))
 HOGBOT_USER_ID = int(os.getenv('HOGBOT_USER_ID'))
 CHANCELLOR_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
+HOGBOT_SERVER_ID = int(os.getenv('HOGBOT_SERVER_ID'))
 
 # Set up bot config
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
@@ -41,17 +43,64 @@ KEY_SUFFIX_VOICE = '_voice'
 KEY_SUFFIX_MUTE = '_mute'
 KEY_SUFFIX_DEAFEN = '_deafen'
 KEY_SUFFIX_STREAM = '_stream'
+VALID_ARG_TYPES = ['voice', 'muted', 'deafened', 'streaming']
+SUFFIXES = {
+    VALID_ARG_TYPES[0]: KEY_SUFFIX_VOICE,
+    VALID_ARG_TYPES[1]: KEY_SUFFIX_MUTE,
+    VALID_ARG_TYPES[2]: KEY_SUFFIX_DEAFEN,
+    VALID_ARG_TYPES[3]: KEY_SUFFIX_STREAM
+}
+THISWEEK_COMMAND = 'thisweek'
+LIFETIME_COMMAND = 'lifetime'
+DUMP_COMMAND = 'dump'
+
 
 timestamps = {} # Dictionary to store timestamps of state changes
 lifetime_sums = {} # Dictionary to store total time spent
 this_week_time_sums = {} # Dictionary to store weekly time spent
 
+#startup function
 @bot.event
 async def on_ready():
     logger.info(f'Logged in as {bot.user} at {datetime.now()}')
     scheduler.start()
     logger.info(f'Scheduler is on')
+    await restore_data()
 
+async def restore_data():
+    # Function to convert "H:MM:SS" strings to timedelta
+    def string_to_timedelta(time_str):
+        parts = time_str.split(':')
+        hours = int(parts[0])
+        minutes = int(parts[1])
+        seconds = int(parts[2])
+        return timedelta(hours=hours, minutes=minutes, seconds=seconds)
+        
+    try:
+        global lifetime_sums, this_week_time_sums
+        # Read data from JSON file
+        filepath = "time_data.json"
+        if os.path.exists(filepath):
+            logger.info(f"restoring date from file {filepath}")
+            with open(filepath, "r") as file:
+                data = json.load(file)
+
+            # Restore dictionaries from JSON file
+            lifetime_sums = {
+                member: string_to_timedelta(time_spent)
+                for member, time_spent in data["lifetime_sums"].items()
+            }
+
+            this_week_time_sums = {
+                member: string_to_timedelta(time_spent)
+                for member, time_spent in data["this_week_time_sums"].items()
+            }
+        else:
+            logger.warning(f"file {filepath} does not exist")
+    except Exception as e:
+        logger.error(f"Error in restore_data: {e}")
+
+#captures member state changes
 @bot.event
 async def on_voice_state_update(member, before, after):
     try:
@@ -84,7 +133,7 @@ async def on_voice_state_update(member, before, after):
                 logger.info(f"{member.name} joined {after.channel.name} at {timestamps[key]}")
             # disconnected from server or joined AFK channel, so stop all timers
             elif after.channel is None or (after.channel and after.channel.id == AFK_CHANNEL_ID):
-                time_spent = pop_voice_timestamp_and_calculate(key)
+                time_spent = pop_timestamp_and_calculate(key)
                 logger.info(f"{member.name} left {before.channel.name} after {time_spent}")
                 after.self_mute = False
                 after.self_deaf = False
@@ -102,7 +151,7 @@ async def on_voice_state_update(member, before, after):
     except Exception as e:
         logger.error(f"Error in on_voice_state_update: {e}")
 
-def pop_voice_timestamp_and_calculate(key):
+def pop_timestamp_and_calculate(key):
     if key in timestamps:
         join_time = timestamps.pop(key)
         time_spent = datetime.now() - join_time
@@ -114,27 +163,72 @@ def pop_voice_timestamp_and_calculate(key):
         this_week_time_sums[key] += time_spent
         return time_spent
 
-@bot.command(name='lifetime')
-async def lifetime_spent_for_member(ctx, member: discord.Member = None):
-    await time_spent_member(ctx, lifetime_sums, member)
+@bot.command(name=DUMP_COMMAND)
+async def dump_data_command(ctx):
+    await dump_data(ctx)
 
-@bot.command(name='thisweek')
-async def time_spent_this_week_for_member(ctx, member: discord.Member = None):
-    await time_spent_member(ctx, this_week_time_sums, member)
+#dump current time sums dictionary into json file for data persistence
+async def dump_data(ctx=None):
 
-@bot.command(name='lifetime_all')
-async def lifetime_spent_all_members(ctx, time_type: str = None):
-    await time_spent_all_members(ctx, lifetime_sums, time_type)
+    # Convert timedelta objects to a consistent string format "H:MM:SS"
+    def timedelta_to_string(td):
+        total_seconds = int(td.total_seconds())
+        hours, remainder = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{hours}:{minutes:02}:{seconds:02}"
 
-@bot.command(name='thisweek_all')
-async def time_spent_this_week_all_members(ctx, time_type: str = None):
-    await time_spent_all_members(ctx, this_week_time_sums, time_type)
-
-async def time_spent_member(ctx, time_sums, member: discord.Member = None):
     try:
+        global lifetime_sums, this_week_time_sums
+        if ctx is None:
+            guild = bot.get_guild(HOGBOT_SERVER_ID)
+            reset_active_timestamps(guild)
+        else:
+            reset_active_timestamps(ctx.guild)
+        # Prepare data for JSON serialization
+        data = {
+            "lifetime_sums": {member: timedelta_to_string(time_spent) for member, time_spent in lifetime_sums.items()},
+            "this_week_time_sums": {member: timedelta_to_string(time_spent) for member, time_spent in this_week_time_sums.items()},
+        }
+        # Write data to a JSON file
+        with open("time_data.json", "w") as file:
+            json.dump(data, file, indent=4)
+    except Exception as e:
+        logger.error(f"Error in dump_data: {e}")
+
+#message discord with time sums starting from beginning of bot creation
+@bot.command(name=LIFETIME_COMMAND)
+async def lifetime_spent(ctx, arg: str = ''):
+    if not arg:
+        arg = VALID_ARG_TYPES[0]
+
+    if arg not in VALID_ARG_TYPES:
+        member = discord.utils.get(ctx.guild.members, name=arg)
         if member is None:
-            member = ctx.author
-        
+            await ctx.send(f"Invalid type! Please choose from '{VALID_ARG_TYPES[0]}', '{VALID_ARG_TYPES[1]}', '{VALID_ARG_TYPES[2]}', '{VALID_ARG_TYPES[3]}' or a valid member name.")
+            return
+        else:
+            await time_spent_member(ctx, lifetime_sums, member)
+    else:
+        await time_spent_all_members(ctx, lifetime_sums, arg)
+
+#message discord with time sums starting from beginning of the week
+@bot.command(name=THISWEEK_COMMAND)
+async def time_spent_this_week(ctx, arg: str = ''):
+    if not arg:
+        arg = VALID_ARG_TYPES[0]
+
+    if arg not in VALID_ARG_TYPES:
+        member = discord.utils.get(ctx.guild.members, name=arg)
+        if member is None:
+            await ctx.send("Invalid type! Please choose from 'voice', 'muted', 'deafened', 'streaming' or a valid member name.")
+            return
+        else:
+            await time_spent_member(ctx, this_week_time_sums, member)
+    else:
+        await time_spent_all_members(ctx, this_week_time_sums, arg)
+
+async def time_spent_member(ctx, time_sums, member: discord.Member):
+    try:
         keys = {
             'channel': f'{member.id}{KEY_SUFFIX_VOICE}',
             'mute': f'{member.id}{KEY_SUFFIX_MUTE}',
@@ -162,23 +256,16 @@ async def time_spent_member(ctx, time_sums, member: discord.Member = None):
         logger.error(f'Error in time_spent: {e}')
 
 
-async def time_spent_all_members(ctx, time_sums, time_type: str = None):
+async def time_spent_all_members(ctx, time_sums, time_type: str):
     try:
-        if time_type is None:
+        if not time_type:
             time_type = 'voice'
-        valid_types = ['voice', 'muted', 'deafened', 'streaming']
-        suffixes = {
-            'voice': KEY_SUFFIX_VOICE,
-            'muted': KEY_SUFFIX_MUTE,
-            'deafened': KEY_SUFFIX_DEAFEN,
-            'streaming': KEY_SUFFIX_STREAM
-        }
 
-        if time_type not in valid_types:
+        if time_type not in VALID_ARG_TYPES:
             await ctx.send("Invalid type! Please choose from 'voice', 'muted', 'deafened', or 'streaming'.")
             return
 
-        suffix = suffixes[time_type]
+        suffix = SUFFIXES[time_type]
         filtered_time_sums = {key: value for key, value in time_sums.items() if key.endswith(suffix)}
         filtered_timestamps = {key: value for key, value in timestamps.items() if key.endswith(suffix)}
 
@@ -195,7 +282,7 @@ async def time_spent_all_members(ctx, time_sums, time_type: str = None):
             return
 
         message_header = f"Most {time_type} time spent this week:"
-        if ctx.command and ctx.command.name == 'list_lifetime':
+        if ctx.command and ctx.command.name == LIFETIME_COMMAND:
             message_header = f"Most {time_type} time spent for life:"
 
         message_lines = [message_header]
@@ -249,14 +336,26 @@ def format_time_spent(time_spent):
     formatted_time = " ".join(formatted_time_parts)
     return formatted_time
 
-def reset_active_timestamps(ctx):
-    for member in ctx.guild.members:
+def reset_active_timestamps(guild):
+    for member in guild.members:
         key = f"{member.id}{KEY_SUFFIX_VOICE}"
         if key in timestamps:
-            pop_voice_timestamp_and_calculate(key)
+            pop_timestamp_and_calculate(key)
+            timestamps[key] = datetime.now()
+        key = f"{member.id}{KEY_SUFFIX_MUTE}"
+        if key in timestamps:
+            pop_timestamp_and_calculate(key)
+            timestamps[key] = datetime.now()
+        key = f"{member.id}{KEY_SUFFIX_DEAFEN}"
+        if key in timestamps:
+            pop_timestamp_and_calculate(key)
+            timestamps[key] = datetime.now()
+        key = f"{member.id}{KEY_SUFFIX_STREAM}"
+        if key in timestamps:
+            pop_timestamp_and_calculate(key)
             timestamps[key] = datetime.now()
 
-def clear_time_sums():
+def clear_this_week_time_sums():
     global this_week_time_sums
     this_week_time_sums = {}
 
@@ -273,7 +372,7 @@ async def end_week():
         ctx_message = await channel.send('A new Chancellor is to be appointed...')
         ctx = await bot.get_context(ctx_message, cls=commands.Context)
         
-        reset_active_timestamps(ctx)
+        reset_active_timestamps(ctx.guild)
         sorted_times = await time_spent_all_members(ctx, this_week_time_sums)
         
         if not sorted_times:
@@ -284,14 +383,19 @@ async def end_week():
         chancellor_id = chancellor[0].replace(KEY_SUFFIX_VOICE, '')
         logger.info(f'Chancellor ID found, announcing winner: {chancellor_id}')
         await appoint_chancellor(ctx, chancellor_id)
-        clear_time_sums()
+        clear_this_week_time_sums()
         
     except Exception as e:
-        logger.error(f"Error in end_week: {e}", exc_info=True)
+        logger.error(f"Error in end_week: {e}")
+
+async def end_day():
+    logger.info(f"Scheduler kicked of at {datetime.now()} to dump time sum data")
+    await dump_data()
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
 scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=4, minute=1))
+scheduler.add_job(end_day, CronTrigger(hour=8, minute=0))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
