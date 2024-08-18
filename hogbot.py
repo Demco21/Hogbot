@@ -54,7 +54,6 @@ THISWEEK_COMMAND = 'thisweek'
 LIFETIME_COMMAND = 'lifetime'
 DUMP_COMMAND = 'dump'
 
-
 timestamps = {} # Dictionary to store timestamps of state changes
 lifetime_sums = {} # Dictionary to store total time spent
 this_week_time_sums = {} # Dictionary to store weekly time spent
@@ -71,10 +70,11 @@ async def restore_data():
     # Function to convert "H:MM:SS" strings to timedelta
     def string_to_timedelta(time_str):
         parts = time_str.split(':')
-        hours = int(parts[0])
-        minutes = int(parts[1])
-        seconds = int(parts[2])
-        return timedelta(hours=hours, minutes=minutes, seconds=seconds)
+        days = int(parts[0])
+        hours = int(parts[1])
+        minutes = int(parts[2])
+        seconds = int(parts[3])
+        return timedelta(days=days, hours=hours, minutes=minutes, seconds=seconds)
         
     try:
         global lifetime_sums, this_week_time_sums
@@ -173,9 +173,10 @@ async def dump_data(ctx=None):
     # Convert timedelta objects to a consistent string format "H:MM:SS"
     def timedelta_to_string(td):
         total_seconds = int(td.total_seconds())
-        hours, remainder = divmod(total_seconds, 3600)
+        days, remainder = divmod(total_seconds, 86400)
+        hours, remainder = divmod(remainder, 3600)
         minutes, seconds = divmod(remainder, 60)
-        return f"{hours}:{minutes:02}:{seconds:02}"
+        return f"{days}:{hours:02}:{minutes:02}:{seconds:02}"
 
     try:
         global lifetime_sums, this_week_time_sums
