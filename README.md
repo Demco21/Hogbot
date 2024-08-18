@@ -31,6 +31,7 @@ create a file named `.env` and add the following keys:<br>
 5. `HOGBOT_CHANNEL_ID=` ID value of the channel you'd like for Hogbot to push automated messages to<br>
 5. `CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
 6. `HOGBOT_USER_ID=` ID of Hogbot itself
+7. `HOGBOT_SERVER_ID=` ID of the server
 
 ## Running the bot
 ### Run the bot locally
@@ -68,23 +69,16 @@ kill [PID]
 ## Commands
 While the bot is running you can enter the following commands into a discord text channel
 ```shell
-!thisweek [name]
+!thisweek [type]
 ```
 ```shell
-!lifetime [name]
-```
-```shell
-!thisweek_all [type]
-```
-```shell
-!lifetime_all [type]
+!lifetime [type]
 ```
 ### Arguments
-* [name] (optional): The username of the member for which times will be listed for. 
-    * If blank, defaults to self.
 * [type] (optional): The type of event to get times for. Valid values are:
     * voice - Time spent in voice channels.
     * muted - Time spent muted in voice channels.
     * deafened - Time spent deafened in voice channels.
     * streaming - Time spent streaming in voice channels.
+    * username of the member for which times will be listed for.
     * If blank, defaults to voice.
