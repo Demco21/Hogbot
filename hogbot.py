@@ -57,6 +57,7 @@ DUMP_COMMAND = 'dump'
 timestamps = {} # Dictionary to store timestamps of state changes
 lifetime_sums = {} # Dictionary to store total time spent
 this_week_time_sums = {} # Dictionary to store weekly time spent
+hogbot_start_date = 'some unknown date'
 
 #startup function
 @bot.event
@@ -85,15 +86,18 @@ async def restore_data():
             with open(filepath, "r") as file:
                 data = json.load(file)
 
+            global hogbot_start_date
+            hogbot_start_date = data.get("hogbot_start_date", datetime.today().strftime("%m/%d/%Y"))
+
             # Restore dictionaries from JSON file
             lifetime_sums = {
                 member: string_to_timedelta(time_spent)
-                for member, time_spent in data["lifetime_sums"].items()
+                for member, time_spent in data.get("lifetime_sums", {}).items()
             }
 
             this_week_time_sums = {
                 member: string_to_timedelta(time_spent)
-                for member, time_spent in data["this_week_time_sums"].items()
+                for member, time_spent in data.get("this_week_time_sums", {}).items()
             }
         else:
             logger.warning(f"file {filepath} does not exist")
@@ -179,7 +183,7 @@ async def dump_data(ctx=None):
         return f"{days}:{hours:02}:{minutes:02}:{seconds:02}"
 
     try:
-        global lifetime_sums, this_week_time_sums
+        global lifetime_sums, this_week_time_sums, hogbot_start_date
         if ctx is None:
             guild = bot.get_guild(HOGBOT_SERVER_ID)
             reset_active_timestamps(guild)
@@ -189,6 +193,7 @@ async def dump_data(ctx=None):
         data = {
             "lifetime_sums": {member: timedelta_to_string(time_spent) for member, time_spent in lifetime_sums.items()},
             "this_week_time_sums": {member: timedelta_to_string(time_spent) for member, time_spent in this_week_time_sums.items()},
+            "hogbot_start_date": hogbot_start_date
         }
         # Write data to a JSON file
         with open("time_data.json", "w") as file:
@@ -244,6 +249,11 @@ async def time_spent_member(ctx, time_sums, member: discord.Member):
             'stream': f"{member.name} has spent {{time_spent}} streaming."
         }
 
+        if ctx.command and ctx.command.name == LIFETIME_COMMAND:
+            await ctx.send(f"Since {hogbot_start_date}:")
+        else:
+            await ctx.send(f"This week:")
+
         for key_type, key in keys.items():
             time_spent = timedelta()
             if key in time_sums:
@@ -284,7 +294,7 @@ async def time_spent_all_members(ctx, time_sums, time_type: str):
 
         message_header = f"Most {time_type} time spent this week:"
         if ctx.command and ctx.command.name == LIFETIME_COMMAND:
-            message_header = f"Most {time_type} time spent for life:"
+            message_header = f"Most {time_type} time spent since {hogbot_start_date}:"
 
         message_lines = [message_header]
         for key, time_spent in sorted_times:
