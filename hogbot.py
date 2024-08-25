@@ -267,7 +267,7 @@ async def time_spent_member(ctx, time_sums, member: discord.Member):
         logger.error(f'Error in time_spent: {e}')
 
 
-async def time_spent_all_members(ctx, time_sums, time_type: str):
+async def time_spent_all_members(ctx, time_sums, time_type: str = ''):
     try:
         if not time_type:
             time_type = 'voice'
