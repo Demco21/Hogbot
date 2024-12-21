@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from pytz import timezone
 
 # Load environment variables from .env file
 load_dotenv()
@@ -28,7 +29,7 @@ bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 handler = RotatingFileHandler(
-    filename='discord.log',
+    filename='hogbot.log',
     mode='a',
     maxBytes=5*1024*1024,  # 5 MB
     backupCount=2,         # Keep up to 2 backup files
@@ -50,6 +51,9 @@ SUFFIXES = {
     VALID_ARG_TYPES[2]: KEY_SUFFIX_DEAFEN,
     VALID_ARG_TYPES[3]: KEY_SUFFIX_STREAM
 }
+MAX_MESSAGE_SIZE = 2000
+
+# Commands
 THISWEEK_COMMAND = 'thisweek'
 LIFETIME_COMMAND = 'lifetime'
 DUMP_COMMAND = 'dump'
@@ -302,7 +306,13 @@ async def time_spent_all_members(ctx, time_sums, time_type: str = ''):
             member = ctx.guild.get_member(int(member_id))
             if member:
                 formatted_time = format_time_spent(time_spent)
-                message_lines.append(f"{member.name}: {formatted_time}")
+                message = f"{member.name}: {formatted_time}"
+                total_size = sum(len(line) for line in message_lines) + len(message) + len(message_lines)
+                if (total_size < MAX_MESSAGE_SIZE):
+                    message_lines.append(message)
+                else:
+                    logger.info(f'MAX_MESSAGE_SIZE reached: {MAX_MESSAGE_SIZE}')
+                    break
 
         await ctx.send("\n".join(message_lines))
         return sorted_times
@@ -405,8 +415,8 @@ async def end_day():
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
-scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=4, minute=1))
-scheduler.add_job(end_day, CronTrigger(hour=8, minute=0))
+scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=0, minute=0, timezone=timezone('America/New_York')))
+scheduler.add_job(end_day, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
