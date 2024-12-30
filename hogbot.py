@@ -21,7 +21,7 @@ AFK_CHANNEL_ID = int(os.getenv('AFK_CHANNEL_ID'))
 HOGBOT_CHANNEL_ID = int(os.getenv('HOGBOT_CHANNEL_ID'))
 HOGBOT_USER_ID = int(os.getenv('HOGBOT_USER_ID'))
 CHANCELLOR_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
-MOD_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
+MOD_ROLE_ID = int(os.getenv('MOD_ROLE_ID'))
 POWER_ROLE_ID = int(os.getenv('POWER_ROLE_ID'))
 HOGBOT_SERVER_ID = int(os.getenv('HOGBOT_SERVER_ID'))
 
