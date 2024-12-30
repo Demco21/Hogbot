@@ -2,6 +2,7 @@ import discord
 import logging
 import os
 import json
+import asyncio
 from discord.ext import commands
 from logging.handlers import RotatingFileHandler
 from datetime import datetime, timedelta
@@ -20,6 +21,8 @@ AFK_CHANNEL_ID = int(os.getenv('AFK_CHANNEL_ID'))
 HOGBOT_CHANNEL_ID = int(os.getenv('HOGBOT_CHANNEL_ID'))
 HOGBOT_USER_ID = int(os.getenv('HOGBOT_USER_ID'))
 CHANCELLOR_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
+MOD_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
+POWER_ROLE_ID = int(os.getenv('POWER_ROLE_ID'))
 HOGBOT_SERVER_ID = int(os.getenv('HOGBOT_SERVER_ID'))
 
 # Set up bot config
@@ -52,16 +55,28 @@ SUFFIXES = {
     VALID_ARG_TYPES[3]: KEY_SUFFIX_STREAM
 }
 MAX_MESSAGE_SIZE = 2000
+APPROVALS_NEEDED = 2
+POWER_DURATION = 60 * 15 # 15 minutes
+
+#States
+DEFAULT_STATE = 1
+VOTING_STATE = 2
+VOTE_APPROVED_STATE = 3
 
 # Commands
 THISWEEK_COMMAND = 'thisweek'
 LIFETIME_COMMAND = 'lifetime'
 DUMP_COMMAND = 'dump'
+POWER_COMMAND = 'power'
+APPROVE_COMMAND = 'approve'
 
 timestamps = {} # Dictionary to store timestamps of state changes
 lifetime_sums = {} # Dictionary to store total time spent
 this_week_time_sums = {} # Dictionary to store weekly time spent
 hogbot_start_date = 'some unknown date'
+bot_state = DEFAULT_STATE
+approvals = {}
+current_chancellor_id = None
 
 #startup function
 @bot.event
@@ -82,7 +97,7 @@ async def restore_data():
         return timedelta(days=days, hours=hours, minutes=minutes, seconds=seconds)
         
     try:
-        global lifetime_sums, this_week_time_sums
+        global lifetime_sums, this_week_time_sums, current_chancellor_id
         # Read data from JSON file
         filepath = "time_data.json"
         if os.path.exists(filepath):
@@ -92,6 +107,7 @@ async def restore_data():
 
             global hogbot_start_date
             hogbot_start_date = data.get("hogbot_start_date", datetime.today().strftime("%m/%d/%Y"))
+            current_chancellor_id = data.get("current_chancellor_id")
 
             # Restore dictionaries from JSON file
             lifetime_sums = {
@@ -187,7 +203,7 @@ async def dump_data(ctx=None):
         return f"{days}:{hours:02}:{minutes:02}:{seconds:02}"
 
     try:
-        global lifetime_sums, this_week_time_sums, hogbot_start_date
+        global lifetime_sums, this_week_time_sums, hogbot_start_date, current_chancellor_id
         if ctx is None:
             guild = bot.get_guild(HOGBOT_SERVER_ID)
             reset_active_timestamps(guild)
@@ -197,7 +213,8 @@ async def dump_data(ctx=None):
         data = {
             "lifetime_sums": {member: timedelta_to_string(time_spent) for member, time_spent in lifetime_sums.items()},
             "this_week_time_sums": {member: timedelta_to_string(time_spent) for member, time_spent in this_week_time_sums.items()},
-            "hogbot_start_date": hogbot_start_date
+            "hogbot_start_date": hogbot_start_date,
+            "current_chancellor_id": current_chancellor_id
         }
         # Write data to a JSON file
         with open("time_data.json", "w") as file:
@@ -320,7 +337,80 @@ async def time_spent_all_members(ctx, time_sums, time_type: str = ''):
     except Exception as e:
         logger.error(f"Error in time_spent_all_members: {e}")
 
+@bot.command(name=POWER_COMMAND)
+async def power(ctx):
+    global bot_state, approvals
+    chancellor_role = ctx.guild.get_role(CHANCELLOR_ROLE_ID)
+    if chancellor_role not in ctx.author.roles:
+        await ctx.send(f"Only the Chancellor can request for power.")
+        return
+    if bot_state == VOTING_STATE:
+        await ctx.send(f"Waiting for {APPROVALS_NEEDED - len(approvals)} more approvals.")
+        return
+    if bot_state == VOTE_APPROVED_STATE:
+        await ctx.send(f"You already have been approved of your powers.")
+        return
+    await ctx.send(f"Your Chancellor has requested approval to expand his powers. He will need {APPROVALS_NEEDED} votes from his council to be approved.\nType **!approve** to vote in favor of this expansion of power.")
+    bot_state = VOTING_STATE
+
+@bot.command(name=APPROVE_COMMAND)
+async def approve(ctx):
+    global bot_state, approvals, scheduler
+    chancellor_role = ctx.guild.get_role(CHANCELLOR_ROLE_ID)
+    mod_role = ctx.guild.get_role(MOD_ROLE_ID)
+    power_role = ctx.guild.get_role(POWER_ROLE_ID)
+    if bot_state == VOTE_APPROVED_STATE:
+        await ctx.send("The Chancellor has already been approved for power.")
+        return
+    if bot_state != VOTING_STATE:
+        await ctx.send("The Chancellor has not requested an expansion of his power. Type **!power** to request.")
+        return
+    if chancellor_role in ctx.author.roles:
+        await ctx.send(f"The Chancellor cannot approve his own request for power.")
+        return
+    if mod_role not in ctx.author.roles:
+        await ctx.send(f"Only Moderators can approve this request.")
+        return
+    if approvals.get(ctx.author):
+        await ctx.send(f"You have already sent your approval ({len(approvals)}/{APPROVALS_NEEDED})")
+        return
+    approvals[ctx.author] = 1
+    await ctx.send(f"Power request approved by {ctx.author.name} ({len(approvals)}/{APPROVALS_NEEDED})")
+    if len(approvals) >= APPROVALS_NEEDED:
+        await approve_power(ctx)
+        approvals = {}
+        bot_state = VOTE_APPROVED_STATE
+        await asyncio.sleep(POWER_DURATION)
+        await remove_role_for_all(ctx, power_role)
+        await ctx.send("Chancellor has run out of power...")
+        bot_state = DEFAULT_STATE
+
+async def approve_power(ctx):
+    if not current_chancellor_id:
+        await ctx.send('No Chancellor ID found.')
+        return
+
+    logger.info(f'current chancellor id: {current_chancellor_id}')
+    current_chancellor = ctx.guild.get_member(current_chancellor_id)
+
+    if current_chancellor is None:
+        logger.info('Chancellor not found!')
+        return
+
+    logger.info(f'power role id: {POWER_ROLE_ID}')
+    power_role = ctx.guild.get_role(POWER_ROLE_ID)
+
+    if power_role is None:
+        logger.info('Power role not found!')
+        return
+
+    await remove_role_for_all(ctx, power_role)
+    await current_chancellor.add_roles(power_role)
+    await ctx.send(f'The request was approved, the Chancellor will get 15 minutes of power!')
+
+
 async def appoint_chancellor(ctx, member_id):
+    global current_chancellor_id
     member = ctx.guild.get_member(int(member_id))
     if member:
         logger.info(f'chancellor id: {CHANCELLOR_ROLE_ID}')
@@ -330,6 +420,7 @@ async def appoint_chancellor(ctx, member_id):
         else:
             await remove_role_for_all(ctx, chancellor)
             await member.add_roles(chancellor)
+            current_chancellor_id = member.id
             await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {member.name} !')
     else:
         await ctx.send('No Chancellor found.')
