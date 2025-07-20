@@ -24,6 +24,7 @@ CHANCELLOR_ROLE_ID = int(os.getenv('CHANCELLOR_ROLE_ID'))
 MOD_ROLE_ID = int(os.getenv('MOD_ROLE_ID'))
 POWER_ROLE_ID = int(os.getenv('POWER_ROLE_ID'))
 HOGBOT_SERVER_ID = int(os.getenv('HOGBOT_SERVER_ID'))
+CHANGE_CHANNEL_ID = int(os.getenv('CHANGE_CHANNEL_ID'))
 
 # Set up bot config
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
@@ -57,6 +58,15 @@ SUFFIXES = {
 MAX_MESSAGE_SIZE = 2000
 APPROVALS_NEEDED = 2
 POWER_DURATION = 60 * 15 # 15 minutes
+DAY_OVERRIDES = {
+    "monday": "🍺 Monday Beers",
+    "tuesday": "🍺 Tuesday Beers",
+    "wednesday": "🍺 Wednesday Beers",
+    "thursday": "🍺 Thursday Beers",
+    "friday": "🍺 Friday Beers",
+    "saturday": "🍺 Saturday Beers",
+    "sunday": "🍺 Sunday Beers"
+}
 
 #States
 DEFAULT_STATE = 1
@@ -471,9 +481,27 @@ def clear_this_week_time_sums():
     global this_week_time_sums
     this_week_time_sums = {}
 
-async def end_week():
+async def change_channel_name():
     try:
-        logger.info(f'Scheduler kicked off at {datetime.now()}, looking for channel {HOGBOT_CHANNEL_ID}')
+        channel = bot.get_channel(CHANGE_CHANNEL_ID)
+
+        if not isinstance(channel, (discord.TextChannel, discord.VoiceChannel)):
+            logger.error("Channel ID does not point to a text or voice channel.")
+            return
+
+        # Determine what to name the channel
+        today = datetime.now().strftime("%A")
+        new_name = DAY_OVERRIDES.get(today.lower(), f"404 Beers Not Found")
+
+        # Rename the channel
+        await channel.edit(name=new_name)
+        logger.info(f"Renamed channel to: {new_name}")
+
+    except Exception as e:
+        logger.error(f"Error in change_channel_name: {e}")
+
+async def decide_chancellor():
+    try:
         channel = bot.get_channel(HOGBOT_CHANNEL_ID)
 
         if not channel:
@@ -500,14 +528,23 @@ async def end_week():
     except Exception as e:
         logger.error(f"Error in end_week: {e}")
 
+async def end_week():
+    logger.info(f'Scheduler end_week kicked off at {datetime.now()}')
+    await decide_chancellor()
+
 async def end_day():
-    logger.info(f"Scheduler kicked of at {datetime.now()} to dump time sum data")
+    logger.info(f"Scheduler end_day kicked of at {datetime.now()}")
+    await change_channel_name()
+
+async def persistence_sync():
+    logger.info(f"Scheduler persistence_sync kicked of at {datetime.now()}")
     await dump_data()
 
 #set up scheduler
 scheduler = AsyncIOScheduler()
 scheduler.add_job(end_week, CronTrigger(day_of_week='sun', hour=0, minute=0, timezone=timezone('America/New_York')))
-scheduler.add_job(end_day, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
+scheduler.add_job(end_day, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))
+scheduler.add_job(persistence_sync, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
 
 # Run the bot
 bot.run(DISCORD_TOKEN)
