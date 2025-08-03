@@ -273,11 +273,12 @@ async def time_spent_member(ctx, time_sums, member: discord.Member):
             'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
         }
 
+        member_name = get_name(member.name)
         messages = {
-            'channel': f"{member.name} has spent {{time_spent}} in voice channels.",
-            'mute': f"{member.name} has spent {{time_spent}} muted.",
-            'deafen': f"{member.name} has spent {{time_spent}} deafened.",
-            'stream': f"{member.name} has spent {{time_spent}} streaming."
+            'channel': f"{member_name} has spent {{time_spent}} in voice channels.",
+            'mute': f"{member_name} has spent {{time_spent}} muted.",
+            'deafen': f"{member_name} has spent {{time_spent}} deafened.",
+            'stream': f"{member_name} has spent {{time_spent}} streaming."
         }
 
         if ctx.command and ctx.command.name == LIFETIME_COMMAND:
@@ -332,8 +333,9 @@ async def time_spent_all_members(ctx, time_sums, time_type: str = ''):
             member_id = key.replace(suffix, '')
             member = ctx.guild.get_member(int(member_id))
             if member:
+                member_name = get_name(member.name)
                 formatted_time = format_time_spent(time_spent)
-                message = f"{member.name}: {formatted_time}"
+                message = f"{member_name}: {formatted_time}"
                 total_size = sum(len(line) for line in message_lines) + len(message) + len(message_lines)
                 if (total_size < MAX_MESSAGE_SIZE):
                     message_lines.append(message)
@@ -431,7 +433,7 @@ async def appoint_chancellor(ctx, member_id):
             await remove_role_for_all(ctx, chancellor)
             await member.add_roles(chancellor)
             current_chancellor_id = member.id
-            await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {member.name} !')
+            await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {get_name(member.name)} !')
     else:
         await ctx.send('No Chancellor found.')
 
@@ -476,6 +478,10 @@ def reset_active_timestamps(guild):
         if key in timestamps:
             pop_timestamp_and_calculate(key)
             timestamps[key] = datetime.now()
+
+def get_name(member):
+    escaped_name = member.name.replace("_", "\\_") # If player name contains _ then need to add backslash so Discord doesn't make it italic
+    return f"{escaped_name}"
 
 def clear_this_week_time_sums():
     global this_week_time_sums
