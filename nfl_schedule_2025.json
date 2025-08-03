@@ -1,0 +1,2349 @@
+{
+    "season": 2025,
+    "first_week_date": "2025-08-31",
+    "last_game_date": "2026-01-04",
+    "weeks": [
+    {
+      "nfl_week": 1,
+      "calendar_week": 36,
+      "byes": [],
+      "games": [
+            {
+            "date": "2025-09-04",
+            "time_est": "8:20 PM",
+            "day": "Thursday",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Philadelphia Eagles",
+            "network": "NBC"
+            },
+            {
+            "date": "2025-09-05",
+            "time_est": "8:00 PM",
+            "day": "Friday",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Los Angeles Chargers (Sao Paulo, Brazil)",
+            "network": "YouTube"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Atlanta Falcons",
+            "network": "FOX"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Cleveland Browns",
+            "network": "FOX"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Miami Dolphins",
+            "home_team": "Indianapolis Colts",
+            "network": "CBS"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Carolina Panthers",
+            "home_team": "Jacksonville Jaguars",
+            "network": "FOX"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "New England Patriots",
+            "network": "CBS"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Arizona Cardinals",
+            "home_team": "New Orleans Saints",
+            "network": "CBS"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "New York Jets",
+            "network": "CBS"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "1:00 PM",
+            "day": "Sunday",
+            "away_team": "New York Giants",
+            "home_team": "Washington Commanders",
+            "network": "FOX"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "4:05 PM",
+            "day": "Sunday",
+            "away_team": "Tennessee Titans",
+            "home_team": "Denver Broncos",
+            "network": "FOX"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "4:05 PM",
+            "day": "Sunday",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Seattle Seahawks",
+            "network": "FOX"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "4:25 PM",
+            "day": "Sunday",
+            "away_team": "Detroit Lions",
+            "home_team": "Green Bay Packers",
+            "network": "CBS"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "4:25 PM",
+            "day": "Sunday",
+            "away_team": "Houston Texans",
+            "home_team": "Los Angeles Rams",
+            "network": "CBS"
+            },
+            {
+            "date": "2025-09-07",
+            "time_est": "8:20 PM",
+            "day": "Sunday",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Buffalo Bills",
+            "network": "NBC"
+            },
+            {
+            "date": "2025-09-08",
+            "time_est": "8:15 PM",
+            "day": "Monday",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Chicago Bears",
+            "network": "ABC/ESPN"
+            }
+      ]
+    },
+    {
+        "nfl_week": 2,
+        "calendar_week": 37,
+        "byes": [],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-09-11",
+            "home_team": "Green Bay Packers",
+            "away_team": "Washington Commanders",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Baltimore Ravens",
+            "away_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Cincinnati Bengals",
+            "away_team": "Jacksonville Jaguars",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Dallas Cowboys",
+            "away_team": "New York Giants",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Detroit Lions",
+            "away_team": "Chicago Bears",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Miami Dolphins",
+            "away_team": "New England Patriots",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "New Orleans Saints",
+            "away_team": "San Francisco 49ers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "New York Jets",
+            "away_team": "Buffalo Bills",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Pittsburgh Steelers",
+            "away_team": "Seattle Seahawks",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Tennessee Titans",
+            "away_team": "Los Angeles Rams",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Arizona Cardinals",
+            "away_team": "Carolina Panthers",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Indianapolis Colts",
+            "away_team": "Denver Broncos",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Kansas City Chiefs",
+            "away_team": "Philadelphia Eagles",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-14",
+            "home_team": "Minnesota Vikings",
+            "away_team": "Atlanta Falcons",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-09-15",
+            "home_team": "Houston Texans",
+            "away_team": "Tampa Bay Buccaneers",
+            "time_est": "7:00 PM",
+            "network": "ABC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-09-15",
+            "home_team": "Las Vegas Raiders",
+            "away_team": "Los Angeles Chargers",
+            "time_est": "10:00 PM",
+            "network": "ESPN"
+            }
+        ]
+    },
+    {
+        "nfl_week": 3,
+        "calendar_week": 38,
+        "byes": [],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-09-18",
+            "away_team": "Miami Dolphins",
+            "home_team": "Buffalo Bills",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Atlanta Falcons",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Green Bay Packers",
+            "home_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Houston Texans",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Minnesota Vikings",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "New England Patriots",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "New York Jets",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Washington Commanders",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Denver Broncos",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "New Orleans Saints",
+            "home_team": "Seattle Seahawks",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Chicago Bears",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Arizona Cardinals",
+            "home_team": "San Francisco 49ers",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-21",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "New York Giants",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-09-22",
+            "away_team": "Detroit Lions",
+            "home_team": "Baltimore Ravens",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 4,
+        "calendar_week": 39,
+        "byes": [],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-09-25",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Arizona Cardinals",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Pittsburgh Steelers (Dublin, Ireland)",
+            "time_est": "9:30 AM",
+            "network": "NFLN"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Washington Commanders",
+            "home_team": "Atlanta Falcons",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "New Orleans Saints",
+            "home_team": "Buffalo Bills",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Cleveland Browns",
+            "home_team": "Detroit Lions",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Tennessee Titans",
+            "home_team": "Houston Texans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Carolina Panthers",
+            "home_team": "New England Patriots",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "New York Giants",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Los Angeles Rams",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "San Francisco 49ers",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Chicago Bears",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-09-28",
+            "away_team": "Green Bay Packers",
+            "home_team": "Dallas Cowboys",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-09-29",
+            "away_team": "New York Jets",
+            "home_team": "Miami Dolphins",
+            "time_est": "7:15 PM",
+            "network": "ESPN"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-09-29",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Denver Broncos",
+            "time_est": "8:15 PM",
+            "network": "ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 5,
+        "calendar_week": 40,
+        "byes": [
+            "Atlanta Falcons",
+            "Chicago Bears",
+            "Green Bay Packers",
+            "Pittsburgh Steelers"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-10-02",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Los Angeles Rams",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Cleveland Browns (Tottenham, London)",
+            "time_est": "9:30 AM",
+            "network": "NFLN"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Houston Texans",
+            "home_team": "Baltimore Ravens",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Miami Dolphins",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Indianapolis Colts",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "New York Giants",
+            "home_team": "New Orleans Saints",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Dallas Cowboys",
+            "home_team": "New York Jets",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Denver Broncos",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Tennessee Titans",
+            "home_team": "Arizona Cardinals",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Seattle Seahawks",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Detroit Lions",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "Washington Commanders",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-05",
+            "away_team": "New England Patriots",
+            "home_team": "Buffalo Bills",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-10-06",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 6,
+        "calendar_week": 41,
+        "byes": [
+            "Houston Texans",
+            "Minnesota Vikings"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-10-09",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "New York Giants",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Denver Broncos",
+            "home_team": "New York Jets",
+            "time_est": "9:30 AM",
+            "network": "NFLN"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Baltimore Ravens",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Indianapolis Colts",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "Miami Dolphins",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Cleveland Browns",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Tennessee Titans",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Green Bay Packers",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "New England Patriots",
+            "home_team": "New Orleans Saints",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-12",
+            "away_team": "Detroit Lions",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-10-13",
+            "away_team": "Buffalo Bills",
+            "home_team": "Atlanta Falcons",
+            "time_est": "7:15 PM",
+            "network": "ESPN"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-10-13",
+            "away_team": "Chicago Bears",
+            "home_team": "Washington Commanders",
+            "time_est": "8:15 PM",
+            "network": "ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 7,
+        "calendar_week": 42,
+        "byes": [
+            "Baltimore Ravens",
+            "Buffalo Bills"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-10-16",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Jacksonville Jaguars (Wembley, London)",
+            "time_est": "9:30 AM",
+            "network": "NFLN"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "New Orleans Saints",
+            "home_team": "Chicago Bears",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Miami Dolphins",
+            "home_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Minnesota Vikings",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Carolina Panthers",
+            "home_team": "New York Jets",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "New England Patriots",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "New York Giants",
+            "home_team": "Denver Broncos",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Green Bay Packers",
+            "home_team": "Arizona Cardinals",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Washington Commanders",
+            "home_team": "Dallas Cowboys",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-19",
+            "away_team": "Atlanta Falcons",
+            "home_team": "San Francisco 49ers",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-10-20",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Detroit Lions",
+            "time_est": "7:00 PM",
+            "network": "ESPN/ABC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-10-20",
+            "away_team": "Houston Texans",
+            "home_team": "Seattle Seahawks",
+            "time_est": "10:00 PM",
+            "network": "ESPN+"
+            }
+        ]
+    },
+    {
+        "nfl_week": 8,
+        "calendar_week": 43,
+        "byes": [
+            "Arizona Cardinals",
+            "Detroit Lions",
+            "Jacksonville Jaguars",
+            "L.A. Rams",
+            "Las Vegas Raiders",
+            "Seattle Seahawks"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-10-23",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Miami Dolphins",
+            "home_team": "Atlanta Falcons",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Chicago Bears",
+            "home_team": "Baltimore Ravens",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Buffalo Bills",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "New York Jets",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Houston Texans",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Cleveland Browns",
+            "home_team": "New England Patriots",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "New York Giants",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "New Orleans Saints",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Denver Broncos",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Tennessee Titans",
+            "home_team": "Indianapolis Colts",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-10-26",
+            "away_team": "Green Bay Packers",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-10-27",
+            "away_team": "Washington Commanders",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 9,
+        "calendar_week": 44,
+        "byes": [
+            "Cleveland Browns",
+            "New York Jets",
+            "Philadelphia Eagles",
+            "Tampa Bay Buccaneers"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-10-30",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Miami Dolphins",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Chicago Bears",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Detroit Lions",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Carolina Panthers",
+            "home_team": "Green Bay Packers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Denver Broncos",
+            "home_team": "Houston Texans",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Atlanta Falcons",
+            "home_team": "New England Patriots",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "San Francisco 49ers",
+            "home_team": "New York Giants",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "New Orleans Saints",
+            "home_team": "Los Angeles Rams",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Buffalo Bills",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-02",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Washington Commanders",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-11-03",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Dallas Cowboys",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 10,
+        "calendar_week": 45,
+        "byes": [
+            "Cincinnati Bengals",
+            "Dallas Cowboys",
+            "Kansas City Chiefs",
+            "Tennessee Titans"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-11-06",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Denver Broncos",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Atlanta Falcons",
+            "home_team": "Indianapolis Colts (Berlin, Germany)",
+            "time_est": "9:30 AM",
+            "network": "NFLN"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "New Orleans Saints",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "New York Giants",
+            "home_team": "Chicago Bears",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "Houston Texans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Buffalo Bills",
+            "home_team": "Miami Dolphins",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Minnesota Vikings",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Cleveland Browns",
+            "home_team": "New York Jets",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "New England Patriots",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Seattle Seahawks",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Los Angeles Rams",
+            "home_team": "San Francisco 49ers",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Detroit Lions",
+            "home_team": "Washington Commanders",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-09",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-11-10",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Green Bay Packers",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 11,
+        "calendar_week": 46,
+        "byes": [
+            "Indianapolis Colts",
+            "New Orleans Saints"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-11-13",
+            "away_team": "New York Jets",
+            "home_team": "New England Patriots",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Miami Dolphins (Madrid, Spain)",
+            "home_team": "Washington Commanders",
+            "time_est": "9:30 AM",
+            "network": "NFLN"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Carolina Panthers",
+            "home_team": "Atlanta Falcons",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Buffalo Bills",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Chicago Bears",
+            "home_team": "Minnesota Vikings",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Green Bay Packers",
+            "home_team": "New York Giants",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Houston Texans",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Arizona Cardinals",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Los Angeles Rams",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Cleveland Browns",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Denver Broncos",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-16",
+            "away_team": "Detroit Lions",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-11-17",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 12,
+        "calendar_week": 47,
+        "byes": [
+            "Denver Broncos",
+            "Los Angeles Chargers",
+            "Miami Dolphins",
+            "Washington Commanders"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-11-20",
+            "away_team": "Buffalo Bills",
+            "home_team": "Houston Texans",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "New York Jets",
+            "home_team": "Baltimore Ravens",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "Chicago Bears",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "New England Patriots",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "New York Giants",
+            "home_team": "Detroit Lions",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Green Bay Packers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "Arizona Cardinals",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Cleveland Browns",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Dallas Cowboys",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Atlanta Falcons",
+            "home_team": "New Orleans Saints",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-23",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Los Angeles Rams",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-11-24",
+            "away_team": "Carolina Panthers",
+            "home_team": "San Francisco 49ers",
+            "time_est": "8:15 PM",
+            "network": "ESPN"
+            }
+        ]
+    },
+    {
+        "nfl_week": 13,
+        "calendar_week": 48,
+        "byes": [],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-11-27",
+            "away_team": "Green Bay Packers",
+            "home_team": "Detroit Lions",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Thursday",
+            "date": "2025-11-27",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Dallas Cowboys",
+            "time_est": "4:30 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Thursday",
+            "date": "2025-11-27",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Baltimore Ravens",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Friday",
+            "date": "2025-11-28",
+            "away_team": "Chicago Bears",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "3:00 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Houston Texans",
+            "home_team": "Indianapolis Colts",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "New Orleans Saints",
+            "home_team": "Miami Dolphins",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Atlanta Falcons",
+            "home_team": "New York Jets",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Seattle Seahawks",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Buffalo Bills",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-11-30",
+            "away_team": "Denver Broncos",
+            "home_team": "Washington Commanders",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-12-01",
+            "away_team": "New York Giants",
+            "home_team": "New England Patriots",
+            "time_est": "8:15 PM",
+            "network": "ESPN"
+            }
+        ]
+    },
+    {
+        "nfl_week": 14,
+        "calendar_week": 49,
+        "byes": [
+            "Carolina Panthers",
+            "New England Patriots",
+            "New York Giants",
+            "San Francisco 49ers"
+        ],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-12-04",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Detroit Lions",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Atlanta Falcons",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "Baltimore Ravens",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Tennessee Titans",
+            "home_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Chicago Bears",
+            "home_team": "Green Bay Packers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Washington Commanders",
+            "home_team": "Minnesota Vikings",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Miami Dolphins",
+            "home_team": "New York Jets",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "New Orleans Saints",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Denver Broncos",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "4:05 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Arizona Cardinals",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Buffalo Bills",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-07",
+            "away_team": "Houston Texans",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-12-08",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 15,
+        "calendar_week": 50,
+        "byes": [],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-12-11",
+            "away_team": "Atlanta Falcons",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Cleveland Browns",
+            "home_team": "Chicago Bears",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Houston Texans",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "New York Jets",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Buffalo Bills",
+            "home_team": "New England Patriots",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Washington Commanders",
+            "home_team": "New York Giants",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Green Bay Packers",
+            "home_team": "Denver Broncos",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Detroit Lions",
+            "home_team": "Los Angeles Rams",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Carolina Panthers",
+            "home_team": "New Orleans Saints",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Seattle Seahawks",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Tennessee Titans",
+            "home_team": "San Francisco 49ers",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-14",
+            "away_team": "Minnesota Vikings",
+            "home_team": "Dallas Cowboys",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-12-15",
+            "away_team": "Miami Dolphins",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "8:15 PM",
+            "network": "ESPN/ABC"
+            }
+        ]
+    },
+    {
+        "nfl_week": 16,
+        "calendar_week": 51,
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-12-18",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Seattle Seahawks",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-20",
+            "away_team": "Green Bay Packers",
+            "home_team": "Chicago Bears",
+            "time_est": "TBD",
+            "network": "FOX"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-20",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Washington Commanders",
+            "time_est": "TBD",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "New England Patriots",
+            "home_team": "Baltimore Ravens",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Carolina Panthers",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Buffalo Bills",
+            "home_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "Dallas Cowboys",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "New York Jets",
+            "home_team": "New Orleans Saints",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Minnesota Vikings",
+            "home_team": "New York Giants",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Atlanta Falcons",
+            "home_team": "Arizona Cardinals",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "Denver Broncos",
+            "time_est": "4:05 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "Detroit Lions",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Las Vegas Raiders",
+            "home_team": "Houston Texans",
+            "time_est": "4:25 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-21",
+            "away_team": "Cincinnati Bengals",
+            "home_team": "Miami Dolphins",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-12-22",
+            "away_team": "San Francisco 49ers",
+            "home_team": "Indianapolis Colts",
+            "time_est": "8:15 PM",
+            "network": "ESPN"
+            }
+        ]
+    },
+    {
+        "nfl_week": 17,
+        "calendar_week": 52,
+        "byes": [],
+        "games": [
+            {
+            "day": "Thursday",
+            "date": "2025-12-25",
+            "away_team": "Dallas Cowboys",
+            "home_team": "Washington Commanders",
+            "time_est": "1:00 PM",
+            "network": "NETFLIX"
+            },
+            {
+            "day": "Thursday",
+            "date": "2025-12-25",
+            "away_team": "Detroit Lions",
+            "home_team": "Minnesota Vikings",
+            "time_est": "4:30 PM",
+            "network": "NETFLIX"
+            },
+            {
+            "day": "Thursday",
+            "date": "2025-12-25",
+            "away_team": "Denver Broncos",
+            "home_team": "Kansas City Chiefs",
+            "time_est": "8:15 PM",
+            "network": "Prime Video"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-27",
+            "away_team": "Seattle Seahawks",
+            "home_team": "Carolina Panthers",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-27",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-27",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Green Bay Packers",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-27",
+            "away_team": "Houston Texans",
+            "home_team": "Los Angeles Chargers",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday",
+            "date": "2025-12-27",
+            "away_team": "New York Giants",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "Pittsburgh Steelers",
+            "home_team": "Cleveland Browns",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "Jacksonville Jaguars",
+            "home_team": "Indianapolis Colts",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "Tampa Bay Buccaneers",
+            "home_team": "Miami Dolphins",
+            "time_est": "1:00 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "New England Patriots",
+            "home_team": "New York Jets",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "New Orleans Saints",
+            "home_team": "Tennessee Titans",
+            "time_est": "1:00 PM",
+            "network": "CBS"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "Philadelphia Eagles",
+            "home_team": "Buffalo Bills",
+            "time_est": "4:25 PM",
+            "network": "FOX"
+            },
+            {
+            "day": "Sunday",
+            "date": "2025-12-28",
+            "away_team": "Chicago Bears",
+            "home_team": "San Francisco 49ers",
+            "time_est": "8:20 PM",
+            "network": "NBC"
+            },
+            {
+            "day": "Monday",
+            "date": "2025-12-29",
+            "away_team": "Los Angeles Rams",
+            "home_team": "Atlanta Falcons",
+            "time_est": "8:15 PM",
+            "network": "ESPN"
+            }
+        ]
+    },
+    {
+        "nfl_week": 18,
+        "calendar_week": 1,
+        "byes": [],
+        "games": [
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "New Orleans Saints",
+            "home_team": "Atlanta Falcons",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "New York Jets",
+            "home_team": "Buffalo Bills",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Detroit Lions",
+            "home_team": "Chicago Bears",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Cleveland Browns",
+            "home_team": "Cincinnati Bengals",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Los Angeles Chargers",
+            "home_team": "Denver Broncos",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Indianapolis Colts",
+            "home_team": "Houston Texans",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Tennessee Titans",
+            "home_team": "Jacksonville Jaguars",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Arizona Cardinals",
+            "home_team": "Los Angeles Rams",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Kansas City Chiefs",
+            "home_team": "Las Vegas Raiders",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Green Bay Packers",
+            "home_team": "Minnesota Vikings",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Miami Dolphins",
+            "home_team": "New England Patriots",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Dallas Cowboys",
+            "home_team": "New York Giants",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Washington Commanders",
+            "home_team": "Philadelphia Eagles",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Baltimore Ravens",
+            "home_team": "Pittsburgh Steelers",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Seattle Seahawks",
+            "home_team": "San Francisco 49ers",
+            "time_est": "TBD",
+            "network": "TBD"
+            },
+            {
+            "day": "Saturday or Sunday",
+            "date": "2026-01-03/04",
+            "away_team": "Carolina Panthers",
+            "home_team": "Tampa Bay Buccaneers",
+            "time_est": "TBD",
+            "network": "TBD"
+            }
+        ]
+    }
+  ]
+}
