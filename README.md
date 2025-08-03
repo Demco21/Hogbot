@@ -22,7 +22,7 @@ create a file named `.env` and add the following keys:<br>
 2. `DISCORD_TOKEN_DEV=` value of your dev discord token<br>
 3. `DISCORD_TOKEN_PROD=` value of your prod discord token<br>
 4. `AFK_CHANNEL_ID=` ID value of your AFK channel so timers know to stop for this channel<br>
-5. `HOGBOT_CHANNEL_ID=` ID value of the channel you'd like for Hogbot to push automated messages to<br>
+5. `ANNOUNCEMENTS_CHANNEL_ID=` ID value of the channel you'd like for Hogbot to push automated messages to<br>
 5. `CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
 6. `HOGBOT_USER_ID=` ID of Hogbot itself
 7. `HOGBOT_SERVER_ID=` ID of the server
