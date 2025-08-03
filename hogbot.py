@@ -273,7 +273,7 @@ async def time_spent_member(ctx, time_sums, member: discord.Member):
             'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
         }
 
-        member_name = get_name(member.name)
+        member_name = get_name(member)
         messages = {
             'channel': f"{member_name} has spent {{time_spent}} in voice channels.",
             'mute': f"{member_name} has spent {{time_spent}} muted.",
@@ -333,7 +333,7 @@ async def time_spent_all_members(ctx, time_sums, time_type: str = ''):
             member_id = key.replace(suffix, '')
             member = ctx.guild.get_member(int(member_id))
             if member:
-                member_name = get_name(member.name)
+                member_name = get_name(member)
                 formatted_time = format_time_spent(time_spent)
                 message = f"{member_name}: {formatted_time}"
                 total_size = sum(len(line) for line in message_lines) + len(message) + len(message_lines)
@@ -433,7 +433,7 @@ async def appoint_chancellor(ctx, member_id):
             await remove_role_for_all(ctx, chancellor)
             await member.add_roles(chancellor)
             current_chancellor_id = member.id
-            await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {get_name(member.name)} !')
+            await ctx.send(f'ALL HAIL OUR NEW CHANCELLOR, {get_name(member)} !')
     else:
         await ctx.send('No Chancellor found.')
 
