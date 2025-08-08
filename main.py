@@ -6,6 +6,7 @@ from services.time_service import TimeService
 from services.channel_change_service import ChannelChangeService
 from services.nfl_service import NFLService
 from services.chancellor_service import ChancellorService
+from services.yahoo_ff_service import YahooFFService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -20,6 +21,7 @@ class HogBot(commands.Bot):
         self.nfl_service = NFLService(self.state, self)
         self.channel_change_service = ChannelChangeService(self.state, self)
         self.chancellor_service = ChancellorService(self.state, self)
+        self.yahoo_ff_service = YahooFFService(self.state, self)
 
     async def setup_hook(self):
         await self.load_extension("cogs.time_cog")
