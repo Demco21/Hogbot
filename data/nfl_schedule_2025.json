@@ -5,7 +5,7 @@
     "weeks": [
     {
       "nfl_week": 1,
-      "calendar_week": 36,
+      "calendar_week": 31,
       "byes": [],
       "games": [
             {
@@ -140,7 +140,7 @@
     },
     {
         "nfl_week": 2,
-        "calendar_week": 37,
+        "calendar_week": 32,
         "byes": [],
         "games": [
             {
