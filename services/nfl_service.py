@@ -76,6 +76,7 @@ NFL_TEAM_LOGOS = {
     "Los Angeles Rams": {"logo_name": "rams", "logo_id": RAMS_EMOJI_ID},
     "Arizona Cardinals": {"logo_name": "cardinals", "logo_id": CARDINALS_EMOJI_ID}
 }
+NFL_LOGO = "https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/National_Football_League_logo.svg/1200px-National_Football_League_logo.svg.png"
 
 class NFLService:
     def __init__(self, bot_state: BotState, bot):
@@ -121,15 +122,15 @@ class NFLService:
                 logger.warning("Channel not found")
                 return
 
-            # Send a top-level "NFL Week X Schedule" embed
+            # Top-level NFL Week schedule embed
             week_embed = discord.Embed(
-                title=f"🏈 NFL Week {nfl_week['nfl_week']} Schedule",
+                title=f"🏈 Week {nfl_week['nfl_week']} Games",
                 color=discord.Color.gold()
             )
-            week_embed.set_thumbnail(url="https://upload.wikimedia.org/wikipedia/en/a/a2/National_Football_League_logo.svg")
+            week_embed.set_thumbnail(url=NFL_LOGO)
             await channel.send(embed=week_embed)
 
-            # Sort by date and send one embed per date
+            # One embed per date
             for date in sorted(games_by_date.keys()):
                 dt = datetime.strptime(date, "%Y-%m-%d")
                 date_header = dt.strftime("%A, %B %d")
@@ -143,14 +144,12 @@ class NFLService:
                     away_emoji = f"<:{NFL_TEAM_LOGOS[game['away_team']]['logo_name']}:{NFL_TEAM_LOGOS[game['away_team']]['logo_id']}>"
                     home_emoji = f"<:{NFL_TEAM_LOGOS[game['home_team']]['logo_name']}:{NFL_TEAM_LOGOS[game['home_team']]['logo_id']}>"
 
-                    # Build the base game line
                     game_line = (
                         f"{away_emoji} **{game['away_team']}** at "
                         f"{home_emoji} **{game['home_team']}**\n"
                         f"🕒 {game['time_est']} | 📺 {game['network']}"
                     )
 
-                    # Add special location if available
                     special_location = game.get("special_location")
                     if special_location:
                         game_line += f"\n📍 {special_location}"
@@ -159,7 +158,7 @@ class NFLService:
 
                 await channel.send(embed=date_embed)
 
-            # Add byes, if any
+            # Byes
             if nfl_week.get("byes"):
                 bye_embed = discord.Embed(
                     title="🛑 Teams on Bye",
@@ -174,5 +173,6 @@ class NFLService:
 
         except Exception as e:
             logger.error(f"Failed to post NFL schedule: {e}")
+
 
 __all__ = ['NFLService']
