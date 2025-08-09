@@ -5,7 +5,7 @@
     "weeks": [
     {
       "nfl_week": 1,
-      "calendar_week": 31,
+      "calendar_week": 36,
       "byes": [],
       "games": [
             {
@@ -21,8 +21,9 @@
             "time_est": "8:00 PM",
             "day": "Friday",
             "away_team": "Kansas City Chiefs",
-            "home_team": "Los Angeles Chargers (Sao Paulo, Brazil)",
-            "network": "YouTube"
+            "home_team": "Los Angeles Chargers",
+            "network": "YouTube",
+            "special_location": "Sao Paulo, Brazil"
             },
             {
             "date": "2025-09-07",
@@ -140,7 +141,7 @@
     },
     {
         "nfl_week": 2,
-        "calendar_week": 32,
+        "calendar_week": 37,
         "byes": [],
         "games": [
             {
@@ -425,9 +426,10 @@
             "day": "Sunday",
             "date": "2025-09-28",
             "away_team": "Minnesota Vikings",
-            "home_team": "Pittsburgh Steelers (Dublin, Ireland)",
+            "home_team": "Pittsburgh Steelers",
             "time_est": "9:30 AM",
-            "network": "NFLN"
+            "network": "NFLN",
+            "special_location": "Dublin, Ireland"
             },
             {
             "day": "Sunday",
@@ -565,9 +567,10 @@
             "day": "Sunday",
             "date": "2025-10-05",
             "away_team": "Minnesota Vikings",
-            "home_team": "Cleveland Browns (Tottenham, London)",
+            "home_team": "Cleveland Browns",
             "time_est": "9:30 AM",
-            "network": "NFLN"
+            "network": "NFLN",
+            "special_location": "Tottenham, London"
             },
             {
             "day": "Sunday",
@@ -817,9 +820,10 @@
             "day": "Sunday",
             "date": "2025-10-19",
             "away_team": "Los Angeles Rams",
-            "home_team": "Jacksonville Jaguars (Wembley, London)",
+            "home_team": "Jacksonville Jaguars",
             "time_est": "9:30 AM",
-            "network": "NFLN"
+            "network": "NFLN",
+            "special_location": "Wembley, London"
             },
             {
             "day": "Sunday",
@@ -1191,9 +1195,10 @@
             "day": "Sunday",
             "date": "2025-11-09",
             "away_team": "Atlanta Falcons",
-            "home_team": "Indianapolis Colts (Berlin, Germany)",
+            "home_team": "Indianapolis Colts",
             "time_est": "9:30 AM",
-            "network": "NFLN"
+            "network": "NFLN",
+            "special_location": "Berlin, Germany"
             },
             {
             "day": "Sunday",
@@ -1312,10 +1317,11 @@
             {
             "day": "Sunday",
             "date": "2025-11-16",
-            "away_team": "Miami Dolphins (Madrid, Spain)",
+            "away_team": "Miami Dolphins",
             "home_team": "Washington Commanders",
             "time_est": "9:30 AM",
-            "network": "NFLN"
+            "network": "NFLN",
+            "special_location": "Madrid, Spain"
             },
             {
             "day": "Sunday",
