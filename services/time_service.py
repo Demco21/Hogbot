@@ -163,6 +163,9 @@ class TimeService:
                     member: string_to_timedelta(time_spent)
                     for member, time_spent in data.get("this_week_time_sums", {}).items()
                 }
+
+                self.state.scoreboard_msg = data.get("scoreboard_msg", {})
+                
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
                 self.state.hogbot_start_date = datetime.today().strftime("%m/%d/%Y")
@@ -262,7 +265,8 @@ class TimeService:
                 "lifetime_sums": {member: timedelta_to_string(time_spent) for member, time_spent in self.state.lifetime_sums.items()},
                 "this_week_time_sums": {member: timedelta_to_string(time_spent) for member, time_spent in self.state.this_week_time_sums.items()},
                 "hogbot_start_date": self.state.hogbot_start_date,
-                "current_chancellor_id": self.state.current_chancellor_id
+                "current_chancellor_id": self.state.current_chancellor_id,
+                "scoreboard_msg": self.state.scoreboard_msg
             }
 
             with open(TIME_DATA_FILE, "w") as file:

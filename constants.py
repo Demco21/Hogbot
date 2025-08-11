@@ -24,6 +24,8 @@ DAY_OVERRIDES = {
 }
 TIME_DATA_FILE = "data/time_data.json"
 NFL_SCHEDULE_FILE = "data/nfl_schedule_2025.json"
+WINNER_PHRASES_FILE = "data/winner_phrases.json"
+YAHOO_TOKEN_FILE = "data/yahoo_token.json"
 
 # Commands
 THISWEEK_COMMAND = 'thisweek'

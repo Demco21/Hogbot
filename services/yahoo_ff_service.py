@@ -11,18 +11,22 @@ import time
 from pytz import timezone
 import json
 import os
+import random
 from config import (
     YAHOO_CLIENT_ID, 
     YAHOO_CLIENT_SECRET, 
     YAHOO_LEAGUE_KEY,
     ANNOUNCEMENTS_CHANNEL_ID
 )
-from constants import NFL_SCHEDULE_FILE
+from constants import (
+    NFL_SCHEDULE_FILE,
+    YAHOO_TOKEN_FILE,
+    WINNER_PHRASES_FILE
+)
 
 REDIRECT_URI = "https://localhost"
 AUTH_URL = "https://api.login.yahoo.com/oauth2/request_auth"
 TOKEN_URL = "https://api.login.yahoo.com/oauth2/get_token"
-TOKEN_FILE = "data/yahoo_token.json"
 
 class YahooFFService:
     def __init__(self, bot_state: BotState, bot):
@@ -30,8 +34,8 @@ class YahooFFService:
         self.bot = bot
 
         # Load saved token if exists
-        if os.path.exists(TOKEN_FILE):
-            with open(TOKEN_FILE, "r") as f:
+        if os.path.exists(YAHOO_TOKEN_FILE):
+            with open(YAHOO_TOKEN_FILE, "r") as f:
                 self.state.yahoo_token = json.load(f)
 
     async def fantasy_auth(self, ctx):
@@ -59,12 +63,12 @@ class YahooFFService:
             token["expires_at"] = time.time() + int(token.get("expires_in", 0))
 
             # Save token to file
-            with open(TOKEN_FILE, "w") as f:
+            with open(YAHOO_TOKEN_FILE, "w") as f:
                 json.dump(token, f)
 
             self.state.yahoo_token = token
 
-            logger.info(f"Yahoo OAuth token saved to {TOKEN_FILE}")
+            logger.info(f"Yahoo OAuth token saved to {YAHOO_TOKEN_FILE}")
             await ctx.send("✅ Authorized successfully! Token saved for future use.")
         except Exception as e:
             logger.error(f"Error during Yahoo OAuth: {e}")
@@ -91,7 +95,7 @@ class YahooFFService:
                     new_token["refresh_token"] = refresh_token  # Yahoo often doesn't return it again
                     new_token["expires_at"] = time.time() + int(new_token["expires_in"])
                     self.state.yahoo_token = new_token
-                    with open(TOKEN_FILE, "w") as f:
+                    with open(YAHOO_TOKEN_FILE, "w") as f:
                         json.dump(new_token, f)
 
     async def get_matchups(self, ctx=None, week: Optional[int] = None):
@@ -341,10 +345,19 @@ class YahooFFService:
 
                 embed.add_field(name=f"", value=line, inline=False)
 
+            def need_to_announce_winner() -> bool:
+                if "postevent" in overall_statuses and len(overall_statuses) == 1:
+                    if self.state.scoreboard_msg.get("winner_announced") is not True:
+                        self.state.scoreboard_msg["winner_announced"] = True
+                        return True
+                return False
+            
             if self.state.scoreboard_msg:
                 if self.state.scoreboard_msg.get("week") == week:
                     logger.info(f"Updating existing scoreboard embed for week {week}")
                     await self.update_scoreboard_embed(embed)
+                    if need_to_announce_winner():
+                        await self.announce_winner(matchups, channel)
                     return
 
             msg = await channel.send(embed=embed)
@@ -352,7 +365,8 @@ class YahooFFService:
             self.state.scoreboard_msg = {
                 "channel_id": channel.id,
                 "message_id": msg.id,
-                "week": week
+                "week": week,
+                "winner_announced": False
             }
 
         except Exception as e:
@@ -377,12 +391,50 @@ class YahooFFService:
 
         await msg.edit(embed=new_embed)
 
+    async def announce_winner(self, matchups, channel):
+
+        def get_random_winner_phrase(file_path: str = WINNER_PHRASES_FILE) -> str:
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"Winner phrases file not found: {file_path}")
+
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            phrases = data.get("phrases")
+            if not phrases or not isinstance(phrases, list):
+                raise ValueError(f"No valid 'phrases' list found in {file_path}")
+
+            return random.choice(phrases)
+        
+        if not matchups:
+            logger.error("No matchups to announce winners for.")
+            return
+
+        for i, m in enumerate(matchups, 1):
+            embed = discord.Embed(color=discord.Color.green())
+
+            if abs(m["t1_pts"] - m["t2_pts"]) < 1e-9:
+                if m["t1_logo"]:
+                    embed.set_thumbnail(url=m["t1_logo"])
+                embed.description = "### 🏆 " + get_random_winner_phrase() % ("**"+m["t1_name"]+"**", "**"+m["t2_name"]+"**")
+            elif m["t1_pts"] > m["t2_pts"]:
+                if m["t1_logo"]:
+                    embed.set_thumbnail(url=m["t1_logo"])
+                embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t1_name"], m["t2_name"])
+            else:
+                if m["t2_logo"]:
+                    embed.set_thumbnail(url=m["t2_logo"])
+                embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t2_name"], m["t1_name"])
+            
+            await channel.send(embed=embed)
+    
     async def test_api(self, ctx = None):
         try:
             await self.ensure_token()
             access_token = self.state.yahoo_token["access_token"]
             # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/scoreboard;week=1"
-            url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/standings?format=json"
+            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/standings?format=json"
+            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys=461.l.550581.t.1,461.l.550581.t.2/roster;week=1/players;stats?format=json"
             headers = {
                 "Authorization": f"Bearer {access_token}",
                 "Accept": "application/json"
