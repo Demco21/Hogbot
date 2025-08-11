@@ -1,7 +1,7 @@
 import discord
 from logging_config import logger
 from pytz import timezone
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 from collections import defaultdict
 from bot_state import BotState
@@ -96,20 +96,23 @@ class NFLService:
                 logger.error(f"Failed to load NFL schedule JSON: {e}")
                 return
 
-            first_week_date = datetime.strptime(schedule.get("first_week_date"), "%Y-%m-%d").date()
+            first_game_date = datetime.strptime(schedule.get("first_game_date"), "%Y-%m-%d").date()
             last_game_date = datetime.strptime(schedule.get("last_game_date"), "%Y-%m-%d").date()
             today = now.date()
 
             # Skip if outside regular season
-            if not (first_week_date <= today <= last_game_date):
-                logger.info(f"Today {today} is outside the regular season ({first_week_date} to {last_game_date}). Skipping.")
+            if not ((first_game_date - timedelta(days=3)) <= today <= last_game_date):
+                logger.info(f"Today {today} is outside the regular season ({first_game_date} to {last_game_date}). Skipping.")
                 return
 
-            current_cal_week = now.isocalendar().week
-            nfl_week = next((week for week in schedule["weeks"] if week["calendar_week"] == current_cal_week), None)
+            current_nfl_week_num = self.get_current_nfl_week_num(schedule)
+            if current_nfl_week_num is None:
+                return
+            
+            nfl_week = next((week for week in schedule["weeks"] if week["nfl_week"] == current_nfl_week_num), None)
 
             if not nfl_week:
-                logger.info("No NFL games scheduled for this calendar week.")
+                logger.info(f"No NFL week found for NFL week {current_nfl_week_num}")
                 return
 
             # Group games by date
@@ -174,5 +177,44 @@ class NFLService:
         except Exception as e:
             logger.error(f"Failed to post NFL schedule: {e}")
 
+    def get_current_nfl_week_num(self, schedule) -> int | None:
+        """
+        Reads the NFL schedule JSON file and returns the nfl_week value for the first week
+        where:
+            - week["year"] == current year
+            - current ISO calendar week <= week["calendar_week"]
+        Returns None if no matching week is found or season has ended.
+        """
+        eastern = timezone("America/New_York")
+        now = datetime.now(eastern)
+        today = now.date()
+
+        last_game_date = datetime.strptime(schedule["last_game_date"], "%Y-%m-%d").date()
+        # Skip if season has ended
+        if today > last_game_date:
+            return None
+
+        weekday = now.weekday()
+        if weekday == 0:  # Monday
+            effective_dt = now - timedelta(days=1)
+        elif weekday == 1 and now.hour < 5:  # Tuesday before 5 AM
+            effective_dt = now - timedelta(days=2)
+        else:
+            effective_dt = now
+
+
+        eff_iso = effective_dt.isocalendar()  # returns (iso_year, iso_week, iso_weekday)
+        effective_year = eff_iso[0]
+        effective_week = eff_iso[1]
+
+        current_year = today.year
+        current_cal_week = today.isocalendar().week
+
+        for week in schedule.get("weeks", []):
+            if week["year"] == effective_year and effective_week <= week["calendar_week"]:
+                return week["nfl_week"]
+
+        logger.info(f"No NFL week found for year {effective_year} and week {effective_week}")
+        return None
 
 __all__ = ['NFLService']

@@ -535,73 +535,6 @@ async def decide_chancellor():
     except Exception as e:
         logger.error(f"Error in end_week: {e}")
 
-async def post_nfl_schedule():
-    try:
-        logger.info(f"Posting NFL schedule")
-        eastern = timezone('America/New_York')
-        now = datetime.now(eastern)
-
-        try:
-            with open("nfl_schedule_2025.json", "r", encoding="utf-8") as f:
-                schedule = json.load(f)
-        except Exception as e:
-            logger.error(f"Failed to load NFL schedule JSON: {e}")
-            return
-
-        first_week_date = datetime.strptime(schedule.get("first_week_date"), "%Y-%m-%d").date()
-        last_game_date = datetime.strptime(schedule.get("last_game_date"), "%Y-%m-%d").date()
-        today = now.date()
-
-        # Check if today is within the season's range
-        if not (first_week_date <= today <= last_game_date):
-            logger.info(f"Today {today} is outside the regular season ({first_week_date} to {last_game_date}). Skipping.")
-            return
-
-        current_cal_week = now.isocalendar().week
-        nfl_week = next((week for week in schedule["weeks"] if week["calendar_week"] == current_cal_week), None)
-
-        if not nfl_week:
-            logger.info("No NFL games scheduled for this calendar week.")
-            return
-
-        # Group games by date
-        games_by_date = defaultdict(list)
-        for game in nfl_week["games"]:
-            games_by_date[game["date"]].append(game)
-
-        msg_lines = [f"**NFL Week {nfl_week['nfl_week']} Schedule:**\n"]
-
-        # Sort the dates
-        for date in sorted(games_by_date.keys()):
-            dt = datetime.strptime(date, "%Y-%m-%d")
-            date_header = dt.strftime("%A, %B %d")  # e.g., "Sunday, September 07"
-            msg_lines.append(f"**{date_header}**")
-
-            for game in games_by_date[date]:
-                line = f"{game['away_team']} at {game['home_team']} at {game['time_est']} on {game['network']}"
-                msg_lines.append(line)
-
-            msg_lines.append("")  # Empty line between date blocks
-
-        # Add byes, if any
-        if nfl_week.get("byes"):
-            byes = ", ".join(nfl_week["byes"])
-            msg_lines.append(f"**Teams on Bye:** {byes}")
-
-        message = "\n".join(msg_lines)
-
-        channel = bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
-
-        if not channel:
-            logger.warning('Channel not found')
-            return
-        
-        logger.info('Channel found')
-        await channel.send(message)
-    except Exception as e:
-        logger.error(f"Failed to post NFL schedule: {e}")
-        return
-
 async def end_week():
     logger.info(f'Scheduler end_week kicked off at {datetime.now()}')
     await decide_chancellor()
@@ -613,10 +546,6 @@ async def end_day():
 async def persistence_sync():
     logger.info(f"Scheduler persistence_sync kicked of at {datetime.now()}")
     await dump_data()
-
-async def every_tuesday():
-    logger.info(f"Scheduler every_tuesday kicked of at {datetime.now()}")
-    await post_nfl_schedule()
 
 #set up scheduler
 scheduler = AsyncIOScheduler()

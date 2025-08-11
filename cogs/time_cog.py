@@ -4,6 +4,7 @@ from constants import (
     THISWEEK_COMMAND,
     DUMP_COMMAND
 )
+from config import ADMIN_USER_ID
 import discord
 from discord.ext import commands
 from logging_config import logger
@@ -48,6 +49,8 @@ class TimeCog(commands.Cog):
 
     @commands.command(name=DUMP_COMMAND)
     async def dump_data_command(self, ctx):
+        if ctx.author.id != ADMIN_USER_ID:
+            return
         await self.bot.time_service.dump_data(ctx)
 
 async def setup(bot):
