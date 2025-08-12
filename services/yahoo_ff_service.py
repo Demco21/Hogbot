@@ -113,7 +113,7 @@ class YahooFFService:
             access_token = self.state.yahoo_token["access_token"]
 
             # ---------------------------------------------------------
-            # Resolve week (use given, else your schedule file)
+            # Resolve week using local nfl schedule
             # ---------------------------------------------------------
             def _resolve_week_from_schedule() -> Optional[int]:
                 try:
@@ -128,9 +128,7 @@ class YahooFFService:
             if week is None:
                 week = _resolve_week_from_schedule()
                 if week is None:
-                    # Fallback: ask Yahoo for current_week with week=1 call then read league meta
-                    # (We keep it simple—if schedule can't resolve, default to 1)
-                    week = 1
+                    return
 
             logger.info(f"Fetching matchups for week {week}")
             
@@ -454,10 +452,28 @@ class YahooFFService:
         except Exception as e:
             logger.error(f"Error fetching matchups: {e}")
 
-    async def post_standings_embeds(self, ctx=None):
+    async def post_standings_embeds(self, ctx=None, week=None):
         await self.ensure_token()
         access_token = self.state.yahoo_token["access_token"]
 
+        # ---------------------------------------------------------
+        # Resolve week using local nfl schedule
+        # ---------------------------------------------------------
+        def _resolve_week_from_schedule() -> Optional[int]:
+            try:
+                with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
+                    schedule = json.load(f)
+                # your existing helper on the bot:
+                return self.bot.nfl_service.get_current_nfl_week_num(schedule)
+            except Exception as e:
+                logger.info(f"Could not resolve week from schedule: {e}")
+                return None
+
+        if week is None:
+            week = _resolve_week_from_schedule()
+            if week is None:
+                return
+        
         url = (
             f"https://fantasysports.yahooapis.com/fantasy/v2/"
             f"league/{YAHOO_LEAGUE_KEY}/standings?format=json"
@@ -474,7 +490,7 @@ class YahooFFService:
                     body = await resp.text()
                     raise RuntimeError(f"Standings call failed ({resp.status}): {body}")
                 data = await resp.json()
-
+        
         teams, league_name, league_logo_url, current_week = await self.parse_standings_json(data)
 
         if not teams:
@@ -482,7 +498,7 @@ class YahooFFService:
             return
 
         team_keys = ",".join(t["team_key"] for t in teams if "team_key" in t)
-        url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys={team_keys}/roster;week={current_week}/players;stats?format=json"
+        url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys={team_keys}/roster;week={week}/players;stats?format=json"
         async with aiohttp.ClientSession() as session:
             async with session.get(url, headers=headers) as resp:
                 if resp.status != 200:
@@ -503,18 +519,18 @@ class YahooFFService:
         
         roster_messages = self.state.roster_messages or {}
 
-        if not roster_messages.get('current_week'):
-            roster_messages['current_week'] = None
+        if not roster_messages.get('week'):
+            roster_messages['week'] = None
 
-        if roster_messages['current_week'] != current_week: 
+        if roster_messages['week'] != week: 
             embed = discord.Embed(
                 title=f"{league_name} Standings",
-                description=f"Heading into week {current_week}",
+                description=f"### Heading into week {week}",
                 color=discord.Color.red()
             )
             embed.set_thumbnail(url=league_logo_url)
             await channel.send(embed=embed)
-            roster_messages['current_week'] = current_week
+            roster_messages['week'] = week
 
         for t in teams:
             record = f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t["ties"] else "")
@@ -545,8 +561,8 @@ class YahooFFService:
                     )
             if roster_messages.get(team_key):
                 info = roster_messages[team_key]
-                if info.get("week") == current_week:
-                    logger.info(f"Updating existing roster embed for team {t['name']} week {current_week}")
+                if info.get("week") == week:
+                    logger.info(f"Updating existing roster embed for team {t['name']} week {week}")
                     updated = await self.update_embed(embed, info)
                     if updated:
                         continue
@@ -555,7 +571,7 @@ class YahooFFService:
             roster_messages[team_key] = {
                 "channel_id": channel.id,
                 "message_id": msg.id,
-                "week": current_week,
+                "week": week
             }
 
         self.state.roster_messages = roster_messages
