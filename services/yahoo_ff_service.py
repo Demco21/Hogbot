@@ -355,10 +355,11 @@ class YahooFFService:
             if self.state.scoreboard_msg:
                 if self.state.scoreboard_msg.get("week") == week:
                     logger.info(f"Updating existing scoreboard embed for week {week}")
-                    await self.update_scoreboard_embed(embed)
+                    updated = await self.update_embed(embed, self.state.scoreboard_msg)
                     if need_to_announce_winner():
                         await self.announce_winner(matchups, channel)
-                    return
+                    if updated:
+                        return
 
             msg = await channel.send(embed=embed)
 
@@ -374,22 +375,26 @@ class YahooFFService:
             if ctx:
                 await ctx.send(f"⚠️ Could not fetch matchups: {e}")
 
-    async def update_scoreboard_embed(self, new_embed):
-        info = self.state.scoreboard_msg
-        if not info:
-            return
+    async def update_embed(self, new_embed, info):
+        try:
+            if not info:
+                return
 
-        channel = self.bot.get_channel(info["channel_id"]) or await self.bot.fetch_channel(info["channel_id"])
-        msg = await channel.fetch_message(info["message_id"])
+            channel = self.bot.get_channel(info["channel_id"]) or await self.bot.fetch_channel(info["channel_id"])
+            msg = await channel.fetch_message(info["message_id"])
 
-        # Always use UTC for Discord timestamp
-        new_embed.timestamp = datetime.now(dt_timezone.utc)
+            # Always use UTC for Discord timestamp
+            new_embed.timestamp = datetime.now(dt_timezone.utc)
 
-        # Also change footer text so the payload is guaranteed different (even if same-second)
-        # If you prefer local time in the footer, format it here and still keep timestamp in UTC.
-        new_embed.set_footer(text=f"Last updated")
+            # Also change footer text so the payload is guaranteed different (even if same-second)
+            # If you prefer local time in the footer, format it here and still keep timestamp in UTC.
+            new_embed.set_footer(text=f"Last updated")
 
-        await msg.edit(embed=new_embed)
+            await msg.edit(embed=new_embed)
+            return True
+        except Exception as e:
+            logger.error(f"Error updating scoreboard embed: {e}")
+            return False
 
     async def announce_winner(self, matchups, channel):
 
@@ -434,7 +439,8 @@ class YahooFFService:
             access_token = self.state.yahoo_token["access_token"]
             # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/scoreboard;week=1"
             # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/standings?format=json"
-            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys=461.l.550581.t.1,461.l.550581.t.2/roster;week=1/players;stats?format=json"
+            url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys=461.l.550581.t.1,461.l.550581.t.2/roster;week=1/players;stats?format=json"
+            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/standings?format=json"
             headers = {
                 "Authorization": f"Bearer {access_token}",
                 "Accept": "application/json"
@@ -449,12 +455,6 @@ class YahooFFService:
             logger.error(f"Error fetching matchups: {e}")
 
     async def post_standings_embeds(self, ctx=None):
-        """
-        Fetch league standings (JSON) and send one embed per team:
-        - Title: Team name
-        - Thumbnail: Team logo (large if available)
-        - Fields: Manager nickname, Points For, Points Against, Record (W-L-T)
-        """
         await self.ensure_token()
         access_token = self.state.yahoo_token["access_token"]
 
@@ -475,6 +475,92 @@ class YahooFFService:
                     raise RuntimeError(f"Standings call failed ({resp.status}): {body}")
                 data = await resp.json()
 
+        teams, league_name, league_logo_url, current_week = await self.parse_standings_json(data)
+
+        if not teams:
+            await self._send_text(ctx, "⚠️ No teams found in team_standings.")
+            return
+
+        team_keys = ",".join(t["team_key"] for t in teams if "team_key" in t)
+        url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys={team_keys}/roster;week={current_week}/players;stats?format=json"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as resp:
+                if resp.status != 200:
+                    body = await resp.text()
+                    raise RuntimeError(f"teams call failed ({resp.status}): {body}")
+                data = await resp.json()
+                text = await resp.text()
+        
+        team_rosters = await self.parse_roster_json(data)
+
+        if not team_rosters:
+            await self._send_text(ctx, "⚠️ No team rosters found.")
+            return
+
+        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+        if not channel:
+            return
+        
+        roster_messages = self.state.roster_messages or {}
+
+        if not roster_messages.get('current_week'):
+            roster_messages['current_week'] = None
+
+        if roster_messages['current_week'] != current_week: 
+            embed = discord.Embed(
+                title=f"{league_name} Standings",
+                description=f"Heading into week {current_week}",
+                color=discord.Color.red()
+            )
+            embed.set_thumbnail(url=league_logo_url)
+            await channel.send(embed=embed)
+            roster_messages['current_week'] = current_week
+
+        for t in teams:
+            record = f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t["ties"] else "")
+            embed = discord.Embed(
+                title=t["name"],
+                description=f"Manager: **{t['nickname']}**\nRecord: **{record}**",
+                color=discord.Color.blue()
+            )
+            if t["logo_url"]:
+                embed.set_thumbnail(url=t["logo_url"])
+
+            team_key = t["team_key"]
+            roster = team_rosters.get(team_key, [])
+
+            embed.add_field(name="Points For", value=f"{t['points_for']:.2f}", inline=True)
+            embed.add_field(name="Points Against", value=f"{t['points_against']:.2f}", inline=True)
+            embed.add_field(name="", value=f"", inline=False)
+            if roster:
+                for p in roster:
+                    pos = p.get("position") or "—"
+                    pts = p.get("total_points", 0.0) or 0.0
+                    name = p.get("full_name") or "Unknown"
+                    status = p.get("status") or ""
+                    embed.add_field(
+                        name=f"{pos}   pts:{pts:.2f}",
+                        value=f"{name} {status}",
+                        inline=True
+                    )
+            if roster_messages.get(team_key):
+                info = roster_messages[team_key]
+                if info.get("week") == current_week:
+                    logger.info(f"Updating existing roster embed for team {t['name']} week {current_week}")
+                    updated = await self.update_embed(embed, info)
+                    if updated:
+                        continue
+            
+            msg = await channel.send(embed=embed)
+            roster_messages[team_key] = {
+                "channel_id": channel.id,
+                "message_id": msg.id,
+                "week": current_week,
+            }
+
+        self.state.roster_messages = roster_messages
+
+    async def parse_standings_json(self, data):
         # --- parse JSON (Yahoo XML->JSON is messy) ---
         # Navigate: fantasy_content -> league (list) -> standings -> teams (dict with numeric keys)
         fantasy_content = data.get("fantasy_content", {})
@@ -487,12 +573,9 @@ class YahooFFService:
                 standings_obj = part["standings"]
                 break
         if not standings_obj:
-            # Sometimes standings is a list with a single dict
-            # Keep this defensive in case of format oddities
             await self._send_text(ctx, "⚠️ Could not find standings in response.")
             return
 
-        # standings is usually a list like: [ { "teams": { "0": {...}, "1": {...}, "count": N } } ]
         if isinstance(standings_obj, list):
             standings_obj = standings_obj[0] if standings_obj else {}
 
@@ -507,7 +590,7 @@ class YahooFFService:
             team_block = v.get("team")
             if not team_block:
                 continue
-            teams.append(team_block)  # team_block is a list: [ <meta_list>, {team_points}, {team_standings} ]
+            teams.append(team_block)
 
         # Helper to pull values from that first meta list (list of dicts)
         def from_meta(meta_list, key):
@@ -520,9 +603,7 @@ class YahooFFService:
 
         def get_logo_url(meta_list):
             logos = from_meta(meta_list, "team_logos")
-            # logos looks like [ { "team_logo": { "size": "...", "url": "..." } }, ... ]
             if isinstance(logos, list):
-                # prefer 'large'
                 large = None
                 first = None
                 for entry in logos:
@@ -541,7 +622,6 @@ class YahooFFService:
 
         def get_manager_nickname(meta_list):
             managers = from_meta(meta_list, "managers")
-            # managers looks like [ { "manager": { "nickname": "...", ... } }, ... ]
             if isinstance(managers, list) and managers:
                 mgr = managers[0].get("manager") if isinstance(managers[0], dict) else None
                 if isinstance(mgr, dict):
@@ -560,21 +640,21 @@ class YahooFFService:
         league_name, league_logo_url, current_week = extract_league_meta(league_list)
 
         # Build a clean list of team dicts
-        clean = []
+        clean_team_dicts = []
         for team_block in teams:
-            # team_block is: [ meta_list, { "team_points": {...} }, { "team_standings": {...} } ]
             meta_list = team_block[0] if len(team_block) > 0 else []
             team_points_obj = team_block[1].get("team_points") if len(team_block) > 1 and isinstance(team_block[1], dict) else {}
-            standings = team_block[2].get("team_standings") if len(team_block) > 2 and isinstance(team_block[2], dict) else {}
+            team_standings = team_block[2].get("team_standings") if len(team_block) > 2 and isinstance(team_block[2], dict) else {}
 
             name = from_meta(meta_list, "name") or "Unknown Team"
+            team_key = from_meta(meta_list, "team_key") or None
             logo_url = get_logo_url(meta_list)
 
             nickname = get_manager_nickname(meta_list) or "—"
 
-            # Prefer standings points_for/against for season totals
-            points_for = standings.get("points_for", "0") if isinstance(standings, dict) else "0"
-            points_against = standings.get("points_against", "0") if isinstance(standings, dict) else "0"
+            # Prefer team_standings points_for/against for season totals
+            points_for = team_standings.get("points_for", "0") if isinstance(team_standings, dict) else "0"
+            points_against = team_standings.get("points_against", "0") if isinstance(team_standings, dict) else "0"
             try:
                 points_for = float(points_for) if points_for not in (None, "") else 0.0
             except ValueError:
@@ -584,18 +664,19 @@ class YahooFFService:
             except ValueError:
                 points_against = 0.0
 
-            outcomes = standings.get("outcome_totals", {}) if isinstance(standings, dict) else {}
+            outcomes = team_standings.get("outcome_totals", {}) if isinstance(team_standings, dict) else {}
             wins = int(outcomes.get("wins", 0) or 0)
             losses = int(outcomes.get("losses", 0) or 0)
             ties = int(outcomes.get("ties", 0) or 0)
 
             # Rank can help ordering
             try:
-                rank = int(standings.get("rank", 9999) or 9999)
+                rank = int(team_standings.get("rank", 9999) or 9999)
             except ValueError:
                 rank = 9999
 
-            clean.append({
+            clean_team_dicts.append({
+                "team_key": team_key,
                 "name": name,
                 "nickname": nickname,
                 "logo_url": logo_url,
@@ -606,42 +687,148 @@ class YahooFFService:
                 "ties": ties,
                 "rank": rank,
             })
+        
+        clean_team_dicts.sort(key=lambda t: t["rank"])
+        return clean_team_dicts, league_name, league_logo_url, current_week
 
-        if not clean:
-            await self._send_text(ctx, "⚠️ No teams found in standings.")
-            return
+    async def parse_roster_json(self, data):
+        # --- parse JSON (Yahoo XML->JSON is messy) ---
+        fantasy_content = data.get("fantasy_content", {})
+        teams_container = fantasy_content.get("teams") or {}
 
-        # Sort by rank if present
-        clean.sort(key=lambda t: t["rank"])
+        if not isinstance(teams_container, dict):
+            league_list = fantasy_content.get("league", [])
+            standings_obj = None
+            for part in league_list:
+                if isinstance(part, dict) and "standings" in part:
+                    standings_obj = part["standings"]
+                    break
+            if isinstance(standings_obj, list):
+                standings_obj = standings_obj[0] if standings_obj else {}
+            teams_container = (standings_obj or {}).get("teams") or {}
 
-        # Where to send
-        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
-        if not channel:
-            return
+        teams = []
+        for k, v in teams_container.items():
+            if k == "count":
+                continue
+            if not isinstance(v, dict):
+                continue
+            team_block = v.get("team")
+            if not team_block:
+                continue
+            teams.append(team_block)
 
-        embed = discord.Embed(
-            title=f"{league_name} Standings",
-            description=f"Heading into week {current_week}",
-            color=discord.Color.red()
-        )
-        embed.set_thumbnail(url=league_logo_url)
-        await channel.send(embed=embed)
+        # Helper: pull values from Yahoo's list-of-dicts pattern (same idea as your standings code)
+        def from_meta(meta_list, key):
+            if not isinstance(meta_list, list):
+                return None
+            for item in meta_list:
+                if isinstance(item, dict) and key in item:
+                    return item[key]
+            return None
 
-        # --- send one embed per team ---
-        for t in clean:
-            record = f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t["ties"] else "")
-            embed = discord.Embed(
-                title=t["name"],
-                description=f"Manager: **{t['nickname']}**\nRecord: **{record}**",
-                color=discord.Color.blue()
-            )
-            if t["logo_url"]:
-                embed.set_thumbnail(url=t["logo_url"])
+        # Helper: get a nested dict value from the list-of-dicts
+        def get_subdict(meta_list, key):
+            val = from_meta(meta_list, key)
+            return val if isinstance(val, dict) else {}
 
-            embed.add_field(name="Points For", value=f"{t['points_for']:.2f}", inline=True)
-            embed.add_field(name="Points Against", value=f"{t['points_against']:.2f}", inline=True)
+        # Roster helper: locate the roster object inside team_block (its index can vary)
+        def find_roster_obj(team_block):
+            if not isinstance(team_block, list):
+                return {}
+            for item in team_block:
+                if isinstance(item, dict) and "roster" in item and isinstance(item["roster"], dict):
+                    return item["roster"]
+            return {}
 
-            await channel.send(embed=embed)
+        # Roster helper: normalize different "players" shapes to a simple list of player nodes
+        def extract_players_list(roster_obj):
+            # Shape A: roster["0"]["players"] -> list
+            node0 = roster_obj.get("0")
+            if isinstance(node0, dict):
+                players = node0.get("players")
+                if isinstance(players, list):
+                    return players
+
+            # Shape B: roster["players"] -> list
+            players = roster_obj.get("players")
+            if isinstance(players, list):
+                return players
+
+            # Shape C: roster["players"] -> dict with numeric keys & "count"
+            if isinstance(players, dict):
+                out = []
+                try:
+                    count = int(players.get("count", 0) or 0)
+                except (TypeError, ValueError):
+                    count = 0
+                for i in range(count):
+                    node = players.get(str(i))
+                    if isinstance(node, dict):
+                        out.append(node)
+                return out
+
+            return []
+
+        roster_by_team = {}
+
+        for team_block in teams:
+            # meta_list is first element, just like your standings parse
+            meta_list = team_block[0] if len(team_block) > 0 else []
+            team_key = from_meta(meta_list, "team_key")
+            if not team_key:
+                # Rare fallback if the team_key is oddly placed
+                team_key = from_meta(team_block if isinstance(team_block, list) else [], "team_key")
+            if not team_key:
+                # If we truly can't identify a team, skip
+                continue
+
+            roster_obj = find_roster_obj(team_block)
+            players_nodes = extract_players_list(roster_obj)
+
+            players_list = []
+            for p in players_nodes:
+                p_list = p.get("player", [])
+                if not isinstance(p_list, list):
+                    continue
+
+                # name: { full, first, last }
+                name_obj = get_subdict(p_list, "name")
+                full_name = name_obj.get("full") if isinstance(name_obj, dict) else None
+
+                # id
+                player_id = from_meta(p_list, "player_id")
+
+                # position: prefer lineup slot for the week; fallback to general display_position
+                selected_pos = get_subdict(p_list, "selected_position")
+                position = selected_pos.get("position") if selected_pos else None
+                if not position:
+                    position = from_meta(p_list, "display_position")
+
+                # health/status
+                status = from_meta(p_list, "status")
+                injury_note = from_meta(p_list, "injury_note")
+
+                # points for the requested week
+                points_obj = get_subdict(p_list, "player_points")
+                total_points_raw = points_obj.get("total") if isinstance(points_obj, dict) else None
+                try:
+                    total_points = float(total_points_raw) if total_points_raw not in (None, "") else 0.0
+                except (TypeError, ValueError):
+                    total_points = 0.0
+
+                players_list.append({
+                    "full_name": full_name,
+                    "player_id": player_id,
+                    "position": position,
+                    "status": status,
+                    "injury_note": injury_note,
+                    "total_points": total_points,
+                })
+
+            roster_by_team[team_key] = players_list
+
+        return roster_by_team
 
     async def _send_text(self, ctx, msg: str):
         if ctx is not None and ctx.channel:

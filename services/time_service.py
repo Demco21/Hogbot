@@ -165,6 +165,7 @@ class TimeService:
                 }
 
                 self.state.scoreboard_msg = data.get("scoreboard_msg", {})
+                self.state.roster_messages = data.get("roster_messages", {})
                 
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
@@ -266,7 +267,8 @@ class TimeService:
                 "this_week_time_sums": {member: timedelta_to_string(time_spent) for member, time_spent in self.state.this_week_time_sums.items()},
                 "hogbot_start_date": self.state.hogbot_start_date,
                 "current_chancellor_id": self.state.current_chancellor_id,
-                "scoreboard_msg": self.state.scoreboard_msg
+                "scoreboard_msg": self.state.scoreboard_msg,
+                "roster_messages": self.state.roster_messages
             }
 
             with open(TIME_DATA_FILE, "w") as file:
