@@ -45,16 +45,18 @@ async def on_ready():
 
 def setup_scheduler(bot):
     nfl_job = bot.nfl_service.post_schedule_current_week
+    update_nfl_states = bot.nfl_service.set_nfl_bot_states
     yahoo_ff_job = bot.yahoo_ff_service.get_matchups
     change_channel_job = bot.channel_change_service.change_channel_name
     dump_data_job = bot.time_service.dump_data
     decide_chancellor_job = bot.chancellor_service.decide_chancellor
 
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(nfl_job, CronTrigger(day_of_week='tue', hour=6, minute=0, timezone=timezone('America/New_York')))
-    scheduler.add_job(yahoo_ff_job, CronTrigger(day_of_week='tue', hour=6, minute=1, timezone=timezone('America/New_York')))
+    scheduler.add_job(nfl_job, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
+    scheduler.add_job(update_nfl_states, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
+    scheduler.add_job(yahoo_ff_job, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))
-    scheduler.add_job(dump_data_job, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
+    scheduler.add_job(dump_data_job, CronTrigger(hour='*', minute=2, timezone=timezone('America/New_York')))
     scheduler.add_job(decide_chancellor_job, CronTrigger(day_of_week='sun', hour=0, minute=0, timezone=timezone('America/New_York')))
     scheduler.start()
 
