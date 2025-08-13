@@ -11,6 +11,8 @@ class BotState:
         self.current_chancellor_id = None
         self.yahoo_token = None
         self.scoreboard_msg = {}
+        self.current_nfl_week = 1
+        self.nfl_season_started = False
 
     def reset_week(self):
         self.this_week_time_sums = {}

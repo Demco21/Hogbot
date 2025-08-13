@@ -38,6 +38,7 @@ async def on_ready():
         setup_scheduler(bot)
         logger.info(f'Set up scheduler')
         await bot.time_service.restore_data()
+        await bot.nfl_service.set_nfl_bot_states()
         logger.info(f'Restored data')
     except Exception as e:
         logger.error(f"Error on startup: {e}")

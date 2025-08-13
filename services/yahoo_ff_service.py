@@ -113,21 +113,8 @@ class YahooFFService:
             await self.ensure_token()
             access_token = self.state.yahoo_token["access_token"]
 
-            # ---------------------------------------------------------
-            # Resolve week using local nfl schedule
-            # ---------------------------------------------------------
-            def _resolve_week_from_schedule() -> Optional[int]:
-                try:
-                    with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
-                        schedule = json.load(f)
-                    # your existing helper on the bot:
-                    return self.bot.nfl_service.get_current_nfl_week_num(schedule)
-                except Exception as e:
-                    logger.info(f"Could not resolve week from schedule: {e}")
-                    return None
-
             if week is None:
-                week = _resolve_week_from_schedule()
+                week = self.bot.current_nfl_week
                 if week is None:
                     return
 
@@ -457,21 +444,8 @@ class YahooFFService:
         await self.ensure_token()
         access_token = self.state.yahoo_token["access_token"]
 
-        # ---------------------------------------------------------
-        # Resolve week using local nfl schedule
-        # ---------------------------------------------------------
-        def _resolve_week_from_schedule() -> Optional[int]:
-            try:
-                with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
-                    schedule = json.load(f)
-                # your existing helper on the bot:
-                return self.bot.nfl_service.get_current_nfl_week_num(schedule)
-            except Exception as e:
-                logger.info(f"Could not resolve week from schedule: {e}")
-                return None
-
         if week is None:
-            week = _resolve_week_from_schedule()
+            week = self.bot.current_nfl_week
             if week is None:
                 return
         

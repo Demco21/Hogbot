@@ -113,14 +113,51 @@ class NFLService:
             return now - timedelta(days=2)
         return now
 
-    def get_current_nfl_week_num(self, nfl_schedule: dict) -> int | None:
+    async def set_nfl_bot_states(self):
+        try:
+            with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
+                nfl_schedule = json.load(f)
+            logger.info(f"Loaded schedule file: {NFL_SCHEDULE_FILE}")
+        except Exception as e:
+            logger.error(f"Failed to load schedule JSON: {e}")
+            return
+        
         weeks = nfl_schedule.get("weeks") or {}
         if not isinstance(weeks, dict) or not weeks:
-            return None
+            return
+
+        eastern = timezone('America/New_York')
+        now = datetime.now(eastern)
+        # now = eastern.localize(datetime(2025, 9, 1, 0, 0, 0))  # Sept 1, 2025 at 12:00 AM ET # for testing
+
+        # compute season bounds for skip check (min/max kickoff_est)
+        all_times = []
+        for wk, games in weeks.items():
+            for g in games or []:
+                k = g.get("kickoff_est")
+                if k:
+                    try:
+                        all_times.append(self._parse_est_date(k))
+                    except Exception:
+                        pass
+        if not all_times:
+            logger.info("No games found in schedule, NFL season not started.")
+            self.bot.nfl_season_started = False
+        else:
+            first_game_date = min(all_times).date()
+            last_game_date = max(all_times).date()
+            today = now.date()
+
+            if not ((first_game_date - timedelta(days=3)) <= today <= last_game_date):
+                logger.info(f"Today {today} is outside the regular season ({first_game_date} to {last_game_date}), NFL season not started.")
+                self.bot.nfl_season_started = False
+            else:
+                logger.info(f"Today {today} is inside the regular season ({first_game_date} to {last_game_date}), NFL season has started.")
+                self.bot.nfl_season_started = True
 
         spans = self._games_date_span(weeks)
         if not spans:
-            return None
+            return
 
         eff = self._current_effective_dt().date()
 
@@ -128,15 +165,19 @@ class NFLService:
             start_dt, end_dt = spans[wk]
             if (start_dt.date() - timedelta(days=3)) <= eff <= end_dt.date():
                 logger.info(f"Current effective date {eff} falls in week {wk} span {start_dt.date()}–{end_dt.date()}")
-                return wk
+                self.bot.current_nfl_week = wk
+                return
         
         for wk in sorted(spans):
             if eff <= spans[wk][1].date():
                 logger.info(f"Choosing next upcoming week {wk} for date {eff}")
-                return wk
+                self.bot.current_nfl_week = wk
+                return
+        
         last_wk = max(spans)
         logger.info(f"After last scheduled game window; defaulting to week {last_wk}")
-        return last_wk
+        self.bot.current_nfl_week = last_wk
+        return
 
     def _group_new_games_by_date(self, week_games: list[dict]) -> dict[str, list[dict]]:
         """Group new-format games (with kickoff_est) by YYYY-MM-DD in EST."""
@@ -154,10 +195,6 @@ class NFLService:
 
     async def post_schedule_current_week(self):
         try:
-            eastern = timezone('America/New_York')
-            now = datetime.now(eastern)
-            # now = eastern.localize(datetime(2025, 9, 1, 0, 0, 0))  # Sept 1, 2025 at 12:00 AM ET # for testing
-
             try:
                 with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
                     data = json.load(f)
@@ -169,29 +206,11 @@ class NFLService:
             weeks: dict = data.get("weeks", {})
             byes_map: dict = data.get("byes", {}) or {}
 
-            # compute season bounds for skip check (min/max kickoff_est)
-            all_times = []
-            for wk, games in weeks.items():
-                for g in games or []:
-                    k = g.get("kickoff_est")
-                    if k:
-                        try:
-                            all_times.append(self._parse_est_date(k))
-                        except Exception:
-                            pass
-            if not all_times:
-                logger.info("No games found in schedule; skipping.")
+            if not self.bot.nfl_season_started:
+                logger.info(f"NFL Season has not started. Skipping.")
                 return
 
-            first_game_date = min(all_times).date()
-            last_game_date = max(all_times).date()
-            today = now.date()
-
-            if not ((first_game_date - timedelta(days=3)) <= today <= last_game_date):
-                logger.info(f"Today {today} is outside the regular season ({first_game_date} to {last_game_date}). Skipping.")
-                return
-
-            current_week = self.get_current_nfl_week_num(data)
+            current_week = self.bot.current_nfl_week
             if current_week is None:
                 logger.info("Could not determine current NFL week from schedule; skipping.")
                 return
