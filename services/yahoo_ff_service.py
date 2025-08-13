@@ -8,6 +8,7 @@ from typing import Optional, Any, Dict, List
 import xml.etree.ElementTree as ET
 import aiohttp
 import time
+import asyncio
 from pytz import timezone
 import json
 import os
@@ -532,22 +533,42 @@ class YahooFFService:
             await channel.send(embed=embed)
             roster_messages['week'] = week
 
+        def get_overall_game_state(roster):
+            if not roster:
+                return "waiting"
+            
+            states = [p.get("game_state") for p in roster]
+
+            if all(state == "finished" for state in states):
+                return "finished"
+            elif any(state == "in_progress" for state in states):
+                return "active"
+            else:
+                return "waiting"
+            
         for t in teams:
             record = f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t["ties"] else "")
             embed = discord.Embed(
                 title=t["name"],
                 description=f"Manager: **{t['nickname']}**\nRecord: **{record}**",
-                color=discord.Color.blue()
             )
             if t["logo_url"]:
                 embed.set_thumbnail(url=t["logo_url"])
-
-            team_key = t["team_key"]
-            roster = team_rosters.get(team_key, [])
-
             embed.add_field(name="Points For", value=f"{t['points_for']:.2f}", inline=True)
             embed.add_field(name="Points Against", value=f"{t['points_against']:.2f}", inline=True)
             embed.add_field(name="", value=f"", inline=False)
+
+            team_key = t["team_key"]
+            roster = team_rosters.get(team_key, [])
+            game_state = get_overall_game_state(roster)
+
+            if game_state == "finished":
+                embed.color = discord.Color.green()
+            elif game_state == "active":
+                embed.color = discord.Color.gold()
+            else:
+                embed.color = discord.Color.dark_grey()
+
             if roster:
                 for p in roster:
                     pos = p.get("position") or "—"
@@ -559,24 +580,27 @@ class YahooFFService:
                         value=f"{name} {status}",
                         inline=True
                     )
+            
+            updated = False
             if roster_messages.get(team_key):
                 info = roster_messages[team_key]
                 if info.get("week") == week:
                     logger.info(f"Updating existing roster embed for team {t['name']} week {week}")
                     updated = await self.update_embed(embed, info)
-                    if updated:
-                        continue
             
-            msg = await channel.send(embed=embed)
-            roster_messages[team_key] = {
-                "channel_id": channel.id,
-                "message_id": msg.id,
-                "week": week
-            }
+            if not updated:
+                msg = await channel.send(embed=embed)
+                roster_messages[team_key] = {
+                    "channel_id": channel.id,
+                    "message_id": msg.id,
+                    "week": week
+                }
+                self.state.roster_messages = roster_messages
 
-        self.state.roster_messages = roster_messages
+            await asyncio.sleep(5)
 
     async def parse_standings_json(self, data):
+        # logger.info(json.dumps(data, indent=2))
         # --- parse JSON (Yahoo XML->JSON is messy) ---
         # Navigate: fantasy_content -> league (list) -> standings -> teams (dict with numeric keys)
         fantasy_content = data.get("fantasy_content", {})
@@ -709,6 +733,7 @@ class YahooFFService:
 
     async def parse_roster_json(self, data):
         # --- parse JSON (Yahoo XML->JSON is messy) ---
+        #logger.info(json.dumps(data, indent=2))
         fantasy_content = data.get("fantasy_content", {})
         teams_container = fantasy_content.get("teams") or {}
 
@@ -734,7 +759,7 @@ class YahooFFService:
                 continue
             teams.append(team_block)
 
-        # Helper: pull values from Yahoo's list-of-dicts pattern (same idea as your standings code)
+        # Helpers -----------------------------------------------------------------
         def from_meta(meta_list, key):
             if not isinstance(meta_list, list):
                 return None
@@ -743,12 +768,10 @@ class YahooFFService:
                     return item[key]
             return None
 
-        # Helper: get a nested dict value from the list-of-dicts
         def get_subdict(meta_list, key):
             val = from_meta(meta_list, key)
             return val if isinstance(val, dict) else {}
 
-        # Roster helper: locate the roster object inside team_block (its index can vary)
         def find_roster_obj(team_block):
             if not isinstance(team_block, list):
                 return {}
@@ -757,21 +780,17 @@ class YahooFFService:
                     return item["roster"]
             return {}
 
-        # Roster helper: normalize different "players" shapes to a simple list of player nodes
         def extract_players_list(roster_obj):
-            # Shape A: roster["0"]["players"] -> list
             node0 = roster_obj.get("0")
             if isinstance(node0, dict):
                 players = node0.get("players")
                 if isinstance(players, list):
                     return players
 
-            # Shape B: roster["players"] -> list
             players = roster_obj.get("players")
             if isinstance(players, list):
                 return players
 
-            # Shape C: roster["players"] -> dict with numeric keys & "count"
             if isinstance(players, dict):
                 out = []
                 try:
@@ -786,52 +805,144 @@ class YahooFFService:
 
             return []
 
+        # Parse a boolean-like value robustly (Yahoo often uses "1"/"0" or "true"/"false")
+        def as_bool(v):
+            if isinstance(v, bool):
+                return v
+            if isinstance(v, (int, float)):
+                return v != 0
+            if isinstance(v, str):
+                return v.strip().lower() in {"1", "true", "yes", "y"}
+            return False
+
+        # Find a value by scanning the list-of-dicts for any of several candidate keys
+        def scan_for(meta_list, candidate_keys):
+            if not isinstance(meta_list, list):
+                return None
+            for item in meta_list:
+                if isinstance(item, dict):
+                    for k in candidate_keys:
+                        if k in item:
+                            return item[k]
+            return None
+
+        # Derive a per-player game_state from whatever Yahoo provides, else heuristics
+        def derive_player_game_state(p_list, total_points, week):
+            # Try explicit flags first (these names show up in some sports/feeds)
+            # If none of these are present in your league’s sport/feed, they’ll be None.
+            explicit_is_playing = scan_for(p_list, ["is_playing", "in_game", "is_live"])
+            explicit_started     = scan_for(p_list, ["game_started", "started", "has_started"])
+            explicit_finished    = scan_for(p_list, ["game_finished", "completed", "has_finished"])
+
+            # Bye-week hint (NFL often nests bye weeks under a dict)
+            bye_obj  = get_subdict(p_list, "bye_weeks") or get_subdict(p_list, "bye_week")
+            on_bye   = False
+            if isinstance(bye_obj, dict):
+                # common shapes: {"week": "7"} or {"0": {"week": "7"}}
+                bye_week = bye_obj.get("week")
+                if bye_week is None and "0" in bye_obj and isinstance(bye_obj["0"], dict):
+                    bye_week = bye_obj["0"].get("week")
+                try:
+                    on_bye = (int(bye_week) == int(week))
+                except (TypeError, ValueError):
+                    on_bye = False
+
+            # 1) Use explicit finished flag if present
+            if explicit_finished is not None:
+                return "finished" if as_bool(explicit_finished) else "in_progress"  # if explicitly not finished but flagged, treat as live
+
+            # 2) Use explicit is_playing flag
+            if explicit_is_playing is not None:
+                return "in_progress" if as_bool(explicit_is_playing) else "not_started"
+
+            # 3) Use explicit started flag
+            if explicit_started is not None:
+                return "in_progress" if as_bool(explicit_started) else "not_started"
+
+            # 4) Bye week ⇒ not started (won’t play)
+            if on_bye:
+                return "not_started"
+
+            # 5) Heuristics when nothing else is available:
+            #    - If weekly points are strictly > 0 early in week, could be in-progress or finished.
+            #    - We can’t reliably split those without kickoff/end timestamps, so:
+            #      * If points == 0.0 → probably not started (or goose egg, but safe)
+            #      * If points > 0.0 → mark as unknown; caller can refine later with scoreboard/schedule
+            if total_points == 0.0:
+                return "not_started"
+
+            return "unknown"
+
         roster_by_team = {}
 
+        # Try to read the requested week from the payload if present (caller already passes ?week={week})
+        # If not available, set to None and heuristics won’t use bye logic.
+        requested_week = None
+        try:
+            meta_game = fantasy_content.get("game", {})
+            if isinstance(meta_game, dict):
+                requested_week = int(meta_game.get("week")) if meta_game.get("week") is not None else None
+        except Exception:
+            requested_week = None
+
+        # If not found above, accept a 'week' helper nested in teams -> roster
+        if requested_week is None:
+            # many payloads embed roster week at roster["week"]
+            # we’ll just fill it per-team when available
+            pass
+
         for team_block in teams:
-            # meta_list is first element, just like your standings parse
             meta_list = team_block[0] if len(team_block) > 0 else []
             team_key = from_meta(meta_list, "team_key")
             if not team_key:
-                # Rare fallback if the team_key is oddly placed
                 team_key = from_meta(team_block if isinstance(team_block, list) else [], "team_key")
             if not team_key:
-                # If we truly can't identify a team, skip
                 continue
 
             roster_obj = find_roster_obj(team_block)
-            players_nodes = extract_players_list(roster_obj)
+            # fallback: grab week off this roster if available
+            this_roster_week = requested_week
+            try:
+                if this_roster_week is None:
+                    w = roster_obj.get("week")
+                    if isinstance(w, (str, int)):
+                        this_roster_week = int(w)
+            except Exception:
+                pass
 
+            players_nodes = extract_players_list(roster_obj)
             players_list = []
+
             for p in players_nodes:
                 p_list = p.get("player", [])
                 if not isinstance(p_list, list):
                     continue
 
-                # name: { full, first, last }
                 name_obj = get_subdict(p_list, "name")
                 full_name = name_obj.get("full") if isinstance(name_obj, dict) else None
 
-                # id
                 player_id = from_meta(p_list, "player_id")
 
-                # position: prefer lineup slot for the week; fallback to general display_position
                 selected_pos = get_subdict(p_list, "selected_position")
                 position = selected_pos.get("position") if selected_pos else None
                 if not position:
                     position = from_meta(p_list, "display_position")
 
-                # health/status
                 status = from_meta(p_list, "status")
                 injury_note = from_meta(p_list, "injury_note")
 
-                # points for the requested week
                 points_obj = get_subdict(p_list, "player_points")
                 total_points_raw = points_obj.get("total") if isinstance(points_obj, dict) else None
                 try:
                     total_points = float(total_points_raw) if total_points_raw not in (None, "") else 0.0
                 except (TypeError, ValueError):
                     total_points = 0.0
+
+                game_state = derive_player_game_state(
+                    p_list,
+                    total_points=total_points,
+                    week=this_roster_week
+                )
 
                 players_list.append({
                     "full_name": full_name,
@@ -840,6 +951,7 @@ class YahooFFService:
                     "status": status,
                     "injury_note": injury_note,
                     "total_points": total_points,
+                    "game_state": game_state,
                 })
 
             roster_by_team[team_key] = players_list

@@ -7,6 +7,7 @@ from services.channel_change_service import ChannelChangeService
 from services.nfl_service import NFLService
 from services.chancellor_service import ChancellorService
 from services.yahoo_ff_service import YahooFFService
+from services.espn_service import ESPNService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -22,6 +23,7 @@ class HogBot(commands.Bot):
         self.channel_change_service = ChannelChangeService(self.state, self)
         self.chancellor_service = ChancellorService(self.state, self)
         self.yahoo_ff_service = YahooFFService(self.state, self)
+        self.espn_service = ESPNService(self.state, self)
 
     async def setup_hook(self):
         await self.load_extension("cogs.time_cog")
@@ -41,7 +43,7 @@ async def on_ready():
         logger.error(f"Error on startup: {e}")
 
 def setup_scheduler(bot):
-    nfl_job = bot.nfl_service.post_schedule
+    nfl_job = bot.nfl_service.post_schedule_current_week
     yahoo_ff_job = bot.yahoo_ff_service.get_matchups
     change_channel_job = bot.channel_change_service.change_channel_name
     dump_data_job = bot.time_service.dump_data
@@ -62,5 +64,17 @@ async def dump_data_command(ctx):
 @bot.command(name='channel_change')
 async def dump_data_command(ctx):
     await bot.channel_change_service.change_channel_name()
+
+@bot.command(name='espn')
+async def espn(ctx):
+    await bot.espn_service.get_nfl_week_games(2025, 1)
+
+@bot.command(name='nfldump')
+async def espn(ctx):
+    await bot.espn_service.dump_regular_season_games(2025)
+
+@bot.command(name='games')
+async def games(ctx):
+    await bot.nfl_service.post_schedule_current_week()
 
 bot.run(DISCORD_TOKEN)

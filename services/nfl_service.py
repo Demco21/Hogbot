@@ -83,51 +83,139 @@ class NFLService:
         self.state = bot_state
         self.bot = bot
 
-    async def post_schedule(self):
+    def _parse_est_date(self, iso_str: str) -> datetime:
+        # kickoff_est looks like "2025-09-04T20:20:00-04:00"
+        return datetime.fromisoformat(iso_str)
+
+    def _games_date_span(self, weeks_dict: dict[str, list[dict]]) -> dict[int, tuple[datetime, datetime]]:
+        """Return {week: (min_dt, max_dt)} using kickoff_est datetimes in EST."""
+        spans = {}
+        for wk_str, games in weeks_dict.items():
+            times = []
+            for g in games or []:
+                k = g.get("kickoff_est")
+                if k:
+                    try:
+                        times.append(self._parse_est_date(k))
+                    except Exception:
+                        continue
+            if times:
+                spans[int(wk_str)] = (min(times), max(times))
+        return spans
+
+    def _current_effective_dt(self) -> datetime:
+        eastern = timezone("America/New_York")
+        now = datetime.now(eastern)
+        weekday = now.weekday()
+        if weekday == 0:  # Monday => still consider as Sunday night for "current week"
+            return now - timedelta(days=1)
+        if weekday == 1 and now.hour < 5:  # early Tuesday => still prior week
+            return now - timedelta(days=2)
+        return now
+
+    def get_current_nfl_week_num(self, nfl_schedule: dict) -> int | None:
+        weeks = nfl_schedule.get("weeks") or {}
+        if not isinstance(weeks, dict) or not weeks:
+            return None
+
+        spans = self._games_date_span(weeks)
+        if not spans:
+            return None
+
+        eff = self._current_effective_dt().date()
+
+        for wk in sorted(spans):
+            start_dt, end_dt = spans[wk]
+            if (start_dt.date() - timedelta(days=3)) <= eff <= end_dt.date():
+                logger.info(f"Current effective date {eff} falls in week {wk} span {start_dt.date()}–{end_dt.date()}")
+                return wk
+        
+        for wk in sorted(spans):
+            if eff <= spans[wk][1].date():
+                logger.info(f"Choosing next upcoming week {wk} for date {eff}")
+                return wk
+        last_wk = max(spans)
+        logger.info(f"After last scheduled game window; defaulting to week {last_wk}")
+        return last_wk
+
+    def _group_new_games_by_date(self, week_games: list[dict]) -> dict[str, list[dict]]:
+        """Group new-format games (with kickoff_est) by YYYY-MM-DD in EST."""
+        by_date: dict[str, list[dict]] = defaultdict(list)
+        for g in week_games:
+            k = g.get("kickoff_est")
+            if not k:
+                continue
+            try:
+                dt = self._parse_est_date(k)
+            except Exception:
+                continue
+            by_date[dt.date().isoformat()].append(g)
+        return by_date
+
+    async def post_schedule_current_week(self):
         try:
-            logger.info("Posting NFL schedule")
             eastern = timezone('America/New_York')
             now = datetime.now(eastern)
+            # now = eastern.localize(datetime(2025, 9, 1, 0, 0, 0))  # Sept 1, 2025 at 12:00 AM ET # for testing
 
             try:
                 with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
-                    schedule = json.load(f)
+                    data = json.load(f)
+                logger.info(f"Loaded schedule file: {NFL_SCHEDULE_FILE}")
             except Exception as e:
-                logger.error(f"Failed to load NFL schedule JSON: {e}")
+                logger.error(f"Failed to load schedule JSON: {e}")
                 return
 
-            first_game_date = datetime.strptime(schedule.get("first_game_date"), "%Y-%m-%d").date()
-            last_game_date = datetime.strptime(schedule.get("last_game_date"), "%Y-%m-%d").date()
+            weeks: dict = data.get("weeks", {})
+            byes_map: dict = data.get("byes", {}) or {}
+
+            # compute season bounds for skip check (min/max kickoff_est)
+            all_times = []
+            for wk, games in weeks.items():
+                for g in games or []:
+                    k = g.get("kickoff_est")
+                    if k:
+                        try:
+                            all_times.append(self._parse_est_date(k))
+                        except Exception:
+                            pass
+            if not all_times:
+                logger.info("No games found in schedule; skipping.")
+                return
+
+            first_game_date = min(all_times).date()
+            last_game_date = max(all_times).date()
             today = now.date()
 
-            # Skip if outside regular season
             if not ((first_game_date - timedelta(days=3)) <= today <= last_game_date):
                 logger.info(f"Today {today} is outside the regular season ({first_game_date} to {last_game_date}). Skipping.")
                 return
 
-            current_nfl_week_num = self.get_current_nfl_week_num(schedule)
-            if current_nfl_week_num is None:
-                return
-            
-            nfl_week = next((week for week in schedule["weeks"] if week["nfl_week"] == current_nfl_week_num), None)
-
-            if not nfl_week:
-                logger.info(f"No NFL week found for NFL week {current_nfl_week_num}")
+            current_week = self.get_current_nfl_week_num(data)
+            if current_week is None:
+                logger.info("Could not determine current NFL week from schedule; skipping.")
                 return
 
-            # Group games by date
-            games_by_date = defaultdict(list)
-            for game in nfl_week["games"]:
-                games_by_date[game["date"]].append(game)
+            week_key = str(current_week)
+            week_games = weeks.get(week_key, [])
+            bye_teams = byes_map.get(week_key) or []
+            await self.post_schedule(current_week, week_games, bye_teams)
+        except Exception as e:
+            logger.error(f"Failed to post NFL schedule for current week: {e}")
+
+    async def post_schedule(self, week, games, bye_teams):
+        try:
+            logger.info("Posting NFL schedule")
+            games_by_date = self._group_new_games_by_date(games)
 
             channel = self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
             if not channel:
                 logger.warning("Channel not found")
                 return
 
-            # Top-level NFL Week schedule embed
+            # Top-level embed
             week_embed = discord.Embed(
-                title=f"🏈 Week {nfl_week['nfl_week']} Games",
+                title=f"🏈 Week {week} Games",
                 color=discord.Color.gold()
             )
             week_embed.set_thumbnail(url=NFL_LOGO)
@@ -143,78 +231,55 @@ class NFLService:
                     color=discord.Color.blue()
                 )
 
-                for game in games_by_date[date]:
-                    away_emoji = f"<:{NFL_TEAM_LOGOS[game['away_team']]['logo_name']}:{NFL_TEAM_LOGOS[game['away_team']]['logo_id']}>"
-                    home_emoji = f"<:{NFL_TEAM_LOGOS[game['home_team']]['logo_name']}:{NFL_TEAM_LOGOS[game['home_team']]['logo_id']}>"
+                for g in sorted(games_by_date[date], key=lambda x: x.get("kickoff_est", "")):
+                    away_team = g.get("away_team")
+                    home_team = g.get("home_team")
+                    away_emoji = f"<:{NFL_TEAM_LOGOS[away_team]['logo_name']}:{NFL_TEAM_LOGOS[away_team]['logo_id']}>" if away_team in NFL_TEAM_LOGOS else ""
+                    home_emoji = f"<:{NFL_TEAM_LOGOS[home_team]['logo_name']}:{NFL_TEAM_LOGOS[home_team]['logo_id']}>" if home_team in NFL_TEAM_LOGOS else ""
+
+                    # time from kickoff_est
+                    try:
+                        kdt = self._parse_est_date(g["kickoff_est"])
+                        time_str = kdt.strftime("%I:%M %p").lstrip("0")
+                    except Exception:
+                        time_str = "TBD"
+
+                    tv_list = g.get("tv_networks") or []
+                    stream_list = g.get("streaming_networks") or []
+                    parts = [f"🕒 {time_str}"]
+                    if tv_list:
+                        parts.append(f"📺 {', '.join(tv_list)}")
+                    if stream_list:
+                        parts.append(f"💻 {', '.join(stream_list)}")
 
                     game_line = (
-                        f"{away_emoji} **{game['away_team']}** at "
-                        f"{home_emoji} **{game['home_team']}**\n"
-                        f"🕒 {game['time_est']} | 📺 {game['network']}"
+                        f"{away_emoji} **{away_team}** at "
+                        f"{home_emoji} **{home_team}**\n"
+                        f"{' | '.join(parts)}"
                     )
 
-                    special_location = game.get("special_location")
-                    if special_location:
-                        game_line += f"\n📍 {special_location}"
+                    location = g.get("location")
+                    if location:
+                        game_line += f"\n📍 {location}"
 
                     date_embed.add_field(name="\u200b", value=game_line, inline=False)
 
                 await channel.send(embed=date_embed)
 
-            # Byes
-            if nfl_week.get("byes"):
+            if bye_teams:
                 bye_embed = discord.Embed(
                     title="🛑 Teams on Bye",
                     color=discord.Color.red()
                 )
                 byes_with_emojis = [
-                    f"<:{NFL_TEAM_LOGOS[team]['logo_name']}:{NFL_TEAM_LOGOS[team]['logo_id']}> **{team}**"
-                    for team in nfl_week["byes"]
+                    f"<:{NFL_TEAM_LOGOS[t]['logo_name']}:{NFL_TEAM_LOGOS[t]['logo_id']}> **{t}**"
+                    if t in NFL_TEAM_LOGOS else f"**{t}**"
+                    for t in bye_teams
                 ]
                 bye_embed.description = ", ".join(byes_with_emojis)
                 await channel.send(embed=bye_embed)
 
         except Exception as e:
             logger.error(f"Failed to post NFL schedule: {e}")
-
-    def get_current_nfl_week_num(self, schedule) -> int | None:
-        """
-        Reads the NFL schedule JSON file and returns the nfl_week value for the first week
-        where:
-            - week["year"] == current year
-            - current ISO calendar week <= week["calendar_week"]
-        Returns None if no matching week is found or season has ended.
-        """
-        eastern = timezone("America/New_York")
-        now = datetime.now(eastern)
-        today = now.date()
-
-        last_game_date = datetime.strptime(schedule["last_game_date"], "%Y-%m-%d").date()
-        # Skip if season has ended
-        if today > last_game_date:
-            return None
-
-        weekday = now.weekday()
-        if weekday == 0:  # Monday
-            effective_dt = now - timedelta(days=1)
-        elif weekday == 1 and now.hour < 5:  # Tuesday before 5 AM
-            effective_dt = now - timedelta(days=2)
-        else:
-            effective_dt = now
-
-
-        eff_iso = effective_dt.isocalendar()  # returns (iso_year, iso_week, iso_weekday)
-        effective_year = eff_iso[0]
-        effective_week = eff_iso[1]
-
-        current_year = today.year
-        current_cal_week = today.isocalendar().week
-
-        for week in schedule.get("weeks", []):
-            if week["year"] == effective_year and effective_week <= week["calendar_week"]:
-                return week["nfl_week"]
-
-        logger.info(f"No NFL week found for year {effective_year} and week {effective_week}")
-        return None
 
 __all__ = ['NFLService']

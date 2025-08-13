@@ -23,7 +23,7 @@ DAY_OVERRIDES = {
     "sunday": "🍺 Sunday Beers"
 }
 TIME_DATA_FILE = "data/time_data.json"
-NFL_SCHEDULE_FILE = "data/nfl_schedule_2025.json"
+NFL_SCHEDULE_FILE = "data/nfl_game_dump_2025.json"
 WINNER_PHRASES_FILE = "data/winner_phrases.json"
 YAHOO_TOKEN_FILE = "data/yahoo_token.json"
 
