@@ -13,7 +13,11 @@
         ],
         "streaming_networks": [
           "Peacock"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772510/competitions/401772510/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772510/competitions/401772510/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -23,7 +27,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "YouTube"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772714/competitions/401772714/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772714/competitions/401772714/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -33,7 +41,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772830/competitions/401772830/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772830/competitions/401772830/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -43,7 +55,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772829/competitions/401772829/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772829/competitions/401772829/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -53,7 +69,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772719/competitions/401772719/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772719/competitions/401772719/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -63,7 +83,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772720/competitions/401772720/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772720/competitions/401772720/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -73,7 +97,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772718/competitions/401772718/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772718/competitions/401772718/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -83,7 +111,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772721/competitions/401772721/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772721/competitions/401772721/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -93,7 +125,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772827/competitions/401772827/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772827/competitions/401772827/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -103,7 +139,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772828/competitions/401772828/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772828/competitions/401772828/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -113,7 +153,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772832/competitions/401772832/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772832/competitions/401772832/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -123,7 +167,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772831/competitions/401772831/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772831/competitions/401772831/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -133,7 +181,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772722/competitions/401772722/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772722/competitions/401772722/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -143,7 +195,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772723/competitions/401772723/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772723/competitions/401772723/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -153,7 +209,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772918/competitions/401772918/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772918/competitions/401772918/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -164,7 +224,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772810/competitions/401772810/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772810/competitions/401772810/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "2": [
@@ -176,7 +240,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772936/competitions/401772936/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772936/competitions/401772936/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -186,7 +254,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772725/competitions/401772725/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772725/competitions/401772725/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -196,7 +268,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772834/competitions/401772834/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772834/competitions/401772834/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Detroit Lions",
@@ -206,7 +282,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772835/competitions/401772835/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772835/competitions/401772835/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -216,7 +296,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772724/competitions/401772724/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772724/competitions/401772724/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -226,7 +310,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772728/competitions/401772728/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772728/competitions/401772728/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -236,7 +324,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772833/competitions/401772833/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772833/competitions/401772833/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -246,7 +338,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772727/competitions/401772727/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772727/competitions/401772727/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -256,7 +352,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772836/competitions/401772836/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772836/competitions/401772836/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -266,7 +366,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772726/competitions/401772726/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772726/competitions/401772726/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -276,7 +380,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772729/competitions/401772729/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772729/competitions/401772729/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -286,7 +394,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772730/competitions/401772730/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772730/competitions/401772730/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -296,7 +408,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772837/competitions/401772837/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772837/competitions/401772837/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -306,7 +422,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772919/competitions/401772919/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772919/competitions/401772919/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -317,7 +437,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772715/competitions/401772715/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772715/competitions/401772715/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -327,7 +451,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772811/competitions/401772811/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772811/competitions/401772811/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "3": [
@@ -339,7 +467,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772937/competitions/401772937/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772937/competitions/401772937/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -349,7 +481,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772842/competitions/401772842/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772842/competitions/401772842/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -359,7 +495,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772733/competitions/401772733/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772733/competitions/401772733/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -369,7 +509,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772731/competitions/401772731/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772731/competitions/401772731/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -379,7 +523,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772732/competitions/401772732/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772732/competitions/401772732/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -389,7 +537,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772839/competitions/401772839/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772839/competitions/401772839/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -399,7 +551,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772840/competitions/401772840/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772840/competitions/401772840/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -409,7 +565,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772841/competitions/401772841/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772841/competitions/401772841/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -419,7 +579,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772838/competitions/401772838/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772838/competitions/401772838/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -429,7 +593,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772734/competitions/401772734/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772734/competitions/401772734/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -439,7 +607,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772735/competitions/401772735/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772735/competitions/401772735/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -449,7 +621,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772736/competitions/401772736/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772736/competitions/401772736/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -459,7 +635,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772844/competitions/401772844/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772844/competitions/401772844/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -469,7 +649,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772843/competitions/401772843/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772843/competitions/401772843/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -479,7 +663,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772920/competitions/401772920/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772920/competitions/401772920/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -490,7 +678,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772812/competitions/401772812/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772812/competitions/401772812/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "4": [
@@ -502,7 +694,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772938/competitions/401772938/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772938/competitions/401772938/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -514,7 +710,11 @@
         ],
         "streaming_networks": [
           "NFL+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772632/competitions/401772632/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772632/competitions/401772632/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -524,7 +724,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772739/competitions/401772739/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772739/competitions/401772739/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -534,7 +738,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772740/competitions/401772740/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772740/competitions/401772740/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Detroit Lions",
@@ -544,7 +752,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772846/competitions/401772846/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772846/competitions/401772846/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -554,7 +766,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772847/competitions/401772847/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772847/competitions/401772847/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -564,7 +780,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772737/competitions/401772737/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772737/competitions/401772737/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -574,7 +794,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772845/competitions/401772845/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772845/competitions/401772845/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -584,7 +808,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772738/competitions/401772738/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772738/competitions/401772738/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -594,7 +822,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772849/competitions/401772849/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772849/competitions/401772849/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -604,7 +836,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772848/competitions/401772848/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772848/competitions/401772848/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -614,7 +850,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772741/competitions/401772741/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772741/competitions/401772741/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -624,7 +864,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772742/competitions/401772742/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772742/competitions/401772742/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -634,7 +878,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772921/competitions/401772921/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772921/competitions/401772921/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -644,7 +892,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772813/competitions/401772813/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772813/competitions/401772813/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -654,7 +906,11 @@
         "tv_networks": [
           "ABC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772716/competitions/401772716/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772716/competitions/401772716/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "5": [
@@ -666,7 +922,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772939/competitions/401772939/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772939/competitions/401772939/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -678,7 +938,11 @@
         ],
         "streaming_networks": [
           "NFL+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772633/competitions/401772633/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772633/competitions/401772633/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -688,7 +952,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772851/competitions/401772851/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772851/competitions/401772851/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -698,7 +966,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772744/competitions/401772744/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772744/competitions/401772744/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -708,7 +980,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772850/competitions/401772850/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772850/competitions/401772850/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -718,7 +994,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772745/competitions/401772745/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772745/competitions/401772745/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -728,7 +1008,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772852/competitions/401772852/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772852/competitions/401772852/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -738,7 +1022,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772743/competitions/401772743/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772743/competitions/401772743/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -748,7 +1036,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772747/competitions/401772747/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772747/competitions/401772747/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -758,7 +1050,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772746/competitions/401772746/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772746/competitions/401772746/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -768,7 +1064,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772854/competitions/401772854/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772854/competitions/401772854/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -778,7 +1078,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772853/competitions/401772853/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772853/competitions/401772853/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -788,7 +1092,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772922/competitions/401772922/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772922/competitions/401772922/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -799,7 +1107,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772814/competitions/401772814/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772814/competitions/401772814/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "6": [
@@ -811,7 +1123,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772940/competitions/401772940/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772940/competitions/401772940/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -823,7 +1139,11 @@
         ],
         "streaming_networks": [
           "NFL+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772634/competitions/401772634/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772634/competitions/401772634/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -833,7 +1153,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772856/competitions/401772856/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772856/competitions/401772856/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -843,7 +1167,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772750/competitions/401772750/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772750/competitions/401772750/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -853,7 +1181,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772748/competitions/401772748/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772748/competitions/401772748/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -863,7 +1195,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772749/competitions/401772749/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772749/competitions/401772749/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -873,7 +1209,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772858/competitions/401772858/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772858/competitions/401772858/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -883,7 +1223,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772857/competitions/401772857/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772857/competitions/401772857/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -893,7 +1237,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772855/competitions/401772855/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772855/competitions/401772855/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -903,7 +1251,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772859/competitions/401772859/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772859/competitions/401772859/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -913,7 +1265,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772752/competitions/401772752/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772752/competitions/401772752/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -923,7 +1279,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772751/competitions/401772751/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772751/competitions/401772751/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -933,7 +1293,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772923/competitions/401772923/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772923/competitions/401772923/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -943,7 +1307,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772815/competitions/401772815/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772815/competitions/401772815/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -953,7 +1321,11 @@
         "tv_networks": [
           "ABC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772717/competitions/401772717/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772717/competitions/401772717/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "7": [
@@ -965,7 +1337,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772941/competitions/401772941/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772941/competitions/401772941/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -977,7 +1353,11 @@
         ],
         "streaming_networks": [
           "NFL+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772635/competitions/401772635/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772635/competitions/401772635/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -987,7 +1367,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772861/competitions/401772861/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772861/competitions/401772861/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -997,7 +1381,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772754/competitions/401772754/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772754/competitions/401772754/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -1007,7 +1395,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772755/competitions/401772755/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772755/competitions/401772755/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -1017,7 +1409,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772753/competitions/401772753/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772753/competitions/401772753/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -1027,7 +1423,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772862/competitions/401772862/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772862/competitions/401772862/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -1037,7 +1437,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772860/competitions/401772860/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772860/competitions/401772860/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -1047,7 +1451,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772757/competitions/401772757/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772757/competitions/401772757/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -1057,7 +1465,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772756/competitions/401772756/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772756/competitions/401772756/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -1067,7 +1479,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772864/competitions/401772864/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772864/competitions/401772864/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -1077,7 +1493,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772863/competitions/401772863/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772863/competitions/401772863/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -1087,7 +1507,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772924/competitions/401772924/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772924/competitions/401772924/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Detroit Lions",
@@ -1098,7 +1522,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772816/competitions/401772816/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772816/competitions/401772816/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -1108,7 +1536,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "ESPN+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772826/competitions/401772826/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772826/competitions/401772826/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "8": [
@@ -1120,7 +1552,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772942/competitions/401772942/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772942/competitions/401772942/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -1130,7 +1566,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772760/competitions/401772760/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772760/competitions/401772760/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -1140,7 +1580,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772758/competitions/401772758/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772758/competitions/401772758/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -1150,7 +1594,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772868/competitions/401772868/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772868/competitions/401772868/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -1160,7 +1608,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772867/competitions/401772867/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772867/competitions/401772867/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -1170,7 +1622,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772865/competitions/401772865/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772865/competitions/401772865/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -1180,7 +1636,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772759/competitions/401772759/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772759/competitions/401772759/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -1190,7 +1650,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772866/competitions/401772866/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772866/competitions/401772866/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -1200,7 +1664,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772869/competitions/401772869/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772869/competitions/401772869/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -1210,7 +1678,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772762/competitions/401772762/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772762/competitions/401772762/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -1220,7 +1692,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772761/competitions/401772761/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772761/competitions/401772761/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1230,7 +1706,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772925/competitions/401772925/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772925/competitions/401772925/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -1241,7 +1721,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772817/competitions/401772817/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772817/competitions/401772817/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "9": [
@@ -1253,7 +1737,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772943/competitions/401772943/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772943/competitions/401772943/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -1263,7 +1751,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772765/competitions/401772765/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772765/competitions/401772765/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Detroit Lions",
@@ -1273,7 +1765,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772871/competitions/401772871/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772871/competitions/401772871/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -1283,7 +1779,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772872/competitions/401772872/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772872/competitions/401772872/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -1293,7 +1793,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772764/competitions/401772764/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772764/competitions/401772764/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -1303,7 +1807,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772763/competitions/401772763/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772763/competitions/401772763/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -1313,7 +1821,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772767/competitions/401772767/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772767/competitions/401772767/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1323,7 +1835,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772766/competitions/401772766/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772766/competitions/401772766/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -1333,7 +1849,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772870/competitions/401772870/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772870/competitions/401772870/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -1343,7 +1863,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772873/competitions/401772873/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772873/competitions/401772873/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -1353,7 +1877,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772874/competitions/401772874/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772874/competitions/401772874/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -1363,7 +1891,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772768/competitions/401772768/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772768/competitions/401772768/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -1373,7 +1905,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772926/competitions/401772926/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772926/competitions/401772926/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -1384,7 +1920,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772818/competitions/401772818/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772818/competitions/401772818/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "10": [
@@ -1396,7 +1936,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772944/competitions/401772944/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772944/competitions/401772944/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -1408,7 +1952,11 @@
         ],
         "streaming_networks": [
           "NFL+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772636/competitions/401772636/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772636/competitions/401772636/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -1418,7 +1966,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772875/competitions/401772875/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772875/competitions/401772875/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -1428,7 +1980,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772771/competitions/401772771/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -1438,7 +1994,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772876/competitions/401772876/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772876/competitions/401772876/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -1448,7 +2008,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772769/competitions/401772769/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772769/competitions/401772769/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -1458,7 +2022,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772772/competitions/401772772/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772772/competitions/401772772/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -1468,7 +2036,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772877/competitions/401772877/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772877/competitions/401772877/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -1478,7 +2050,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772770/competitions/401772770/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772770/competitions/401772770/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -1488,7 +2064,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772773/competitions/401772773/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772773/competitions/401772773/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -1498,7 +2078,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772879/competitions/401772879/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772879/competitions/401772879/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -1508,7 +2092,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772878/competitions/401772878/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772878/competitions/401772878/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -1518,7 +2106,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772927/competitions/401772927/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772927/competitions/401772927/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -1529,7 +2121,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772630/competitions/401772630/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772630/competitions/401772630/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "11": [
@@ -1541,7 +2137,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772945/competitions/401772945/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772945/competitions/401772945/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -1553,7 +2153,11 @@
         ],
         "streaming_networks": [
           "NFL+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772631/competitions/401772631/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772631/competitions/401772631/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -1563,7 +2167,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772882/competitions/401772882/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772882/competitions/401772882/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -1573,7 +2181,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772776/competitions/401772776/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772776/competitions/401772776/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -1583,7 +2195,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772881/competitions/401772881/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772881/competitions/401772881/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -1593,7 +2209,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772880/competitions/401772880/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772880/competitions/401772880/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -1603,7 +2223,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772883/competitions/401772883/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772883/competitions/401772883/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1613,7 +2237,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772774/competitions/401772774/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -1623,7 +2251,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772775/competitions/401772775/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772775/competitions/401772775/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -1633,7 +2265,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772884/competitions/401772884/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772884/competitions/401772884/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -1643,7 +2279,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772885/competitions/401772885/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772885/competitions/401772885/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -1653,7 +2293,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772777/competitions/401772777/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772777/competitions/401772777/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -1663,7 +2307,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772778/competitions/401772778/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772778/competitions/401772778/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -1673,7 +2321,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772928/competitions/401772928/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772928/competitions/401772928/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -1684,7 +2336,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772819/competitions/401772819/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772819/competitions/401772819/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "12": [
@@ -1696,7 +2352,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772946/competitions/401772946/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772946/competitions/401772946/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -1706,7 +2366,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772780/competitions/401772780/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772780/competitions/401772780/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -1716,7 +2380,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772781/competitions/401772781/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772781/competitions/401772781/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Detroit Lions",
@@ -1726,7 +2394,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772888/competitions/401772888/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772888/competitions/401772888/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -1736,7 +2408,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772887/competitions/401772887/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772887/competitions/401772887/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -1746,7 +2422,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772886/competitions/401772886/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772886/competitions/401772886/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -1756,7 +2436,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772779/competitions/401772779/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772779/competitions/401772779/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -1766,7 +2450,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772782/competitions/401772782/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772782/competitions/401772782/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -1776,7 +2464,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772784/competitions/401772784/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772784/competitions/401772784/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -1786,7 +2478,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772783/competitions/401772783/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772783/competitions/401772783/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -1796,7 +2492,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772890/competitions/401772890/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772890/competitions/401772890/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -1806,7 +2506,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772889/competitions/401772889/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772889/competitions/401772889/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -1816,7 +2520,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772929/competitions/401772929/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772929/competitions/401772929/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -1826,7 +2534,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772820/competitions/401772820/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772820/competitions/401772820/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "13": [
@@ -1838,7 +2550,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772891/competitions/401772891/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772891/competitions/401772891/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -1850,7 +2566,11 @@
         ],
         "streaming_networks": [
           "Paramount+"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772694/competitions/401772694/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772694/competitions/401772694/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -1860,7 +2580,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772930/competitions/401772930/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772930/competitions/401772930/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -1870,7 +2594,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772621/competitions/401772621/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772621/competitions/401772621/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -1880,7 +2608,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772785/competitions/401772785/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772785/competitions/401772785/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -1890,7 +2622,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772786/competitions/401772786/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772786/competitions/401772786/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -1900,7 +2636,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772787/competitions/401772787/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772787/competitions/401772787/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -1910,7 +2650,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772892/competitions/401772892/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772892/competitions/401772892/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -1920,7 +2664,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772893/competitions/401772893/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772893/competitions/401772893/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -1930,7 +2678,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772895/competitions/401772895/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772895/competitions/401772895/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -1940,7 +2692,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772894/competitions/401772894/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772894/competitions/401772894/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -1950,7 +2706,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772896/competitions/401772896/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772896/competitions/401772896/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1960,7 +2720,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772789/competitions/401772789/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772789/competitions/401772789/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -1970,7 +2734,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772788/competitions/401772788/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772788/competitions/401772788/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -1980,7 +2748,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772931/competitions/401772931/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772931/competitions/401772931/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -1990,7 +2762,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772821/competitions/401772821/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772821/competitions/401772821/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "14": [
@@ -2002,7 +2778,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772947/competitions/401772947/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772947/competitions/401772947/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -2012,7 +2792,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772900/competitions/401772900/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772900/competitions/401772900/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -2022,7 +2806,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772898/competitions/401772898/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772898/competitions/401772898/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -2032,7 +2820,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772897/competitions/401772897/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772897/competitions/401772897/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -2042,7 +2834,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772899/competitions/401772899/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772899/competitions/401772899/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -2052,7 +2848,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772790/competitions/401772790/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772790/competitions/401772790/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -2062,7 +2862,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772792/competitions/401772792/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772792/competitions/401772792/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -2072,7 +2876,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772793/competitions/401772793/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772793/competitions/401772793/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -2082,7 +2890,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772791/competitions/401772791/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772791/competitions/401772791/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -2092,7 +2904,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772794/competitions/401772794/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772794/competitions/401772794/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -2102,7 +2918,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772902/competitions/401772902/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772902/competitions/401772902/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -2112,7 +2932,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772901/competitions/401772901/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772901/competitions/401772901/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -2122,7 +2946,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772932/competitions/401772932/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772932/competitions/401772932/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -2133,7 +2961,11 @@
           "ABC",
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772822/competitions/401772822/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772822/competitions/401772822/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "15": [
@@ -2145,7 +2977,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772948/competitions/401772948/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772948/competitions/401772948/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -2155,7 +2991,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772904/competitions/401772904/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772904/competitions/401772904/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -2165,7 +3005,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772796/competitions/401772796/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772796/competitions/401772796/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -2175,7 +3019,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772798/competitions/401772798/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772798/competitions/401772798/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -2185,7 +3033,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772795/competitions/401772795/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772795/competitions/401772795/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -2195,7 +3047,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772905/competitions/401772905/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772905/competitions/401772905/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -2205,7 +3061,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772906/competitions/401772906/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772906/competitions/401772906/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -2215,7 +3075,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772797/competitions/401772797/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772797/competitions/401772797/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -2225,7 +3089,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772903/competitions/401772903/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772903/competitions/401772903/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -2235,7 +3103,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772800/competitions/401772800/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772800/competitions/401772800/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -2245,7 +3117,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772909/competitions/401772909/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772909/competitions/401772909/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -2255,7 +3131,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772908/competitions/401772908/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772908/competitions/401772908/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -2265,7 +3145,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772907/competitions/401772907/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772907/competitions/401772907/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Seattle Seahawks",
@@ -2275,7 +3159,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772799/competitions/401772799/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772799/competitions/401772799/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -2285,7 +3173,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772933/competitions/401772933/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772933/competitions/401772933/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -2295,7 +3187,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772823/competitions/401772823/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772823/competitions/401772823/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "16": [
@@ -2307,7 +3203,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772949/competitions/401772949/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772949/competitions/401772949/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -2317,7 +3217,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772613/competitions/401772613/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772613/competitions/401772613/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Washington Commanders",
@@ -2327,7 +3231,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772612/competitions/401772612/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772612/competitions/401772612/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -2337,7 +3245,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772802/competitions/401772802/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772802/competitions/401772802/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Dallas Cowboys",
@@ -2347,7 +3259,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772910/competitions/401772910/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772910/competitions/401772910/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -2357,7 +3273,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772803/competitions/401772803/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772803/competitions/401772803/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New Orleans Saints",
@@ -2367,7 +3287,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772801/competitions/401772801/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772801/competitions/401772801/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -2377,7 +3301,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772911/competitions/401772911/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772911/competitions/401772911/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -2387,7 +3315,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772912/competitions/401772912/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772912/competitions/401772912/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Baltimore Ravens",
@@ -2397,7 +3329,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772804/competitions/401772804/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772804/competitions/401772804/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -2407,7 +3343,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772913/competitions/401772913/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772913/competitions/401772913/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Arizona Cardinals",
@@ -2417,7 +3357,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772914/competitions/401772914/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772914/competitions/401772914/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Detroit Lions",
@@ -2427,7 +3371,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772806/competitions/401772806/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772806/competitions/401772806/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -2437,7 +3385,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772805/competitions/401772805/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772805/competitions/401772805/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -2447,7 +3399,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772934/competitions/401772934/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772934/competitions/401772934/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -2457,7 +3413,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772824/competitions/401772824/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772824/competitions/401772824/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "17": [
@@ -2469,7 +3429,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Netflix"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772710/competitions/401772710/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772710/competitions/401772710/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -2479,7 +3443,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Netflix"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772711/competitions/401772711/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772711/competitions/401772711/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -2489,7 +3457,11 @@
         "tv_networks": [],
         "streaming_networks": [
           "Prime Video"
-        ]
+        ],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772622/competitions/401772622/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772622/competitions/401772622/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -2497,7 +3469,11 @@
         "location": "Cincinnati, OH",
         "kickoff_est": "2025-12-27T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772954/competitions/401772954/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Green Bay Packers",
@@ -2505,7 +3481,11 @@
         "location": "Green Bay, WI",
         "kickoff_est": "2025-12-27T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772953/competitions/401772953/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -2513,7 +3493,11 @@
         "location": "Las Vegas, NV",
         "kickoff_est": "2025-12-27T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772950/competitions/401772950/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -2521,7 +3505,11 @@
         "location": "Inglewood, CA",
         "kickoff_est": "2025-12-27T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772951/competitions/401772951/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Carolina Panthers",
@@ -2529,7 +3517,11 @@
         "location": "Charlotte, NC",
         "kickoff_est": "2025-12-27T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772952/competitions/401772952/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cleveland Browns",
@@ -2539,7 +3531,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772807/competitions/401772807/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772807/competitions/401772807/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tennessee Titans",
@@ -2549,7 +3545,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772809/competitions/401772809/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772809/competitions/401772809/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Indianapolis Colts",
@@ -2559,7 +3559,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772915/competitions/401772915/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772915/competitions/401772915/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Miami Dolphins",
@@ -2569,7 +3573,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772916/competitions/401772916/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772916/competitions/401772916/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Jets",
@@ -2579,7 +3587,11 @@
         "tv_networks": [
           "CBS"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772808/competitions/401772808/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772808/competitions/401772808/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -2589,7 +3601,11 @@
         "tv_networks": [
           "FOX"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772917/competitions/401772917/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772917/competitions/401772917/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -2599,7 +3615,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772935/competitions/401772935/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772935/competitions/401772935/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Atlanta Falcons",
@@ -2609,7 +3629,11 @@
         "tv_networks": [
           "ESPN"
         ],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772825/competitions/401772825/status?lang=en&region=us",
+        "odds_ref": null,
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ],
     "18": [
@@ -2619,7 +3643,11 @@
         "location": "Atlanta, GA",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772966/competitions/401772966/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772966/competitions/401772966/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Buffalo Bills",
@@ -2627,7 +3655,11 @@
         "location": "Orchard Park, NY",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772967/competitions/401772967/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772967/competitions/401772967/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Chicago Bears",
@@ -2635,7 +3667,11 @@
         "location": "Chicago, IL",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772965/competitions/401772965/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772965/competitions/401772965/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -2643,7 +3679,11 @@
         "location": "Cincinnati, OH",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772964/competitions/401772964/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772964/competitions/401772964/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Denver Broncos",
@@ -2651,7 +3691,11 @@
         "location": "Denver, CO",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772956/competitions/401772956/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772956/competitions/401772956/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -2659,7 +3703,11 @@
         "location": "Las Vegas, NV",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772957/competitions/401772957/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772957/competitions/401772957/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Los Angeles Rams",
@@ -2667,7 +3715,11 @@
         "location": "Inglewood, CA",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772955/competitions/401772955/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772955/competitions/401772955/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Minnesota Vikings",
@@ -2675,7 +3727,11 @@
         "location": "Minneapolis, MN",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772968/competitions/401772968/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772968/competitions/401772968/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New England Patriots",
@@ -2683,7 +3739,11 @@
         "location": "Foxborough, MA",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772958/competitions/401772958/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772958/competitions/401772958/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "New York Giants",
@@ -2691,7 +3751,11 @@
         "location": "East Rutherford, NJ",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772963/competitions/401772963/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772963/competitions/401772963/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -2699,7 +3763,11 @@
         "location": "Philadelphia, PA",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772959/competitions/401772959/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772959/competitions/401772959/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -2707,7 +3775,11 @@
         "location": "Pittsburgh, PA",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772960/competitions/401772960/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772960/competitions/401772960/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "San Francisco 49ers",
@@ -2715,7 +3787,11 @@
         "location": "Santa Clara, CA",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772961/competitions/401772961/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772961/competitions/401772961/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -2723,7 +3799,11 @@
         "location": "Tampa, FL",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772969/competitions/401772969/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772969/competitions/401772969/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -2731,7 +3811,11 @@
         "location": "Jacksonville, FL",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772970/competitions/401772970/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772970/competitions/401772970/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       },
       {
         "home_team": "Houston Texans",
@@ -2739,7 +3823,11 @@
         "location": "Houston, TX",
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
-        "streaming_networks": []
+        "streaming_networks": [],
+        "status_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772962/competitions/401772962/status?lang=en&region=us",
+        "odds_ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401772962/competitions/401772962/odds?lang=en&region=us",
+        "leaders_ref": null,
+        "probs_ref": null
       }
     ]
   },

@@ -122,7 +122,7 @@ class ESPNService:
         tv, streaming = [], []
 
         broadcasts = await self.deref_if_needed(session, broadcasts_ref)
-        logger.info(f"broadcasts:{broadcasts}")
+        # logger.info(f"broadcasts:{broadcasts}")
         if not isinstance(broadcasts, dict):
             return tv, streaming
 
@@ -173,19 +173,19 @@ class ESPNService:
         url = ESPN_EVENTS_URL.format(year=year, week=week)
         async with aiohttp.ClientSession() as session:
             index = await self.fetch_json(session, url)
-            logger.info(f"index: {index}")
+            # logger.info(f"index: {index}")
             items = index.get("items") or []
             games: list[dict] = []
 
             for item in items:
                 # Each item is {"$ref": ".../events/{eventId}"}
                 event = await self.deref_if_needed(session, item)
-                logger.info(f"event: {event}")
+                # logger.info(f"event: {event}")
                 if not isinstance(event, dict):
                     continue
 
                 competitions = await self.deref_if_needed(session, event.get("competitions") or [])
-                logger.info(f"competitions: {competitions}")
+                # logger.info(f"competitions: {competitions}")
                 if not competitions:
                     continue
                 comp = competitions[0]
@@ -196,7 +196,7 @@ class ESPNService:
 
                 # competitors (home/away + team refs)
                 competitors = await self.deref_if_needed(session, comp.get("competitors") or [])
-                logger.info(f"competitors: {competitors}")
+                # logger.info(f"competitors: {competitors}")
                 home_team = away_team = None
                 for c in competitors:
                     team_info = await self.get_team_display(session, c.get("team"))
@@ -221,6 +221,19 @@ class ESPNService:
                     location_parts = [p for p in (city, country) if p]
                 location = ", ".join(location_parts) if location_parts else None
 
+                # status / odds / leaders / probabilities $ref
+                status = comp.get("status") or {}
+                status_ref = status.get("$ref")
+
+                odds = comp.get("odds") or {}
+                odds_ref = odds.get("$ref")
+
+                leaders = comp.get("leaders") or {}
+                leaders_ref = leaders.get("$ref")
+
+                probs = comp.get("probabilities") or {}
+                probs_ref = probs.get("$ref")
+
                 # broadcasts
                 tv_networks, streaming_networks = await self.get_broadcasts(session, comp.get("broadcasts"))
 
@@ -231,6 +244,10 @@ class ESPNService:
                     "kickoff_est": kickoff_iso_est,
                     "tv_networks": tv_networks,
                     "streaming_networks": streaming_networks,
+                    "status_ref": status_ref,
+                    "odds_ref": odds_ref,
+                    "leaders_ref": leaders_ref,
+                    "probs_ref": probs_ref
                 })
             
             logger.info(games)
