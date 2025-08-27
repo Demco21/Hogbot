@@ -24,6 +24,21 @@ ESPN_EVENTS_URL = (
     "seasons/{year}/types/2/weeks/{week}/events?lang=en&region=us"
 )
 
+ESPN_STATUS_URL = (
+    "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/"
+    "events/{game_id}/competitions/{game_id}/status?lang=en&region=us"
+)
+
+ESPN_ODDS_URL = (
+    "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/"
+    "events/{game_id}/competitions/{game_id}/odds?lang=en&region=us"
+)
+
+ESPN_REG_SEASONS_URL = (
+    "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/"
+    "seasons/{year}/types/2/weeks/{week}/events?lang=en&region=us"
+)
+
 NY_TZ = ZoneInfo("America/New_York")
 
 NFL_TEAM_LOGOS = {
@@ -153,7 +168,96 @@ class ESPNService:
 
         return dedup(tv), dedup(streaming)
 
-    # --------------------- main service ---------------------
+    async def get_nfl_game_odds(self, game_id: str) -> dict[str, float | int | str | None]:
+        url = ESPN_ODDS_URL.format(game_id=game_id)
+
+        async with aiohttp.ClientSession() as session:
+            index = await self.fetch_json(session, url)
+            items = index.get("items") or []
+            odds_list: list[dict] = []
+
+            for item in items:
+                odds = await self.deref_if_needed(session, item)
+                if odds:
+                    odds_list.append(odds)
+
+            if not odds_list:
+                return {
+                    "over_under": None,
+                    "home_ml": None,
+                    "away_ml": None,
+                    "spread": None,
+                }
+
+            # Pick provider with lowest priority
+            def priority(o: dict) -> int:
+                prov = o.get("provider") or {}
+                try:
+                    return int(prov.get("priority", 1_000_000))
+                except Exception:
+                    return 1_000_000
+
+            odds_list.sort(key=priority)
+            o = odds_list[0]
+
+            # --- Over/Under ---
+            over_under = o.get("overUnder")
+            if over_under is None:
+                total = (o.get("current") or {}).get("total") or {}
+                try:
+                    over_under = float(total.get("american")) if total.get("american") else None
+                except Exception:
+                    over_under = None
+
+            # --- Moneylines ---
+            def extract_moneyline(team_odds: dict) -> int | None:
+                if not team_odds:
+                    return None
+                ml = team_odds.get("moneyLine")
+                if ml is not None:
+                    try:
+                        return int(ml)
+                    except Exception:
+                        pass
+                cur_ml = ((team_odds.get("current") or {}).get("moneyLine") or {}).get("alternateDisplayValue")
+                if cur_ml:
+                    try:
+                        return int(cur_ml)
+                    except Exception:
+                        return None
+                return None
+
+            home_ml = extract_moneyline(o.get("homeTeamOdds"))
+            away_ml = extract_moneyline(o.get("awayTeamOdds"))
+
+            # --- Spread ---
+            spread_val = o.get("spread")
+            spread_str = None
+            if spread_val is not None:
+                # Determine which team is favorite
+                team_ref = None
+                if (o.get("homeTeamOdds") or {}).get("favorite"):
+                    team_ref = o["homeTeamOdds"]["team"]["$ref"]
+                elif (o.get("awayTeamOdds") or {}).get("favorite"):
+                    team_ref = o["awayTeamOdds"]["team"]["$ref"]
+
+                team_name = None
+                if team_ref:
+                    try:
+                        team_obj = await self.deref_if_needed(session, {"$ref": team_ref})
+                        team_name = team_obj.get("abbreviation") or team_obj.get("displayName")
+                    except Exception:
+                        pass
+
+                if team_name:
+                    spread_str = f"{team_name} {spread_val}"
+
+            return {
+                "over_under": over_under,  # float like 46.5
+                "home_ml": home_ml,        # int like -290
+                "away_ml": away_ml,        # int like 240
+                "spread": spread_str,      # str like "PHI -6.5"
+            }
 
     async def get_nfl_week_games(self, year: int, week: int) -> list[dict]:
         """
@@ -197,14 +301,17 @@ class ESPNService:
                 # competitors (home/away + team refs)
                 competitors = await self.deref_if_needed(session, comp.get("competitors") or [])
                 # logger.info(f"competitors: {competitors}")
-                home_team = away_team = None
+                home_team = away_team = home_abbrv = away_abbrv = None
                 for c in competitors:
                     team_info = await self.get_team_display(session, c.get("team"))
                     name = team_info["name"] or team_info["abbreviation"]
+                    abbrvName = team_info["abbreviation"] or None
                     if c.get("homeAway") == "home":
                         home_team = name
+                        home_abbrv = abbrvName
                     elif c.get("homeAway") == "away":
                         away_team = name
+                        away_abbrv = abbrvName
 
                 # venue / location
                 venue = await self.deref_if_needed(session, comp.get("venue"))
@@ -222,17 +329,7 @@ class ESPNService:
                 location = ", ".join(location_parts) if location_parts else None
 
                 # status / odds / leaders / probabilities $ref
-                status = comp.get("status") or {}
-                status_ref = status.get("$ref")
-
-                odds = comp.get("odds") or {}
-                odds_ref = odds.get("$ref")
-
-                leaders = comp.get("leaders") or {}
-                leaders_ref = leaders.get("$ref")
-
-                probs = comp.get("probabilities") or {}
-                probs_ref = probs.get("$ref")
+                game_id = comp.get("id") or ""
 
                 # broadcasts
                 tv_networks, streaming_networks = await self.get_broadcasts(session, comp.get("broadcasts"))
@@ -240,14 +337,13 @@ class ESPNService:
                 games.append({
                     "home_team": home_team,
                     "away_team": away_team,
+                    "home_abbrv": home_abbrv,
+                    "away_abbrv": away_abbrv,
                     "location": location,
                     "kickoff_est": kickoff_iso_est,
                     "tv_networks": tv_networks,
                     "streaming_networks": streaming_networks,
-                    "status_ref": status_ref,
-                    "odds_ref": odds_ref,
-                    "leaders_ref": leaders_ref,
-                    "probs_ref": probs_ref
+                    "game_id": game_id
                 })
             
             logger.info(games)
@@ -272,6 +368,7 @@ class ESPNService:
         import os
         import json
 
+        logger.info("started dump_regular_season_games")
         out_path = out_path or f"data/nfl_game_dump_{year}.json"
 
         # 1) Find the number of regular-season weeks from ESPN Core (types/2)
@@ -340,6 +437,7 @@ class ESPNService:
             json.dump(dump_obj, f, indent=2, ensure_ascii=False)
 
         logger.info(f"Wrote NFL game dump to {out_path}")
+        logger.info("end dump_regular_season_games")
         return dump_obj
 
 __all__ = ["ESPNService"]

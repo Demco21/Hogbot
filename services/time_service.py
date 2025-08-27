@@ -30,23 +30,23 @@ class TimeService:
         self.bot = bot
 
     def get_name(self, member):
-            escaped_name = member.name.replace("_", "\\_") # If player name contains _ then need to add backslash so Discord doesn't make it italic
-            return f"{escaped_name}"
+        escaped_name = member.name.replace("_", "\\_") # If player name contains _ then need to add backslash so Discord doesn't make it italic
+        return f"{escaped_name}"
 
     def pop_timestamp_and_calculate(self, key):
-            timestamps = self.state.timestamps
-            lifetime_sums = self.state.lifetime_sums
-            this_week_time_sums = self.state.this_week_time_sums
-            if key in timestamps:
-                join_time = timestamps.pop(key)
-                time_spent = datetime.now() - join_time
-                if key not in lifetime_sums:
-                    lifetime_sums[key] = timedelta()
-                lifetime_sums[key] += time_spent
-                if key not in this_week_time_sums:
-                    this_week_time_sums[key] = timedelta()
-                this_week_time_sums[key] += time_spent
-                return time_spent
+        timestamps = self.state.timestamps
+        lifetime_sums = self.state.lifetime_sums
+        this_week_time_sums = self.state.this_week_time_sums
+        if key in timestamps:
+            join_time = timestamps.pop(key)
+            time_spent = datetime.now() - join_time
+            if key not in lifetime_sums:
+                lifetime_sums[key] = timedelta()
+            lifetime_sums[key] += time_spent
+            if key not in this_week_time_sums:
+                this_week_time_sums[key] = timedelta()
+            this_week_time_sums[key] += time_spent
+            return time_spent
 
     async def time_spent_all_members(self, ctx, time_sums, time_type: str = ''):
         try:
@@ -166,6 +166,7 @@ class TimeService:
 
                 self.state.scoreboard_msg = data.get("scoreboard_msg", {})
                 self.state.roster_messages = data.get("roster_messages", {})
+                self.state.nfl_games_msgs = data.get("nfl_games_msgs", {})
                 
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
@@ -268,7 +269,8 @@ class TimeService:
                 "hogbot_start_date": self.state.hogbot_start_date,
                 "current_chancellor_id": self.state.current_chancellor_id,
                 "scoreboard_msg": self.state.scoreboard_msg,
-                "roster_messages": self.state.roster_messages
+                "roster_messages": self.state.roster_messages,
+                "nfl_games_msgs": self.state.nfl_games_msgs
             }
 
             with open(TIME_DATA_FILE, "w") as file:

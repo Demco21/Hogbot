@@ -1,7 +1,7 @@
 import discord
 from logging_config import logger
 from pytz import timezone
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone as dt_timezone
 import json
 from collections import defaultdict
 from bot_state import BotState
@@ -225,7 +225,6 @@ class NFLService:
     async def post_schedule(self, week, games, bye_teams):
         try:
             logger.info("Posting NFL schedule")
-            games_by_date = self._group_new_games_by_date(games)
 
             channel = self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
             if not channel:
@@ -240,50 +239,18 @@ class NFLService:
             week_embed.set_thumbnail(url=NFL_LOGO)
             await channel.send(embed=week_embed)
 
-            # One embed per date
-            for date in sorted(games_by_date.keys()):
-                dt = datetime.strptime(date, "%Y-%m-%d")
-                date_header = dt.strftime("%A, %B %d")
+            games_embed = await self.get_games_embed(games)
+            nfl_game_msgs = {}
+            for date, embed in games_embed.items():
+                msg = await channel.send(embed=embed)
+                info = {
+                    "message_id": msg.id,
+                    "channel_id": channel.id
 
-                date_embed = discord.Embed(
-                    title=f"📅 {date_header}",
-                    color=discord.Color.blue()
-                )
+                }
+                nfl_game_msgs[date] = info
 
-                for g in sorted(games_by_date[date], key=lambda x: x.get("kickoff_est", "")):
-                    away_team = g.get("away_team")
-                    home_team = g.get("home_team")
-                    away_emoji = f"<:{NFL_TEAM_LOGOS[away_team]['logo_name']}:{NFL_TEAM_LOGOS[away_team]['logo_id']}>" if away_team in NFL_TEAM_LOGOS else ""
-                    home_emoji = f"<:{NFL_TEAM_LOGOS[home_team]['logo_name']}:{NFL_TEAM_LOGOS[home_team]['logo_id']}>" if home_team in NFL_TEAM_LOGOS else ""
-
-                    # time from kickoff_est
-                    try:
-                        kdt = self._parse_est_date(g["kickoff_est"])
-                        time_str = kdt.strftime("%I:%M %p").lstrip("0")
-                    except Exception:
-                        time_str = "TBD"
-
-                    tv_list = g.get("tv_networks") or []
-                    stream_list = g.get("streaming_networks") or []
-                    parts = [f"🕒 {time_str}"]
-                    if tv_list:
-                        parts.append(f"📺 {', '.join(tv_list)}")
-                    if stream_list:
-                        parts.append(f"💻 {', '.join(stream_list)}")
-
-                    game_line = (
-                        f"{away_emoji} **{away_team}** at "
-                        f"{home_emoji} **{home_team}**\n"
-                        f"{' | '.join(parts)}"
-                    )
-
-                    location = g.get("location")
-                    if location:
-                        game_line += f"\n📍 {location}"
-
-                    date_embed.add_field(name="\u200b", value=game_line, inline=False)
-
-                await channel.send(embed=date_embed)
+            self.state.nfl_games_msgs = nfl_game_msgs
 
             if bye_teams:
                 bye_embed = discord.Embed(
@@ -300,5 +267,153 @@ class NFLService:
 
         except Exception as e:
             logger.error(f"Failed to post NFL schedule: {e}")
+    
+    async def update_schedule_current_week(self):
+        try:
+            try:
+                with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                logger.info(f"Loaded schedule file: {NFL_SCHEDULE_FILE}")
+            except Exception as e:
+                logger.error(f"Failed to load schedule JSON: {e}")
+                return
+
+            weeks: dict = data.get("weeks", {})
+
+            if not self.bot.nfl_season_started:
+                logger.info(f"NFL Season has not started. Skipping.")
+                return
+
+            current_week = self.bot.current_nfl_week
+            if current_week is None:
+                logger.info("Could not determine current NFL week from schedule; skipping.")
+                return
+
+            week_key = str(current_week)
+            week_games = weeks.get(week_key, [])
+            await self.update_schedule(current_week, week_games)
+        except Exception as e:
+            logger.error(f"Failed to post NFL schedule for current week: {e}")
+    
+    async def update_schedule(self, week, games):
+        try:
+            logger.info("Updating NFL schedule")
+            games_embed = await self.get_games_embed(games)
+            for date, embed in games_embed.items():
+                info = self.state.nfl_games_msgs[date]
+                logger.info(f"info: {info}")
+                await self.update_embed(embed, info)
+
+        except Exception as e:
+            logger.error(f"Failed to post NFL schedule: {e}")
+
+    async def get_games_embed(self, games):
+        if not games:
+            return None
+        
+        games_by_date = self._group_new_games_by_date(games)
+        games_embed = {}
+
+        for date in sorted(games_by_date.keys()):
+            dt = datetime.strptime(date, "%Y-%m-%d")
+            date_header = dt.strftime("%A, %B %d")
+
+            date_embed = discord.Embed(
+                title=f"📅 {date_header}",
+                color=discord.Color.blue()
+            )
+
+            for g in sorted(games_by_date[date], key=lambda x: x.get("kickoff_est", "")):
+                away_team = g.get("away_team")
+                home_team = g.get("home_team")
+                away_abbrv = g.get("away_abbrv")
+                home_abbrv = g.get("home_abbrv")
+                away_emoji = f"<:{NFL_TEAM_LOGOS[away_team]['logo_name']}:{NFL_TEAM_LOGOS[away_team]['logo_id']}>" if away_team in NFL_TEAM_LOGOS else ""
+                home_emoji = f"<:{NFL_TEAM_LOGOS[home_team]['logo_name']}:{NFL_TEAM_LOGOS[home_team]['logo_id']}>" if home_team in NFL_TEAM_LOGOS else ""
+
+                # time from kickoff_est
+                try:
+                    kdt = self._parse_est_date(g["kickoff_est"])
+                    time_str = kdt.strftime("%I:%M %p").lstrip("0")
+                except Exception:
+                    time_str = "TBD"
+
+                tv_list = g.get("tv_networks") or []
+                stream_list = g.get("streaming_networks") or []
+                parts = [f"🕒 {time_str}"]
+                if tv_list:
+                    parts.append(f"📺 {', '.join(tv_list)}")
+                if stream_list:
+                    parts.append(f"💻 {', '.join(stream_list)}")
+
+                game_line = (
+                    f"{away_emoji} **{away_team}** at "
+                    f"{home_emoji} **{home_team}**"
+                )
+
+                game_id = g.get("game_id")
+                game_odds = await self.bot.espn_service.get_nfl_game_odds(game_id)
+
+                # ---- Pretty odds formatting (only changes here) ----
+                def _fmt_ml(v):
+                    return f"{v:+d}" if isinstance(v, int) else "—"
+
+                def _fmt_ou(v):
+                    try:
+                        return f"{float(v):.1f}"
+                    except Exception:
+                        return "—"
+
+                ou = game_odds.get('over_under')
+                home_ml = game_odds.get('home_ml')
+                away_ml = game_odds.get('away_ml')
+                spread = game_odds.get('spread')
+
+                ou_and_spread = []
+                if spread:
+                    ou_and_spread.append(f"⚖️ **Spread** {spread}")
+                if ou:
+                    ou_and_spread.append(f"📈📉 **OverUnder** {_fmt_ou(ou)}")
+                
+                moneylines = []
+                if home_ml is not None or away_ml is not None:
+                    moneylines = (
+                        f"\n💵 **Moneylines** {away_abbrv} {_fmt_ml(away_ml)}"
+                        f" | {home_abbrv} {_fmt_ml(home_ml)}"
+                    )
+                
+                game_line += "\n" + " | ".join(ou_and_spread)
+                game_line += moneylines
+
+                game_line += f"\n{' | '.join(parts)}"
+                location = g.get("location")
+                if location:
+                    game_line += f"\n📍 {location}"
+
+                date_embed.add_field(name="\u200b", value=game_line, inline=False)
+
+            games_embed[date] = date_embed
+        return games_embed
+
+    async def update_embed(self, new_embed, info):
+        try:
+            if not info:
+                return
+
+            channel = self.bot.get_channel(info["channel_id"]) or await self.bot.fetch_channel(info["channel_id"])
+            msg = await channel.fetch_message(info["message_id"])
+
+            # Always use UTC for Discord timestamp
+            new_embed.timestamp = datetime.now(dt_timezone.utc)
+
+            # Also change footer text so the payload is guaranteed different (even if same-second)
+            # If you prefer local time in the footer, format it here and still keep timestamp in UTC.
+            new_embed.set_footer(text=f"Last updated")
+
+            await msg.edit(embed=new_embed)
+            return True
+        except Exception as e:
+            logger.error(f"Error updating nfl game embed: {e}")
+            return False
 
 __all__ = ['NFLService']

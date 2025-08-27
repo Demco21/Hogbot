@@ -45,6 +45,7 @@ async def on_ready():
 
 def setup_scheduler(bot):
     nfl_job = bot.nfl_service.post_schedule_current_week
+    nfl_upd_job = bot.nfl_service.update_schedule_current_week
     update_nfl_states = bot.nfl_service.set_nfl_bot_states
     yahoo_ff_job = bot.yahoo_ff_service.get_matchups
     change_channel_job = bot.channel_change_service.change_channel_name
@@ -53,6 +54,7 @@ def setup_scheduler(bot):
 
     scheduler = AsyncIOScheduler()
     scheduler.add_job(nfl_job, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
+    scheduler.add_job(nfl_upd_job, CronTrigger(hour='*', minute=30, timezone=timezone('America/New_York')))
     scheduler.add_job(update_nfl_states, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
     scheduler.add_job(yahoo_ff_job, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))
@@ -79,5 +81,9 @@ async def espn(ctx):
 @bot.command(name='games')
 async def games(ctx):
     await bot.nfl_service.post_schedule_current_week()
+
+@bot.command(name='gamesupd')
+async def games(ctx):
+    await bot.nfl_service.update_schedule_current_week()
 
 bot.run(DISCORD_TOKEN)
