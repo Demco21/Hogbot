@@ -113,7 +113,7 @@ class ESPNService:
             return out
         return maybe_ref
 
-    async def get_team_display(self, session: aiohttp.ClientSession, team_ref) -> dict:
+    async def get_team_display(self, session: aiohttp.ClientSession, team_ref):
         """Return best-effort team identification dict."""
         team = await self.deref_if_needed(session, team_ref)
         if not isinstance(team, dict):
@@ -130,7 +130,7 @@ class ESPNService:
             "abbreviation": team.get("abbreviation"),
         }
 
-    async def get_broadcasts(self, session: aiohttp.ClientSession, broadcasts_ref) -> tuple[list, list]:
+    async def get_broadcasts(self, session: aiohttp.ClientSession, broadcasts_ref):
         """
         Returns (tv_networks, streaming_networks).
         """
@@ -168,7 +168,7 @@ class ESPNService:
 
         return dedup(tv), dedup(streaming)
 
-    async def get_nfl_game_odds(self, game_id: str) -> dict[str, float | int | str | None]:
+    async def get_nfl_game_odds(self, game_id: str):
         url = ESPN_ODDS_URL.format(game_id=game_id)
 
         async with aiohttp.ClientSession() as session:
@@ -259,7 +259,7 @@ class ESPNService:
                 "spread": spread_str,      # str like "PHI -6.5"
             }
 
-    async def get_nfl_week_games(self, year: int, week: int) -> list[dict]:
+    async def get_nfl_week_games(self, year: int, week: int):
         """
         Fetch all NFL games for a given season week from ESPN Core API and return:
         [
@@ -349,7 +349,7 @@ class ESPNService:
             logger.info(games)
             return games
 
-    async def dump_regular_season_games(self, year: int, out_path: str | None = None) -> dict:
+    async def dump_regular_season_games(self, year: int, out_path: str | None = None):
         """
         Build a season-wide dump using get_nfl_week_games for every regular-season week.
         Adds a "byes" map computed as teams not appearing in that week's games.

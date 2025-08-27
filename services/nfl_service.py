@@ -87,7 +87,7 @@ class NFLService:
         # kickoff_est looks like "2025-09-04T20:20:00-04:00"
         return datetime.fromisoformat(iso_str)
 
-    def _games_date_span(self, weeks_dict: dict[str, list[dict]]) -> dict[int, tuple[datetime, datetime]]:
+    def _games_date_span(self, weeks_dict: dict[str, list[dict]]):
         """Return {week: (min_dt, max_dt)} using kickoff_est datetimes in EST."""
         spans = {}
         for wk_str, games in weeks_dict.items():
@@ -179,7 +179,7 @@ class NFLService:
         self.bot.current_nfl_week = last_wk
         return
 
-    def _group_new_games_by_date(self, week_games: list[dict]) -> dict[str, list[dict]]:
+    def _group_new_games_by_date(self, week_games: list[dict]):
         """Group new-format games (with kickoff_est) by YYYY-MM-DD in EST."""
         by_date: dict[str, list[dict]] = defaultdict(list)
         for g in week_games:
