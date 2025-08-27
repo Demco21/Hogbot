@@ -54,7 +54,7 @@ def setup_scheduler(bot):
 
     scheduler = AsyncIOScheduler()
     scheduler.add_job(nfl_job, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
-    scheduler.add_job(nfl_upd_job, CronTrigger(hour='*', minute=30, timezone=timezone('America/New_York')))
+    scheduler.add_job(nfl_upd_job, CronTrigger(hour='*', minute=55, timezone=timezone('America/New_York')))
     scheduler.add_job(update_nfl_states, CronTrigger(hour='*', minute=1, timezone=timezone('America/New_York')))
     scheduler.add_job(yahoo_ff_job, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))
