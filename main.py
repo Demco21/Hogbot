@@ -28,6 +28,7 @@ class HogBot(commands.Bot):
     async def setup_hook(self):
         await self.load_extension("cogs.time_cog")
         await self.load_extension("cogs.yahoo_ff_cog")
+        await self.load_extension("cogs.espn_cog")
 
 bot = HogBot()
 
@@ -61,29 +62,5 @@ def setup_scheduler(bot):
     scheduler.add_job(dump_data_job, CronTrigger(hour='*', minute=2, timezone=timezone('America/New_York')))
     scheduler.add_job(decide_chancellor_job, CronTrigger(day_of_week='sun', hour=0, minute=0, timezone=timezone('America/New_York')))
     scheduler.start()
-
-@bot.command(name='decide_chancellor')
-async def dump_data_command(ctx):
-    await bot.chancellor_service.decide_chancellor()
-
-@bot.command(name='channel_change')
-async def dump_data_command(ctx):
-    await bot.channel_change_service.change_channel_name()
-
-@bot.command(name='espn')
-async def espn(ctx):
-    await bot.espn_service.get_nfl_week_games(2025, 1)
-
-@bot.command(name='nfldump')
-async def espn(ctx):
-    await bot.espn_service.dump_regular_season_games(2025)
-
-@bot.command(name='games')
-async def games(ctx):
-    await bot.nfl_service.post_schedule_current_week()
-
-@bot.command(name='gamesupd')
-async def games(ctx):
-    await bot.nfl_service.update_schedule_current_week()
 
 bot.run(DISCORD_TOKEN)

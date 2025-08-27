@@ -418,27 +418,6 @@ class YahooFFService:
                 embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t2_name"], m["t1_name"])
             
             await channel.send(embed=embed)
-    
-    async def test_api(self, ctx = None):
-        try:
-            await self.ensure_token()
-            access_token = self.state.yahoo_token["access_token"]
-            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/scoreboard;week=1"
-            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/standings?format=json"
-            url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys=461.l.550581.t.1,461.l.550581.t.2/roster;week=1/players;stats?format=json"
-            # url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/461.l.550581/standings?format=json"
-            headers = {
-                "Authorization": f"Bearer {access_token}",
-                "Accept": "application/json"
-            }
-
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, headers=headers) as response:
-                    text = await response.text()
-
-            logger.info(f"{url} API response:\n{text}")
-        except Exception as e:
-            logger.error(f"Error fetching matchups: {e}")
 
     async def post_standings_embeds(self, ctx=None, week=None):
         await self.ensure_token()

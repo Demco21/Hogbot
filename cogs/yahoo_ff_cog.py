@@ -14,15 +14,15 @@ class YahooFFCog(commands.Cog):
 
     @commands.command(name="matchups")
     async def matchups(self, ctx):
+        if ctx.author.id != ADMIN_USER_ID:
+            return
         await self.bot.yahoo_ff_service.get_matchups(ctx)
 
     @commands.command(name="standings")
     async def standings(self, ctx):
+        if ctx.author.id != ADMIN_USER_ID:
+            return
         await self.bot.yahoo_ff_service.post_standings_embeds(ctx)
-
-    @commands.command(name="testapi")
-    async def testapi(self, ctx):
-        await self.bot.yahoo_ff_service.test_api(ctx)
 
 async def setup(bot):
     await bot.add_cog(YahooFFCog(bot))
