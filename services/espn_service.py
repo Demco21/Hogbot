@@ -349,7 +349,7 @@ class ESPNService:
             logger.info(games)
             return games
 
-    async def dump_regular_season_games(self, year: int, out_path: str | None = None):
+    async def dump_regular_season_games(self, year: int, out_path: str = None):
         """
         Build a season-wide dump using get_nfl_week_games for every regular-season week.
         Adds a "byes" map computed as teams not appearing in that week's games.
