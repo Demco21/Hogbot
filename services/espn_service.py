@@ -89,7 +89,7 @@ class ESPNService:
             resp.raise_for_status()
             return await resp.json()
 
-    def parse_iso_utc_to_est(self, iso_dt: str) -> str:
+    def parse_iso_utc_to_est(self, iso_dt: str):
         """Convert '2025-09-05T00:20Z' (UTC) to America/New_York ISO string."""
         dt_utc = datetime.fromisoformat(iso_dt.replace("Z", "+00:00"))
         return dt_utc.astimezone(NY_TZ).isoformat()
@@ -190,7 +190,7 @@ class ESPNService:
                 }
 
             # Pick provider with lowest priority
-            def priority(o: dict) -> int:
+            def priority(o: dict):
                 prov = o.get("provider") or {}
                 try:
                     return int(prov.get("priority", 1_000_000))
@@ -210,7 +210,7 @@ class ESPNService:
                     over_under = None
 
             # --- Moneylines ---
-            def extract_moneyline(team_odds: dict) -> int | None:
+            def extract_moneyline(team_odds=None)
                 if not team_odds:
                     return None
                 ml = team_odds.get("moneyLine")
