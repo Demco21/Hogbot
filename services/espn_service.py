@@ -210,7 +210,7 @@ class ESPNService:
                     over_under = None
 
             # --- Moneylines ---
-            def extract_moneyline(team_odds)
+            def extract_moneyline(team_odds=None):
                 if not team_odds:
                     return None
                 ml = team_odds.get("moneyLine")
