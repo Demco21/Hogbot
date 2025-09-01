@@ -84,7 +84,7 @@ class NFLService:
         self.state = bot_state
         self.bot = bot
 
-    def _parse_est_date(self, iso_str: str) -> datetime:
+    def _parse_est_date(self, iso_str: str):
         # kickoff_est looks like "2025-09-04T20:20:00-04:00"
         return datetime.fromisoformat(iso_str)
 
@@ -104,7 +104,7 @@ class NFLService:
                 spans[int(wk_str)] = (min(times), max(times))
         return spans
 
-    def _current_effective_dt(self, now=None) -> datetime:
+    def _current_effective_dt(self, now=None):
         eastern = timezone("America/New_York")
         if now is None:
             now = datetime.now(eastern)
