@@ -163,3 +163,7 @@ cython_debug/
 
 #output
 *.out
+
+# time data persistence file
+data/time_data.json
+data/yahoo_token.json

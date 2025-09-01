@@ -1,0 +1,3623 @@
+{
+  "year": 2025,
+  "season_type": 2,
+  "weeks": {
+    "1": [
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "PHI",
+        "away_abbrv": "DAL",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-09-04T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772510"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "LAC",
+        "away_abbrv": "KC",
+        "location": "Sao Paulo, Brazil",
+        "kickoff_est": "2025-09-05T20:00:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "YouTube"
+        ],
+        "game_id": "401772714"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "ATL",
+        "away_abbrv": "TB",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772830"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "CLE",
+        "away_abbrv": "CIN",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772829"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "IND",
+        "away_abbrv": "MIA",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772719"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "NE",
+        "away_abbrv": "LV",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772720"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "NO",
+        "away_abbrv": "ARI",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772718"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "PIT",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772721"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "New York Giants",
+        "home_abbrv": "WSH",
+        "away_abbrv": "NYG",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772827"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "JAX",
+        "away_abbrv": "CAR",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-09-07T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772828"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "DEN",
+        "away_abbrv": "TEN",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-09-07T16:05:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772832"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "SEA",
+        "away_abbrv": "SF",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-09-07T16:05:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772831"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "GB",
+        "away_abbrv": "DET",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-09-07T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772722"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "Houston Texans",
+        "home_abbrv": "LAR",
+        "away_abbrv": "HOU",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-09-07T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772723"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "BUF",
+        "away_abbrv": "BAL",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-09-07T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772918"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "CHI",
+        "away_abbrv": "MIN",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-09-08T20:15:00-04:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772810"
+      }
+    ],
+    "2": [
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "GB",
+        "away_abbrv": "WSH",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-09-11T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772936"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "CIN",
+        "away_abbrv": "JAX",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772725"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "New York Giants",
+        "home_abbrv": "DAL",
+        "away_abbrv": "NYG",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772834"
+      },
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "DET",
+        "away_abbrv": "CHI",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772835"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "TEN",
+        "away_abbrv": "LAR",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772724"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "New England Patriots",
+        "home_abbrv": "MIA",
+        "away_abbrv": "NE",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772728"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "NO",
+        "away_abbrv": "SF",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772833"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "BUF",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772727"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "PIT",
+        "away_abbrv": "SEA",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772836"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "BAL",
+        "away_abbrv": "CLE",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-09-14T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772726"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "IND",
+        "away_abbrv": "DEN",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-09-14T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772729"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "ARI",
+        "away_abbrv": "CAR",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-09-14T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772730"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "KC",
+        "away_abbrv": "PHI",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-09-14T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772837"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "MIN",
+        "away_abbrv": "ATL",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-09-14T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772919"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "HOU",
+        "away_abbrv": "TB",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-09-15T19:00:00-04:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772715"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "LV",
+        "away_abbrv": "LAC",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-09-15T22:00:00-04:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772811"
+      }
+    ],
+    "3": [
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "BUF",
+        "away_abbrv": "MIA",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-09-18T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772937"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "CLE",
+        "away_abbrv": "GB",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772842"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "TEN",
+        "away_abbrv": "IND",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772733"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "MIN",
+        "away_abbrv": "CIN",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772731"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "NE",
+        "away_abbrv": "PIT",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772732"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "PHI",
+        "away_abbrv": "LAR",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772839"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "New York Jets",
+        "home_abbrv": "TB",
+        "away_abbrv": "NYJ",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772840"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "WSH",
+        "away_abbrv": "LV",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772841"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "CAR",
+        "away_abbrv": "ATL",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772838"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Houston Texans",
+        "home_abbrv": "JAX",
+        "away_abbrv": "HOU",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-09-21T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772734"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "LAC",
+        "away_abbrv": "DEN",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-09-21T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772735"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "SEA",
+        "away_abbrv": "NO",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-09-21T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772736"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "CHI",
+        "away_abbrv": "DAL",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-09-21T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772844"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "SF",
+        "away_abbrv": "ARI",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-09-21T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772843"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "NYG",
+        "away_abbrv": "KC",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-09-21T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772920"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "BAL",
+        "away_abbrv": "DET",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-09-22T20:15:00-04:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772812"
+      }
+    ],
+    "4": [
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "ARI",
+        "away_abbrv": "SEA",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-09-25T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772938"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "PIT",
+        "away_abbrv": "MIN",
+        "location": "Dublin, Ireland",
+        "kickoff_est": "2025-09-28T09:30:00-04:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
+        "streaming_networks": [
+          "NFL+"
+        ],
+        "game_id": "401772632"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "ATL",
+        "away_abbrv": "WSH",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772739"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "BUF",
+        "away_abbrv": "NO",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772740"
+      },
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "DET",
+        "away_abbrv": "CLE",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772846"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "NE",
+        "away_abbrv": "CAR",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772847"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "NYG",
+        "away_abbrv": "LAC",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772737"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "TB",
+        "away_abbrv": "PHI",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772845"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "HOU",
+        "away_abbrv": "TEN",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-09-28T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772738"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "LAR",
+        "away_abbrv": "IND",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-09-28T16:05:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772849"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "SF",
+        "away_abbrv": "JAX",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-09-28T16:05:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772848"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "KC",
+        "away_abbrv": "BAL",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-09-28T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772741"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "LV",
+        "away_abbrv": "CHI",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-09-28T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772742"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "DAL",
+        "away_abbrv": "GB",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-09-28T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772921"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "New York Jets",
+        "home_abbrv": "MIA",
+        "away_abbrv": "NYJ",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-09-29T19:15:00-04:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772813"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "DEN",
+        "away_abbrv": "CIN",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-09-29T20:15:00-04:00",
+        "tv_networks": [
+          "ABC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772716"
+      }
+    ],
+    "5": [
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "LAR",
+        "away_abbrv": "SF",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-10-02T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772939"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "CLE",
+        "away_abbrv": "MIN",
+        "location": "London, England",
+        "kickoff_est": "2025-10-05T09:30:00-04:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
+        "streaming_networks": [
+          "NFL+"
+        ],
+        "game_id": "401772633"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "IND",
+        "away_abbrv": "LV",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-10-05T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772851"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "New York Giants",
+        "home_abbrv": "NO",
+        "away_abbrv": "NYG",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-10-05T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772744"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "DAL",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-10-05T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772850"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "PHI",
+        "away_abbrv": "DEN",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-10-05T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772745"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "CAR",
+        "away_abbrv": "MIA",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-10-05T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772852"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Houston Texans",
+        "home_abbrv": "BAL",
+        "away_abbrv": "HOU",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-10-05T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772743"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "ARI",
+        "away_abbrv": "TEN",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-10-05T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772747"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "SEA",
+        "away_abbrv": "TB",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-10-05T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772746"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "CIN",
+        "away_abbrv": "DET",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-10-05T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772854"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "LAC",
+        "away_abbrv": "WSH",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-10-05T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772853"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "New England Patriots",
+        "home_abbrv": "BUF",
+        "away_abbrv": "NE",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-10-05T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772922"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "JAX",
+        "away_abbrv": "KC",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-10-06T20:15:00-04:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772814"
+      }
+    ],
+    "6": [
+      {
+        "home_team": "New York Giants",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "NYG",
+        "away_abbrv": "PHI",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-10-09T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772940"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "DEN",
+        "location": "London, England",
+        "kickoff_est": "2025-10-12T09:30:00-04:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
+        "streaming_networks": [
+          "NFL+"
+        ],
+        "game_id": "401772634"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "IND",
+        "away_abbrv": "ARI",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772856"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "MIA",
+        "away_abbrv": "LAC",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772750"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "PIT",
+        "away_abbrv": "CLE",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772748"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "TB",
+        "away_abbrv": "SF",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772749"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "CAR",
+        "away_abbrv": "DAL",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772858"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "JAX",
+        "away_abbrv": "SEA",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772857"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "BAL",
+        "away_abbrv": "LAR",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772855"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "LV",
+        "away_abbrv": "TEN",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-10-12T16:05:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772859"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "GB",
+        "away_abbrv": "CIN",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-10-12T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772752"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "New England Patriots",
+        "home_abbrv": "NO",
+        "away_abbrv": "NE",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-10-12T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772751"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "KC",
+        "away_abbrv": "DET",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-10-12T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772923"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "ATL",
+        "away_abbrv": "BUF",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-10-13T19:15:00-04:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772815"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "WSH",
+        "away_abbrv": "CHI",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-10-13T20:15:00-04:00",
+        "tv_networks": [
+          "ABC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772717"
+      }
+    ],
+    "7": [
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "CIN",
+        "away_abbrv": "PIT",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-10-16T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772941"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "JAX",
+        "away_abbrv": "LAR",
+        "location": "London, England",
+        "kickoff_est": "2025-10-19T09:30:00-04:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
+        "streaming_networks": [
+          "NFL+"
+        ],
+        "game_id": "401772635"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "CHI",
+        "away_abbrv": "NO",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-10-19T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772861"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "CLE",
+        "away_abbrv": "MIA",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-10-19T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772754"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "New England Patriots",
+        "home_abbrv": "TEN",
+        "away_abbrv": "NE",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-10-19T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772755"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "KC",
+        "away_abbrv": "LV",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-10-19T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772753"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "MIN",
+        "away_abbrv": "PHI",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-10-19T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772862"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "CAR",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-10-19T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772860"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "New York Giants",
+        "home_abbrv": "DEN",
+        "away_abbrv": "NYG",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-10-19T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772757"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "LAC",
+        "away_abbrv": "IND",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-10-19T16:05:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772756"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "DAL",
+        "away_abbrv": "WSH",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-10-19T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772864"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "ARI",
+        "away_abbrv": "GB",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-10-19T16:25:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772863"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "SF",
+        "away_abbrv": "ATL",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-10-19T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772924"
+      },
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "DET",
+        "away_abbrv": "TB",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-10-20T19:00:00-04:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772816"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "Houston Texans",
+        "home_abbrv": "SEA",
+        "away_abbrv": "HOU",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-10-20T22:00:00-04:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772826"
+      }
+    ],
+    "8": [
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "LAC",
+        "away_abbrv": "MIN",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-10-23T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772942"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "ATL",
+        "away_abbrv": "MIA",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772760"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "New York Jets",
+        "home_abbrv": "CIN",
+        "away_abbrv": "NYJ",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772758"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "NE",
+        "away_abbrv": "CLE",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772868"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "New York Giants",
+        "home_abbrv": "PHI",
+        "away_abbrv": "NYG",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772867"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "CAR",
+        "away_abbrv": "BUF",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772865"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "BAL",
+        "away_abbrv": "CHI",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772759"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "HOU",
+        "away_abbrv": "SF",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-10-26T13:00:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772866"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "NO",
+        "away_abbrv": "TB",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-10-26T16:05:00-04:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772869"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "DEN",
+        "away_abbrv": "DAL",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-10-26T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772762"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "IND",
+        "away_abbrv": "TEN",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-10-26T16:25:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772761"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "PIT",
+        "away_abbrv": "GB",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-10-26T20:20:00-04:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772925"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "KC",
+        "away_abbrv": "WSH",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-10-27T20:15:00-04:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772817"
+      }
+    ],
+    "9": [
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "MIA",
+        "away_abbrv": "BAL",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-10-30T20:15:00-04:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772943"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "CIN",
+        "away_abbrv": "CHI",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772765"
+      },
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "DET",
+        "away_abbrv": "MIN",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772871"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "GB",
+        "away_abbrv": "CAR",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772872"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "TEN",
+        "away_abbrv": "LAC",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772764"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "NE",
+        "away_abbrv": "ATL",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772763"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "NYG",
+        "away_abbrv": "SF",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772767"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "PIT",
+        "away_abbrv": "IND",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772766"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "HOU",
+        "away_abbrv": "DEN",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-11-02T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772870"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "LV",
+        "away_abbrv": "JAX",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-11-02T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772873"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "LAR",
+        "away_abbrv": "NO",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-11-02T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772874"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "BUF",
+        "away_abbrv": "KC",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-11-02T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772768"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "WSH",
+        "away_abbrv": "SEA",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-11-02T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772926"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "DAL",
+        "away_abbrv": "ARI",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-11-03T20:15:00-05:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772818"
+      }
+    ],
+    "10": [
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "DEN",
+        "away_abbrv": "LV",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-11-06T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772944"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "IND",
+        "away_abbrv": "ATL",
+        "location": "Berlin, Germany",
+        "kickoff_est": "2025-11-09T09:30:00-05:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
+        "streaming_networks": [
+          "NFL+"
+        ],
+        "game_id": "401772636"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "New York Giants",
+        "home_abbrv": "CHI",
+        "away_abbrv": "NYG",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772875"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "MIA",
+        "away_abbrv": "BUF",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772771"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "MIN",
+        "away_abbrv": "BAL",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772876"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "CLE",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772769"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "New England Patriots",
+        "home_abbrv": "TB",
+        "away_abbrv": "NE",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772772"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "CAR",
+        "away_abbrv": "NO",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772877"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "HOU",
+        "away_abbrv": "JAX",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-11-09T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772770"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "SEA",
+        "away_abbrv": "ARI",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-11-09T16:05:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772773"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "SF",
+        "away_abbrv": "LAR",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-11-09T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772879"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "WSH",
+        "away_abbrv": "DET",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-11-09T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772878"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "LAC",
+        "away_abbrv": "PIT",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-11-09T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772927"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "GB",
+        "away_abbrv": "PHI",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-11-10T20:15:00-05:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772630"
+      }
+    ],
+    "11": [
+      {
+        "home_team": "New England Patriots",
+        "away_team": "New York Jets",
+        "home_abbrv": "NE",
+        "away_abbrv": "NYJ",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-11-13T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772945"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "MIA",
+        "away_abbrv": "WSH",
+        "location": "Madrid, Spain",
+        "kickoff_est": "2025-11-16T09:30:00-05:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
+        "streaming_networks": [
+          "NFL+"
+        ],
+        "game_id": "401772631"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "ATL",
+        "away_abbrv": "CAR",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772882"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "BUF",
+        "away_abbrv": "TB",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772776"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Houston Texans",
+        "home_abbrv": "TEN",
+        "away_abbrv": "HOU",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772881"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "MIN",
+        "away_abbrv": "CHI",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772880"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "NYG",
+        "away_abbrv": "GB",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772883"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "PIT",
+        "away_abbrv": "CIN",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772774"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "JAX",
+        "away_abbrv": "LAC",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-11-16T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772775"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "LAR",
+        "away_abbrv": "SEA",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-11-16T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772884"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "ARI",
+        "away_abbrv": "SF",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-11-16T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772885"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "CLE",
+        "away_abbrv": "BAL",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-11-16T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772777"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "DEN",
+        "away_abbrv": "KC",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-11-16T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772778"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "PHI",
+        "away_abbrv": "DET",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-11-16T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772928"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "LV",
+        "away_abbrv": "DAL",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-11-17T20:15:00-05:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772819"
+      }
+    ],
+    "12": [
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "HOU",
+        "away_abbrv": "BUF",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-11-20T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772946"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "CHI",
+        "away_abbrv": "PIT",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772780"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "New England Patriots",
+        "home_abbrv": "CIN",
+        "away_abbrv": "NE",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772781"
+      },
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "New York Giants",
+        "home_abbrv": "DET",
+        "away_abbrv": "NYG",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772888"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "GB",
+        "away_abbrv": "MIN",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772887"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "TEN",
+        "away_abbrv": "SEA",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772886"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "KC",
+        "away_abbrv": "IND",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772779"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "New York Jets",
+        "home_abbrv": "BAL",
+        "away_abbrv": "NYJ",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-11-23T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772782"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "LV",
+        "away_abbrv": "CLE",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-11-23T16:05:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772784"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "ARI",
+        "away_abbrv": "JAX",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-11-23T16:05:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772783"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "DAL",
+        "away_abbrv": "PHI",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-11-23T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772890"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "NO",
+        "away_abbrv": "ATL",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-11-23T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772889"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "LAR",
+        "away_abbrv": "TB",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-11-23T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772929"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "SF",
+        "away_abbrv": "CAR",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-11-24T20:15:00-05:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772820"
+      }
+    ],
+    "13": [
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "DET",
+        "away_abbrv": "GB",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-11-27T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772891"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "DAL",
+        "away_abbrv": "KC",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-11-27T16:30:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [
+          "Paramount+"
+        ],
+        "game_id": "401772694"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "BAL",
+        "away_abbrv": "CIN",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-11-27T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772930"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "PHI",
+        "away_abbrv": "CHI",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-11-28T15:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772621"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "CLE",
+        "away_abbrv": "SF",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772785"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "TEN",
+        "away_abbrv": "JAX",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772786"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Houston Texans",
+        "home_abbrv": "IND",
+        "away_abbrv": "HOU",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772787"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "MIA",
+        "away_abbrv": "NO",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772892"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "ATL",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772893"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "TB",
+        "away_abbrv": "ARI",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772895"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "CAR",
+        "away_abbrv": "LAR",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-11-30T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772894"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "SEA",
+        "away_abbrv": "MIN",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-11-30T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772896"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "PIT",
+        "away_abbrv": "BUF",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-11-30T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772789"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "LAC",
+        "away_abbrv": "LV",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-11-30T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772788"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "WSH",
+        "away_abbrv": "DEN",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-11-30T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772931"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "New York Giants",
+        "home_abbrv": "NE",
+        "away_abbrv": "NYG",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-12-01T20:15:00-05:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772821"
+      }
+    ],
+    "14": [
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "DET",
+        "away_abbrv": "DAL",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-12-04T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772947"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "ATL",
+        "away_abbrv": "SEA",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772900"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "CLE",
+        "away_abbrv": "TEN",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772898"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "GB",
+        "away_abbrv": "CHI",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772897"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "MIN",
+        "away_abbrv": "WSH",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772899"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "MIA",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772790"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "TB",
+        "away_abbrv": "NO",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772792"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "JAX",
+        "away_abbrv": "IND",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772793"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "BAL",
+        "away_abbrv": "PIT",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772791"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "LV",
+        "away_abbrv": "DEN",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-12-07T16:05:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772794"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "BUF",
+        "away_abbrv": "CIN",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-12-07T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772902"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "ARI",
+        "away_abbrv": "LAR",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-12-07T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772901"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Houston Texans",
+        "home_abbrv": "KC",
+        "away_abbrv": "HOU",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-12-07T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772932"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "LAC",
+        "away_abbrv": "PHI",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-12-08T20:15:00-05:00",
+        "tv_networks": [
+          "ABC",
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772822"
+      }
+    ],
+    "15": [
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "TB",
+        "away_abbrv": "ATL",
+        "location": "Tampa, FL",
+        "kickoff_est": "2025-12-11T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772948"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "CHI",
+        "away_abbrv": "CLE",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772904"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "CIN",
+        "away_abbrv": "BAL",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772796"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "KC",
+        "away_abbrv": "LAC",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772798"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "NE",
+        "away_abbrv": "BUF",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772795"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "NYG",
+        "away_abbrv": "WSH",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772905"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "PHI",
+        "away_abbrv": "LV",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772906"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "New York Jets",
+        "home_abbrv": "JAX",
+        "away_abbrv": "NYJ",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772797"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "HOU",
+        "away_abbrv": "ARI",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-12-14T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772903"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "DEN",
+        "away_abbrv": "GB",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-12-14T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772800"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "LAR",
+        "away_abbrv": "DET",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-12-14T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772909"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "NO",
+        "away_abbrv": "CAR",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-12-14T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772908"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "SF",
+        "away_abbrv": "TEN",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-12-14T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772907"
+      },
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "SEA",
+        "away_abbrv": "IND",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-12-14T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772799"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "DAL",
+        "away_abbrv": "MIN",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-12-14T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772933"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "PIT",
+        "away_abbrv": "MIA",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2025-12-15T20:15:00-05:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772823"
+      }
+    ],
+    "16": [
+      {
+        "home_team": "Seattle Seahawks",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "SEA",
+        "away_abbrv": "LAR",
+        "location": "Seattle, WA",
+        "kickoff_est": "2025-12-18T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772949"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "CHI",
+        "away_abbrv": "GB",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-12-20T00:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772613"
+      },
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "WSH",
+        "away_abbrv": "PHI",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-12-20T00:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772612"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Buffalo Bills",
+        "home_abbrv": "CLE",
+        "away_abbrv": "BUF",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772802"
+      },
+      {
+        "home_team": "Dallas Cowboys",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "DAL",
+        "away_abbrv": "LAC",
+        "location": "Arlington, TX",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772910"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "TEN",
+        "away_abbrv": "KC",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772803"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "New York Jets",
+        "home_abbrv": "NO",
+        "away_abbrv": "NYJ",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772801"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "Minnesota Vikings",
+        "home_abbrv": "NYG",
+        "away_abbrv": "MIN",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772911"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "CAR",
+        "away_abbrv": "TB",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772912"
+      },
+      {
+        "home_team": "Baltimore Ravens",
+        "away_team": "New England Patriots",
+        "home_abbrv": "BAL",
+        "away_abbrv": "NE",
+        "location": "Baltimore, MD",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772804"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "DEN",
+        "away_abbrv": "JAX",
+        "location": "Denver, CO",
+        "kickoff_est": "2025-12-21T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772913"
+      },
+      {
+        "home_team": "Arizona Cardinals",
+        "away_team": "Atlanta Falcons",
+        "home_abbrv": "ARI",
+        "away_abbrv": "ATL",
+        "location": "Glendale, AZ",
+        "kickoff_est": "2025-12-21T16:05:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772914"
+      },
+      {
+        "home_team": "Detroit Lions",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "DET",
+        "away_abbrv": "PIT",
+        "location": "Detroit, MI",
+        "kickoff_est": "2025-12-21T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772806"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Las Vegas Raiders",
+        "home_abbrv": "HOU",
+        "away_abbrv": "LV",
+        "location": "Houston, TX",
+        "kickoff_est": "2025-12-21T16:25:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772805"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "MIA",
+        "away_abbrv": "CIN",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-12-21T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772934"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "IND",
+        "away_abbrv": "SF",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-12-22T20:15:00-05:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772824"
+      }
+    ],
+    "17": [
+      {
+        "home_team": "Washington Commanders",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "WSH",
+        "away_abbrv": "DAL",
+        "location": "Landover, MD",
+        "kickoff_est": "2025-12-25T13:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Netflix"
+        ],
+        "game_id": "401772710"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "MIN",
+        "away_abbrv": "DET",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2025-12-25T16:30:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Netflix"
+        ],
+        "game_id": "401772711"
+      },
+      {
+        "home_team": "Kansas City Chiefs",
+        "away_team": "Denver Broncos",
+        "home_abbrv": "KC",
+        "away_abbrv": "DEN",
+        "location": "Kansas City, MO",
+        "kickoff_est": "2025-12-25T20:15:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [
+          "Prime Video"
+        ],
+        "game_id": "401772622"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "CIN",
+        "away_abbrv": "ARI",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-12-27T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772954"
+      },
+      {
+        "home_team": "Green Bay Packers",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "GB",
+        "away_abbrv": "BAL",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-12-27T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772953"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "New York Giants",
+        "home_abbrv": "LV",
+        "away_abbrv": "NYG",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-12-27T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772950"
+      },
+      {
+        "home_team": "Los Angeles Chargers",
+        "away_team": "Houston Texans",
+        "home_abbrv": "LAC",
+        "away_abbrv": "HOU",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2025-12-27T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772951"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "CAR",
+        "away_abbrv": "SEA",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-12-27T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772952"
+      },
+      {
+        "home_team": "Cleveland Browns",
+        "away_team": "Pittsburgh Steelers",
+        "home_abbrv": "CLE",
+        "away_abbrv": "PIT",
+        "location": "Cleveland, OH",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772807"
+      },
+      {
+        "home_team": "Tennessee Titans",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "TEN",
+        "away_abbrv": "NO",
+        "location": "Nashville, TN",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772809"
+      },
+      {
+        "home_team": "Indianapolis Colts",
+        "away_team": "Jacksonville Jaguars",
+        "home_abbrv": "IND",
+        "away_abbrv": "JAX",
+        "location": "Indianapolis, IN",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772915"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Tampa Bay Buccaneers",
+        "home_abbrv": "MIA",
+        "away_abbrv": "TB",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772916"
+      },
+      {
+        "home_team": "New York Jets",
+        "away_team": "New England Patriots",
+        "home_abbrv": "NYJ",
+        "away_abbrv": "NE",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772808"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Philadelphia Eagles",
+        "home_abbrv": "BUF",
+        "away_abbrv": "PHI",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-12-28T16:25:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772917"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "SF",
+        "away_abbrv": "CHI",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2025-12-28T20:20:00-05:00",
+        "tv_networks": [
+          "NBC"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772935"
+      },
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "Los Angeles Rams",
+        "home_abbrv": "ATL",
+        "away_abbrv": "LAR",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2025-12-29T20:15:00-05:00",
+        "tv_networks": [
+          "ESPN"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772825"
+      }
+    ],
+    "18": [
+      {
+        "home_team": "Atlanta Falcons",
+        "away_team": "New Orleans Saints",
+        "home_abbrv": "ATL",
+        "away_abbrv": "NO",
+        "location": "Atlanta, GA",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772966"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "New York Jets",
+        "home_abbrv": "BUF",
+        "away_abbrv": "NYJ",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772967"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Detroit Lions",
+        "home_abbrv": "CHI",
+        "away_abbrv": "DET",
+        "location": "Chicago, IL",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772965"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Cleveland Browns",
+        "home_abbrv": "CIN",
+        "away_abbrv": "CLE",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772964"
+      },
+      {
+        "home_team": "Denver Broncos",
+        "away_team": "Los Angeles Chargers",
+        "home_abbrv": "DEN",
+        "away_abbrv": "LAC",
+        "location": "Denver, CO",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772956"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "Kansas City Chiefs",
+        "home_abbrv": "LV",
+        "away_abbrv": "KC",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772957"
+      },
+      {
+        "home_team": "Los Angeles Rams",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "LAR",
+        "away_abbrv": "ARI",
+        "location": "Inglewood, CA",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772955"
+      },
+      {
+        "home_team": "Minnesota Vikings",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "MIN",
+        "away_abbrv": "GB",
+        "location": "Minneapolis, MN",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772968"
+      },
+      {
+        "home_team": "New England Patriots",
+        "away_team": "Miami Dolphins",
+        "home_abbrv": "NE",
+        "away_abbrv": "MIA",
+        "location": "Foxborough, MA",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772958"
+      },
+      {
+        "home_team": "New York Giants",
+        "away_team": "Dallas Cowboys",
+        "home_abbrv": "NYG",
+        "away_abbrv": "DAL",
+        "location": "East Rutherford, NJ",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772963"
+      },
+      {
+        "home_team": "Philadelphia Eagles",
+        "away_team": "Washington Commanders",
+        "home_abbrv": "PHI",
+        "away_abbrv": "WSH",
+        "location": "Philadelphia, PA",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772959"
+      },
+      {
+        "home_team": "Pittsburgh Steelers",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "PIT",
+        "away_abbrv": "BAL",
+        "location": "Pittsburgh, PA",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772960"
+      },
+      {
+        "home_team": "San Francisco 49ers",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "SF",
+        "away_abbrv": "SEA",
+        "location": "Santa Clara, CA",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772961"
+      },
+      {
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "Carolina Panthers",
+        "home_abbrv": "TB",
+        "away_abbrv": "CAR",
+        "location": "Tampa, FL",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772969"
+      },
+      {
+        "home_team": "Jacksonville Jaguars",
+        "away_team": "Tennessee Titans",
+        "home_abbrv": "JAX",
+        "away_abbrv": "TEN",
+        "location": "Jacksonville, FL",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772970"
+      },
+      {
+        "home_team": "Houston Texans",
+        "away_team": "Indianapolis Colts",
+        "home_abbrv": "HOU",
+        "away_abbrv": "IND",
+        "location": "Houston, TX",
+        "kickoff_est": "2026-01-04T00:00:00-05:00",
+        "tv_networks": [],
+        "streaming_networks": [],
+        "game_id": "401772962"
+      }
+    ]
+  },
+  "byes": {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [
+      "Atlanta Falcons",
+      "Chicago Bears",
+      "Green Bay Packers",
+      "Pittsburgh Steelers"
+    ],
+    "6": [
+      "Houston Texans",
+      "Minnesota Vikings"
+    ],
+    "7": [
+      "Baltimore Ravens",
+      "Buffalo Bills"
+    ],
+    "8": [
+      "Arizona Cardinals",
+      "Detroit Lions",
+      "Jacksonville Jaguars",
+      "Las Vegas Raiders",
+      "Los Angeles Rams",
+      "Seattle Seahawks"
+    ],
+    "9": [
+      "Cleveland Browns",
+      "New York Jets",
+      "Philadelphia Eagles",
+      "Tampa Bay Buccaneers"
+    ],
+    "10": [
+      "Cincinnati Bengals",
+      "Dallas Cowboys",
+      "Kansas City Chiefs",
+      "Tennessee Titans"
+    ],
+    "11": [
+      "Indianapolis Colts",
+      "New Orleans Saints"
+    ],
+    "12": [
+      "Denver Broncos",
+      "Los Angeles Chargers",
+      "Miami Dolphins",
+      "Washington Commanders"
+    ],
+    "13": [],
+    "14": [
+      "Carolina Panthers",
+      "New England Patriots",
+      "New York Giants",
+      "San Francisco 49ers"
+    ],
+    "15": [],
+    "16": [],
+    "17": [],
+    "18": []
+  }
+}

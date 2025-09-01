@@ -18,19 +18,59 @@ pip install -r requirements.txt
 
 ### Set up environment file
 create a file named `.env` and add the following keys:<br>
-1. `ENV=` where values can be `_DEV` or `_PROD`<br>
-2. `DISCORD_TOKEN_DEV=` value of your dev discord token<br>
-3. `DISCORD_TOKEN_PROD=` value of your prod discord token<br>
-4. `AFK_CHANNEL_ID=` ID value of your AFK channel so timers know to stop for this channel<br>
-5. `ANNOUNCEMENTS_CHANNEL_ID=` ID value of the channel you'd like for Hogbot to push automated messages to<br>
-5. `CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
-6. `HOGBOT_USER_ID=` ID of Hogbot itself
-7. `HOGBOT_SERVER_ID=` ID of the server
+`ENV=` where values can be `_DEV` or `_PROD`<br>
+`DISCORD_TOKEN_DEV=` value of your dev discord token<br>
+`DISCORD_TOKEN_PROD=` value of your prod discord token<br>
+`AFK_CHANNEL_ID=` ID value of your AFK channel so timers know to stop for this channel<br>
+`ANNOUNCEMENTS_CHANNEL_ID=` ID value of the channel you'd like for Hogbot to push automated messages to<br>
+`CHANCELLOR_ROLE_ID=` ID value of the Chancellor role which Hogbot will give to the memeber who spent the most time in voice channels this week<br>
+`HOGBOT_USER_ID=` ID of Hogbot itself<br>
+`HOGBOT_SERVER_ID=` ID of the server<br>
+`CHANGE_CHANNEL_ID=` ID of the beers channel<br>
+`NFL_SCHEDULE_CHANNEL_ID=` ID of the nfl schedule channel<br>
+`FANTASY_FOOTBALL_CHANNEL_ID=` ID of the fantasy football channel<br>
+`ADMIN_USER_ID=` ID of the server admin<br>
+`YAHOO_CLIENT_ID=` ID of the yahoo client token for fantasy football<br>
+`YAHOO_CLIENT_SECRET=` Secret for yahoo client API<br>
+`YAHOO_LEAGUE_KEY=` Yahoo Fantasy football league key<br><br>
+Emoji ID's for NFL team emoji<br>
+`GIANTS_EMOJI_ID=`<br>
+`JETS_EMOJI_ID=`<br>
+`BILLS_EMOJI_ID=`<br>
+`PATRIOTS_EMOJI_ID=`<br>
+`DOLPHINS_EMOJI_ID=`<br>
+`RAVENS_EMOJI_ID=`<br>
+`BENGALS_EMOJI_ID=`<br>
+`BROWNS_EMOJI_ID=`<br>
+`STEELERS_EMOJI_ID=`<br>
+`TITANS_EMOJI_ID=`<br>
+`COLTS_EMOJI_ID=`<br>
+`TEXANS_EMOJI_ID=`<br>
+`JAGUARS_EMOJI_ID=`<br>
+`CHIEFS_EMOJI_ID=`<br>
+`BRONCOS_EMOJI_ID=`<br>
+`CHARGERS_EMOJI_ID=`<br>
+`RAIDERS_EMOJI_ID=`<br>
+`EAGLES_EMOJI_ID=`<br>
+`COWBOYS_EMOJI_ID=`<br>
+`COMMANDERS_EMOJI_ID=`<br>
+`PACKERS_EMOJI_ID=`<br>
+`BEARS_EMOJI_ID=`<br>
+`VIKINGS_EMOJI_ID=`<br>
+`LIONS_EMOJI_ID=`<br>
+`FALCONS_EMOJI_ID=`<br>
+`SAINTS_EMOJI_ID=`<br>
+`BUCCANEERS_EMOJI_ID=`<br>
+`PANTHERS_EMOJI_ID=`<br>
+`NINERS_EMOJI_ID=`<br>
+`SEAHAWKS_EMOJI_ID=`<br>
+`RAMS_EMOJI_ID=`<br>
+`CARDINALS_EMOJI_ID=`<br>
 
 ## Running the bot
 ### Run the bot locally
 ```shell
-py ./hogbot.py
+py ./main.py
 ```
 
 ### Running on AWS
@@ -41,11 +81,11 @@ sudo su
 ```
 2. Run the bot in the background use nohup (recommended)
 ```shell
-nohup python3 -u hogbot.py &
+nohup python3 -u main.py &
 ```
 3. You can also run the bot directly using python3 (optional)
 ```shell
-python3 hogbot.py
+python3 main.py
 ```
 4. Check the log output
 ```shell
