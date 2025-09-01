@@ -17,6 +17,7 @@ from config import (
     YAHOO_CLIENT_SECRET,
     YAHOO_LEAGUE_KEY,
     ANNOUNCEMENTS_CHANNEL_ID,
+    FANTASY_FOOTBALL_CHANNEL_ID
 )
 from constants import (
     YAHOO_TOKEN_FILE,
@@ -201,7 +202,7 @@ class YahooFFService:
 
             scoreboard_xml = await get_scoreboard_xml(week)
             embed, matchups = await self.get_matchups_embed(ctx, week, scoreboard_xml)
-            channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+            channel = ctx.channel if ctx else self.bot.get_channel(FANTASY_FOOTBALL_CHANNEL_ID)
 
             if embed is None:
                 if channel:
@@ -264,11 +265,10 @@ class YahooFFService:
 
             scoreboard_xml = await get_scoreboard_xml(week)
             embed, matchups = await self.get_matchups_embed(ctx, week, scoreboard_xml)
-            channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
 
             if embed is None:
                 if channel:
-                    await channel.send(f"⚠️ No matchups found for week {week}.")
+                    logger.info(f"⚠️ No matchups found for week {week}.")
                 return
 
             updated = await self.update_embed(embed, self.state.scoreboard_msg)
@@ -516,7 +516,7 @@ class YahooFFService:
             await self._send_text(ctx, "⚠️ No team rosters found.")
             return
 
-        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+        channel = ctx.channel if ctx else self.bot.get_channel(FANTASY_FOOTBALL_CHANNEL_ID)
         if not channel:
             return
 
@@ -559,10 +559,6 @@ class YahooFFService:
 
         if not team_rosters:
             await self._send_text(ctx, "⚠️ No team rosters found.")
-            return
-
-        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
-        if not channel:
             return
 
         roster_messages = self.state.roster_messages or None

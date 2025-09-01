@@ -6,7 +6,7 @@ import json
 import asyncio
 from collections import defaultdict
 from bot_state import BotState
-from config import ANNOUNCEMENTS_CHANNEL_ID
+from config import ANNOUNCEMENTS_CHANNEL_ID, NFL_SCHEDULE_CHANNEL_ID
 from constants import NFL_SCHEDULE_FILE
 from config import (
     GIANTS_EMOJI_ID,
@@ -230,9 +230,9 @@ class NFLService:
         try:
             logger.info("Posting NFL schedule")
 
-            channel = self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+            channel = self.bot.get_channel(NFL_SCHEDULE_CHANNEL_ID)
             if not channel:
-                logger.warning("Channel not found")
+                logger.error("Channel not found")
                 return
 
             # Top-level embed
