@@ -3,6 +3,7 @@ from logging_config import logger
 from pytz import timezone
 from datetime import datetime, timedelta, timezone as dt_timezone
 import json
+import asyncio
 from collections import defaultdict
 from bot_state import BotState
 from config import ANNOUNCEMENTS_CHANNEL_ID
@@ -103,9 +104,10 @@ class NFLService:
                 spans[int(wk_str)] = (min(times), max(times))
         return spans
 
-    def _current_effective_dt(self) -> datetime:
+    def _current_effective_dt(self, now=None) -> datetime:
         eastern = timezone("America/New_York")
-        now = datetime.now(eastern)
+        if now is None:
+            now = datetime.now(eastern)
         weekday = now.weekday()
         if weekday == 0:  # Monday => still consider as Sunday night for "current week"
             return now - timedelta(days=1)
@@ -128,7 +130,7 @@ class NFLService:
 
         eastern = timezone('America/New_York')
         now = datetime.now(eastern)
-        # now = eastern.localize(datetime(2025, 9, 1, 0, 0, 0))  # Sept 1, 2025 at 12:00 AM ET # for testing
+        # now = eastern.localize(datetime(2025, 9, 10, 0, 0, 0))  # Sept 1, 2025 at 12:00 AM ET # for testing
 
         # compute season bounds for skip check (min/max kickoff_est)
         all_times = []
@@ -159,10 +161,12 @@ class NFLService:
         if not spans:
             return
 
-        eff = self._current_effective_dt().date()
+        eff = self._current_effective_dt(now).date()
+        logger.info(f"effective date {eff}")
 
         for wk in sorted(spans):
             start_dt, end_dt = spans[wk]
+            logger.info(f"start_dt {start_dt}, end_dt {end_dt}")
             if (start_dt.date() - timedelta(days=3)) <= eff <= end_dt.date():
                 logger.info(f"Current effective date {eff} falls in week {wk} span {start_dt.date()}–{end_dt.date()}")
                 self.bot.current_nfl_week = wk
@@ -301,8 +305,8 @@ class NFLService:
             games_embed = await self.get_games_embed(games)
             for date, embed in games_embed.items():
                 info = self.state.nfl_games_msgs[date]
-                logger.info(f"info: {info}")
                 await self.update_embed(embed, info)
+                await asyncio.sleep(5)
 
         except Exception as e:
             logger.error(f"Failed to post NFL schedule: {e}")

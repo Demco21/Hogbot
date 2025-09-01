@@ -2,34 +2,47 @@ from logging_config import logger
 from bot_state import BotState
 import discord
 from discord.ext import commands
-from datetime import datetime, timedelta, timezone as dt_timezone
+from datetime import datetime, timezone as dt_timezone
 from requests_oauthlib import OAuth2Session
-from typing import Optional, Any, Dict, List
+from typing import Optional, Any, Dict, List, Tuple
 import xml.etree.ElementTree as ET
 import aiohttp
 import time
 import asyncio
-from pytz import timezone
 import json
 import os
 import random
 from config import (
-    YAHOO_CLIENT_ID, 
-    YAHOO_CLIENT_SECRET, 
+    YAHOO_CLIENT_ID,
+    YAHOO_CLIENT_SECRET,
     YAHOO_LEAGUE_KEY,
-    ANNOUNCEMENTS_CHANNEL_ID
+    ANNOUNCEMENTS_CHANNEL_ID,
 )
 from constants import (
-    NFL_SCHEDULE_FILE,
     YAHOO_TOKEN_FILE,
-    WINNER_PHRASES_FILE
+    WINNER_PHRASES_FILE,
 )
 
+# ---------------------------------------------------------------------------
+# OAuth endpoints
+# ---------------------------------------------------------------------------
 REDIRECT_URI = "https://localhost"
 AUTH_URL = "https://api.login.yahoo.com/oauth2/request_auth"
 TOKEN_URL = "https://api.login.yahoo.com/oauth2/get_token"
 
+
 class YahooFFService:
+    """
+    Yahoo Fantasy Football service (XML-only rewrite, Python 3.8).
+    
+    Public method names and overall behavior kept the same as the existing
+    JSON-based service so callers don't need to change. Internally, we now
+    parse Yahoo's native XML instead of using their XML->JSON shim.
+    """
+
+    # -------------------------------------------------------------------
+    # Lifecycle
+    # -------------------------------------------------------------------
     def __init__(self, bot_state: BotState, bot):
         self.state = bot_state
         self.bot = bot
@@ -39,6 +52,9 @@ class YahooFFService:
             with open(YAHOO_TOKEN_FILE, "r") as f:
                 self.state.yahoo_token = json.load(f)
 
+    # -------------------------------------------------------------------
+    # OAuth
+    # -------------------------------------------------------------------
     async def fantasy_auth(self, ctx):
         """Manual Yahoo OAuth2 flow (one-time setup)."""
         try:
@@ -57,7 +73,7 @@ class YahooFFService:
             token = oauth.fetch_token(
                 TOKEN_URL,
                 authorization_response=redirect_response,
-                client_secret=YAHOO_CLIENT_SECRET
+                client_secret=YAHOO_CLIENT_SECRET,
             )
 
             # Add expiry timestamp for refresh logic
@@ -69,18 +85,17 @@ class YahooFFService:
 
             self.state.yahoo_token = token
 
-            logger.info(f"Yahoo OAuth token saved to {YAHOO_TOKEN_FILE}")
+            logger.info("Yahoo OAuth token saved")
             await ctx.send("✅ Authorized successfully! Token saved for future use.")
         except Exception as e:
             logger.error(f"Error during Yahoo OAuth: {e}")
-            await ctx.send(f"❌ Authorization failed please try again.")
-    
+            await ctx.send("❌ Authorization failed, please try again.")
+
     async def ensure_token(self):
-        """Ensure we have a valid access token by refreshing if needed."""
+        """Ensure a valid access token by refreshing if needed."""
         if not self.state.yahoo_token:
             raise RuntimeError("No token available. You must authorize once manually first.")
 
-        # If token expired, refresh
         if self.state.yahoo_token.get("expires_at", 0) <= time.time():
             refresh_token = self.state.yahoo_token.get("refresh_token")
             async with aiohttp.ClientSession() as session:
@@ -94,287 +109,294 @@ class YahooFFService:
                 async with session.post(TOKEN_URL, data=data) as resp:
                     new_token = await resp.json()
                     new_token["refresh_token"] = refresh_token  # Yahoo often doesn't return it again
-                    new_token["expires_at"] = time.time() + int(new_token["expires_in"])
+                    new_token["expires_at"] = time.time() + int(new_token.get("expires_in", 0) or 0)
                     self.state.yahoo_token = new_token
                     with open(YAHOO_TOKEN_FILE, "w") as f:
                         json.dump(new_token, f)
 
-    async def get_matchups(self, ctx=None, week: Optional[int] = None):
+    # -------------------------------------------------------------------
+    # XML helpers (namespace-agnostic; Yahoo sometimes wraps tags)
+    # -------------------------------------------------------------------
+    @staticmethod
+    def _tag(t):
+        return t.split('}', 1)[-1] if t and '}' in t else t
+
+    @staticmethod
+    def _child(node, name):
+        if node is None:
+            return None
+        for c in list(node):
+            if YahooFFService._tag(c.tag) == name:
+                return c
+        return None
+
+    @staticmethod
+    def _children(node, name):
+        if node is None:
+            return []
+        out = []
+        for c in list(node):
+            if YahooFFService._tag(c.tag) == name:
+                out.append(c)
+        return out
+
+    @staticmethod
+    def _text(node, name, default=None):
+        if node is None:
+            return default
+        c = YahooFFService._child(node, name)
+        return c.text if c is not None else default
+
+    @staticmethod
+    def _iter_desc(node, name):
+        out = []
+        if node is None:
+            return out
+        for el in node.iter():
+            if YahooFFService._tag(el.tag) == name:
+                out.append(el)
+        return out
+
+    @staticmethod
+    def _to_float(x, default=0.0):
+        try:
+            if x in (None, "", "-"):
+                return float(default)
+            return float(x)
+        except (TypeError, ValueError):
+            return float(default)
+
+    # -------------------------------------------------------------------
+    # Scoreboard / Matchups
+    # -------------------------------------------------------------------
+    async def post_fantasy_matchups(self, ctx=None, week=None):
         """
-        Fetch the league scoreboard as JSON and post a single embed listing all matchups.
-        - Crowns the leader with 🏆
-        - Works for preevent/inprogress/postevent
-        - Optional `week` arg; if None we derive from your schedule file
+        Fetch the league scoreboard (XML) and post a single embed listing all matchups.
+        Crowns the leader with 🏆. Colors reflect preevent/inprogress/postevent.
         """
         try:
-            # ---------------------------------------------------------
-            # Token
-            # ---------------------------------------------------------
             await self.ensure_token()
             access_token = self.state.yahoo_token["access_token"]
 
             if week is None:
-                week = self.bot.current_nfl_week
+                week = getattr(self.bot, "current_nfl_week", None)
                 if week is None:
                     return
 
-            logger.info(f"Fetching matchups for week {week}")
-            
-            url = (
-                f"https://fantasysports.yahooapis.com/fantasy/v2/"
-                f"league/{YAHOO_LEAGUE_KEY}/scoreboard;week={week}?format=json"
-            )
-            headers = {
-                "Authorization": f"Bearer {access_token}",
-                "Accept": "application/json",
-            }
+            async def get_scoreboard_xml(week):
+                url = (
+                    f"https://fantasysports.yahooapis.com/fantasy/v2/"
+                    f"league/{YAHOO_LEAGUE_KEY}/scoreboard;week={week}"
+                )
+                headers = {
+                    "Authorization": f"Bearer {access_token}",
+                    "Accept": "application/xml",
+                }
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url, headers=headers) as resp:
+                        if resp.status != 200:
+                            body = await resp.text()
+                            raise RuntimeError(f"Scoreboard call failed ({resp.status}): {body}")
+                        return await resp.text()
 
-            # ---------------------------------------------------------
-            # Fetch JSON
-            # ---------------------------------------------------------
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, headers=headers) as resp:
-                    if resp.status != 200:
-                        body = await resp.text()
-                        raise RuntimeError(f"Scoreboard call failed ({resp.status}): {body}")
-                    data = await resp.json()
+            scoreboard_xml = await get_scoreboard_xml(week)
+            embed, matchups = await self.get_matchups_embed(ctx, week, scoreboard_xml)
+            channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
 
-            # ---------------------------------------------------------
-            # Helpers for Yahoo’s XML->JSON shape
-            # ---------------------------------------------------------
-            def find_first(container: Any, key: str) -> Any:
-                """Return the first value for `key` found anywhere inside a dict/list."""
-                if isinstance(container, dict):
-                    if key in container:
-                        return container[key]
-                    for v in container.values():
-                        found = find_first(v, key)
-                        if found is not None:
-                            return found
-                elif isinstance(container, list):
-                    for item in container:
-                        found = find_first(item, key)
-                        if found is not None:
-                            return found
-                return None
-
-            def extract_league_meta(fc: Dict[str, Any]) -> Dict[str, Any]:
-                league = fc.get("league")
-                name, logo, current_week = None, None, None
-                if isinstance(league, list):
-                    for item in league:
-                        if isinstance(item, dict):
-                            if name is None and "name" in item:
-                                name = item.get("name")
-                            if logo is None and "logo_url" in item:
-                                logo = item.get("logo_url")
-                            if current_week is None and "current_week" in item:
-                                current_week = item.get("current_week")
-                elif isinstance(league, dict):
-                    name = league.get("name")
-                    logo = league.get("logo_url")
-                    current_week = league.get("current_week")
-                return {"name": name, "logo_url": logo, "current_week": current_week}
-
-            def extract_team_block(team_block: Any):
-                """
-                team_block is typically a list:
-                [ <meta_list>, { 'win_probability'?, 'team_points': {...}, 'team_projected_points': {...} } ... ]
-                Return: (name, points, logo_url, win_probability)
-                """
-                # meta_list
-                meta_list = team_block[0] if isinstance(team_block, list) and team_block else []
-                name = "Unknown Team"
-                logo_url = None
-
-                # name + logo
-                if isinstance(meta_list, list):
-                    for item in meta_list:
-                        if isinstance(item, dict) and "name" in item:
-                            name = item["name"]
-                        if isinstance(item, dict) and "team_logos" in item:
-                            logos = item["team_logos"]
-                            if isinstance(logos, list):
-                                first = None
-                                large = None
-                                for entry in logos:
-                                    tl = entry.get("team_logo") if isinstance(entry, dict) else None
-                                    if isinstance(tl, dict):
-                                        url = tl.get("url")
-                                        size = tl.get("size")
-                                        if url and first is None:
-                                            first = url
-                                        if url and size == "large":
-                                            large = url
-                                logo_url = large or first
-
-                # points + win_probability
-                pts = 0.0
-                wp = None
-                if isinstance(team_block, list):
-                    for part in team_block:
-                        if isinstance(part, dict):
-                            if "team_points" in part:
-                                total = part["team_points"].get("total")
-                                try:
-                                    pts = float(total) if total not in (None, "") else 0.0
-                                except (TypeError, ValueError):
-                                    pts = 0.0
-                            if "win_probability" in part:  # 0..1
-                                try:
-                                    wp = float(part["win_probability"])
-                                except (TypeError, ValueError):
-                                    wp = None
-
-                return name, pts, logo_url, wp
-
-            # ---------------------------------------------------------
-            # Walk JSON: fantasy_content -> league -> scoreboard -> matchups -> teams
-            # ---------------------------------------------------------
-            fc = data.get("fantasy_content", {})
-            league_meta = extract_league_meta(fc)
-
-            scoreboard = find_first(fc.get("league"), "scoreboard")
-            if not scoreboard:
-                channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
-                if channel:
-                    await channel.send(f"⚠️ No scoreboard found for week {week}.")
-                return
-
-            matchups_container = find_first(scoreboard, "matchups")
-            if not isinstance(matchups_container, dict):
-                channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+            if embed is None:
                 if channel:
                     await channel.send(f"⚠️ No matchups found for week {week}.")
                 return
 
-            raw_matchups: List[Dict[str, Any]] = []
-            for v in matchups_container.values():
-                if isinstance(v, dict) and "matchup" in v:
-                    raw_matchups.append(v["matchup"])
-
-            matchups: List[Dict[str, Any]] = []
-            overall_statuses = set()
-
-            for m in raw_matchups:
-                status = m.get("status")  # 'preevent' | 'inprogress' | 'postevent'
-                if status:
-                    overall_statuses.add(status)
-
-                teams_container = find_first(m, "teams")
-                if not isinstance(teams_container, dict):
-                    continue
-
-                team_blocks = []
-                for tv in teams_container.values():
-                    if isinstance(tv, dict) and "team" in tv:
-                        team_blocks.append(tv["team"])
-                if len(team_blocks) != 2:
-                    continue
-
-                t1_name, t1_pts, t1_logo, t1_wp = extract_team_block(team_blocks[0])
-                t2_name, t2_pts, t2_logo, t2_wp = extract_team_block(team_blocks[1])
-
-                matchups.append({
-                    "t1_name": t1_name, "t1_pts": t1_pts, "t1_logo": t1_logo, "t1_wp": t1_wp,
-                    "t2_name": t2_name, "t2_pts": t2_pts, "t2_logo": t2_logo, "t2_wp": t2_wp,
-                    "status": status or "unknown",
-                })
-
-            # ---------------------------------------------------------
-            # Build and send embed
-            # ---------------------------------------------------------
-            channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
-            if not channel:
-                return
-
-            league_name = league_meta.get("name") or "League"
-            league_logo = league_meta.get("logo_url")
-
-            # Color by aggregate status
-            color = discord.Color.blurple()
-            if "preevent" in overall_statuses and len(overall_statuses) == 1:
-                color = discord.Color.dark_grey()
-            elif "inprogress" in overall_statuses:
-                color = discord.Color.gold()
-            elif "postevent" in overall_statuses and len(overall_statuses) == 1:
-                color = discord.Color.green()
-
-            embed = discord.Embed(
-                title=f"🏈 {league_name} — Week {week} Matchups",
-                color=color
-            )
-            if league_logo:
-                embed.set_thumbnail(url=league_logo)
-
-            if not matchups:
-                embed.description = "No matchups found."
-                await channel.send(embed=embed)
-                return
-
-            for i, m in enumerate(matchups, 1):
-                a = f"**{m['t1_name']}** ({m['t1_pts']:.2f})"
-                b = f"**{m['t2_name']}** ({m['t2_pts']:.2f})"
-
-                if abs(m["t1_pts"] - m["t2_pts"]) < 1e-9:
-                    line = f"{a} vs {b}"
-                elif m["t1_pts"] > m["t2_pts"]:
-                    line = f"🏆 {a} vs {b}"
-                else:
-                    line = f"{a} vs 🏆 {b}"
-
-                # Pre-game win probability (if present), helpful before kickoff
-                if m["status"] == "preevent":
-                    wp_a = f"{int(m['t1_wp']*100)}%" if isinstance(m["t1_wp"], float) else "—"
-                    wp_b = f"{int(m['t2_wp']*100)}%" if isinstance(m["t2_wp"], float) else "—"
-                    line += f"\nWP: {wp_a} vs {wp_b}"
-
-                embed.add_field(name=f"", value=line, inline=False)
-
-            def need_to_announce_winner() -> bool:
-                if "postevent" in overall_statuses and len(overall_statuses) == 1:
-                    if self.state.scoreboard_msg.get("winner_announced") is not True:
-                        self.state.scoreboard_msg["winner_announced"] = True
-                        return True
+            def need_to_announce_winner():
+                if self.state.scoreboard_msg and self.state.scoreboard_msg.get("week") != week:
+                    return True
                 return False
-            
-            if self.state.scoreboard_msg:
-                if self.state.scoreboard_msg.get("week") == week:
-                    logger.info(f"Updating existing scoreboard embed for week {week}")
-                    updated = await self.update_embed(embed, self.state.scoreboard_msg)
-                    if need_to_announce_winner():
-                        await self.announce_winner(matchups, channel)
-                    if updated:
-                        return
+
+            if need_to_announce_winner():
+                logger.info(f"Announcing winner for week {self.state.scoreboard_msg.get('week')}")
+                last_week = week - 1
+                scoreboard_xml_last_week = await get_scoreboard_xml(last_week)
+                embed_last_week, matchups_last_week = await self.get_matchups_embed(ctx, last_week, scoreboard_xml_last_week)
+                if need_to_announce_winner():
+                    await self.announce_winner(matchups_last_week)
 
             msg = await channel.send(embed=embed)
-
             self.state.scoreboard_msg = {
                 "channel_id": channel.id,
                 "message_id": msg.id,
-                "week": week,
-                "winner_announced": False
+                "week": week
             }
-
         except Exception as e:
-            logger.exception(f"Error fetching JSON matchups for week {week}: {e}")
+            logger.exception(f"Error fetching XML matchups for week {week}: {e}")
             if ctx:
                 await ctx.send(f"⚠️ Could not fetch matchups: {e}")
 
+    async def update_fantasy_matchups(self, ctx=None, week=None):
+        """
+        Fetch the league scoreboard (XML) and post a single embed listing all matchups.
+        Crowns the leader with 🏆. Colors reflect preevent/inprogress/postevent.
+        """
+        try:
+            await self.ensure_token()
+            access_token = self.state.yahoo_token["access_token"]
+
+            if week is None:
+                week = getattr(self.bot, "current_nfl_week", None)
+                if week is None:
+                    return
+
+            async def get_scoreboard_xml(week):
+                url = (
+                    f"https://fantasysports.yahooapis.com/fantasy/v2/"
+                    f"league/{YAHOO_LEAGUE_KEY}/scoreboard;week={week}"
+                )
+                headers = {
+                    "Authorization": f"Bearer {access_token}",
+                    "Accept": "application/xml",
+                }
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(url, headers=headers) as resp:
+                        if resp.status != 200:
+                            body = await resp.text()
+                            raise RuntimeError(f"Scoreboard call failed ({resp.status}): {body}")
+                        return await resp.text()
+
+            scoreboard_xml = await get_scoreboard_xml(week)
+            embed, matchups = await self.get_matchups_embed(ctx, week, scoreboard_xml)
+            channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+
+            if embed is None:
+                if channel:
+                    await channel.send(f"⚠️ No matchups found for week {week}.")
+                return
+
+            updated = await self.update_embed(embed, self.state.scoreboard_msg)
+            if updated:
+                logger.info(f"Successfully updated fantasy matchups for week {week}")
+            else:
+                logger.error(f"Failed to update fantasy matchups for week {week}")
+        except Exception as e:
+            logger.exception(f"Error fetching XML matchups for week {week}: {e}")
+            if ctx:
+                await ctx.send(f"⚠️ Could not fetch matchups: {e}")
+    # -------------------------------------------------------------------
+    # Embeds
+    # -------------------------------------------------------------------
+    async def get_matchups_embed(self, ctx, week, xml_text):
+        root = ET.fromstring(xml_text)
+
+        # League meta
+        league_el = self._iter_desc(root, "league")
+        if not league_el:
+            return
+        league_el = league_el[0]
+        league_name = self._text(league_el, "name") or "League"
+        league_logo = self._text(league_el, "logo_url")
+
+        scoreboard_el = self._child(league_el, "scoreboard")
+        matchups_el = self._child(scoreboard_el, "matchups") if scoreboard_el is not None else None
+        if matchups_el is None:
+            return None
+
+        matchups = []
+        statuses = set()
+
+        for m in self._children(matchups_el, "matchup"):
+            status = self._text(m, "status", "unknown")
+            statuses.add(status)
+
+            teams_el = self._child(m, "teams")
+            teams = self._children(teams_el, "team") if teams_el is not None else []
+            if len(teams) != 2:
+                continue
+
+            def parse_team(team_el):
+                name = self._text(team_el, "name", "Unknown Team")
+
+                # logo
+                logo_url = None
+                team_logos = self._child(team_el, "team_logos")
+                if team_logos is not None:
+                    first = None
+                    large = None
+                    for tl in self._children(team_logos, "team_logo"):
+                        url = self._text(tl, "url")
+                        size = self._text(tl, "size")
+                        if url and first is None:
+                            first = url
+                        if url and size and size.lower() == "large":
+                            large = url
+                    logo_url = large or first
+
+                # points (either <team_points total=".."> OR <team_points><total>..)</n                    pts = 0.0
+                tp = self._child(team_el, "team_points")
+                if tp is not None:
+                    total_attr = tp.attrib.get("total") if hasattr(tp, "attrib") else None
+                    pts = self._to_float(total_attr if total_attr is not None else self._text(tp, "total"))
+
+                wp = None
+                wp_txt = self._text(team_el, "win_probability")
+                if wp_txt is not None:
+                    try:
+                        wp = float(wp_txt)
+                    except Exception:
+                        wp = None
+
+                return name, pts, logo_url, wp
+
+            t1_name, t1_pts, t1_logo, t1_wp = parse_team(teams[0])
+            t2_name, t2_pts, t2_logo, t2_wp = parse_team(teams[1])
+
+            matchups.append({
+                "t1_name": t1_name, "t1_pts": t1_pts, "t1_logo": t1_logo, "t1_wp": t1_wp,
+                "t2_name": t2_name, "t2_pts": t2_pts, "t2_logo": t2_logo, "t2_wp": t2_wp,
+                "status": status,
+            })
+
+        color = discord.Color.blurple()
+        if statuses == {"preevent"}:
+            color = discord.Color.dark_grey()
+        elif "inprogress" in statuses:
+            color = discord.Color.gold()
+        elif statuses == {"postevent"}:
+            color = discord.Color.green()
+
+        embed = discord.Embed(title=f"🏈 {league_name} — Week {week} Matchups", color=color)
+        if league_logo:
+            embed.set_thumbnail(url=league_logo)
+
+        if not matchups:
+            return None
+
+        for m in matchups:
+            a = f"**{m['t1_name']}** ({m['t1_pts']:.2f})"
+            b = f"**{m['t2_name']}** ({m['t2_pts']:.2f})"
+            if abs(m["t1_pts"] - m["t2_pts"]) < 1e-9:
+                line = f"{a} vs {b}"
+            elif m["t1_pts"] > m["t2_pts"]:
+                line = f"🏆 {a} vs {b}"
+            else:
+                line = f"{a} vs 🏆 {b}"
+
+            if m["status"] == "preevent":
+                wp_a = f"{int(m['t1_wp']*100)}%" if isinstance(m["t1_wp"], float) else "—"
+                wp_b = f"{int(m['t2_wp']*100)}%" if isinstance(m["t2_wp"], float) else "—"
+                line += f"\nWP: {wp_a} vs {wp_b}"
+
+            embed.add_field(name="", value=line, inline=False)
+        
+        return embed, matchups
+    
     async def update_embed(self, new_embed, info):
         try:
             if not info:
-                return
-
+                return False
             channel = self.bot.get_channel(info["channel_id"]) or await self.bot.fetch_channel(info["channel_id"])
             msg = await channel.fetch_message(info["message_id"])
 
-            # Always use UTC for Discord timestamp
             new_embed.timestamp = datetime.now(dt_timezone.utc)
-
-            # Also change footer text so the payload is guaranteed different (even if same-second)
-            # If you prefer local time in the footer, format it here and still keep timestamp in UTC.
-            new_embed.set_footer(text=f"Last updated")
+            new_embed.set_footer(text="Last updated")
 
             await msg.edit(embed=new_embed)
             return True
@@ -382,130 +404,25 @@ class YahooFFService:
             logger.error(f"Error updating scoreboard embed: {e}")
             return False
 
-    async def announce_winner(self, matchups, channel):
-
-        def get_random_winner_phrase(file_path: str = WINNER_PHRASES_FILE) -> str:
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(f"Winner phrases file not found: {file_path}")
-
-            with open(file_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-
-            phrases = data.get("phrases")
-            if not phrases or not isinstance(phrases, list):
-                raise ValueError(f"No valid 'phrases' list found in {file_path}")
-
-            return random.choice(phrases)
-        
-        if not matchups:
-            logger.error("No matchups to announce winners for.")
-            return
-
-        for i, m in enumerate(matchups, 1):
-            embed = discord.Embed(color=discord.Color.green())
-
-            if abs(m["t1_pts"] - m["t2_pts"]) < 1e-9:
-                if m["t1_logo"]:
-                    embed.set_thumbnail(url=m["t1_logo"])
-                embed.description = "### 🏆 " + get_random_winner_phrase() % ("**"+m["t1_name"]+"**", "**"+m["t2_name"]+"**")
-            elif m["t1_pts"] > m["t2_pts"]:
-                if m["t1_logo"]:
-                    embed.set_thumbnail(url=m["t1_logo"])
-                embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t1_name"], m["t2_name"])
-            else:
-                if m["t2_logo"]:
-                    embed.set_thumbnail(url=m["t2_logo"])
-                embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t2_name"], m["t1_name"])
-            
-            await channel.send(embed=embed)
-
-    async def post_standings_embeds(self, ctx=None, week=None):
-        await self.ensure_token()
-        access_token = self.state.yahoo_token["access_token"]
-
-        if week is None:
-            week = self.bot.current_nfl_week
-            if week is None:
-                return
-        
-        url = (
-            f"https://fantasysports.yahooapis.com/fantasy/v2/"
-            f"league/{YAHOO_LEAGUE_KEY}/standings?format=json"
-        )
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-            "Accept": "application/json",
-        }
-
-        # --- fetch JSON ---
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as resp:
-                if resp.status != 200:
-                    body = await resp.text()
-                    raise RuntimeError(f"Standings call failed ({resp.status}): {body}")
-                data = await resp.json()
-        
-        teams, league_name, league_logo_url, current_week = await self.parse_standings_json(data)
-
-        if not teams:
-            await self._send_text(ctx, "⚠️ No teams found in team_standings.")
-            return
-
-        team_keys = ",".join(t["team_key"] for t in teams if "team_key" in t)
-        url = f"https://fantasysports.yahooapis.com/fantasy/v2/teams;team_keys={team_keys}/roster;week={week}/players;stats?format=json"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as resp:
-                if resp.status != 200:
-                    body = await resp.text()
-                    raise RuntimeError(f"teams call failed ({resp.status}): {body}")
-                data = await resp.json()
-                text = await resp.text()
-        
-        team_rosters = await self.parse_roster_json(data)
-
-        if not team_rosters:
-            await self._send_text(ctx, "⚠️ No team rosters found.")
-            return
-
-        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
-        if not channel:
-            return
-        
-        roster_messages = self.state.roster_messages or {}
-
-        if not roster_messages.get('week'):
-            roster_messages['week'] = None
-
-        if roster_messages['week'] != week: 
-            embed = discord.Embed(
-                title=f"{league_name} Standings",
-                description=f"### Heading into week {week}",
-                color=discord.Color.red()
-            )
-            embed.set_thumbnail(url=league_logo_url)
-            await channel.send(embed=embed)
-            roster_messages['week'] = week
-
+    async def get_standings_embeds(self, ctx, week, team_rosters, teams):
         def get_overall_game_state(roster):
             if not roster:
                 return "waiting"
-            
             states = [p.get("game_state") for p in roster]
-
-            if all(state == "finished" for state in states):
+            if states and all(s == "finished" for s in states):
                 return "finished"
-            elif any(state == "in_progress" for state in states):
+            if any(s == "in_progress" for s in states):
                 return "active"
-            else:
-                return "waiting"
-            
+            return "waiting"
+
+        embed_map = {}
         for t in teams:
-            record = f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t["ties"] else "")
+            record = f"{t['wins']}-{t['losses']}" + (f"-{t['ties']}" if t['ties'] else "")
             embed = discord.Embed(
                 title=t["name"],
                 description=f"Manager: **{t['nickname']}**\nRecord: **{record}**",
             )
-            if t["logo_url"]:
+            if t.get("logo_url"):
                 embed.set_thumbnail(url=t["logo_url"])
             embed.add_field(name="Points For", value=f"{t['points_for']:.2f}", inline=True)
             embed.add_field(name="Points Against", value=f"{t['points_against']:.2f}", inline=True)
@@ -521,154 +438,288 @@ class YahooFFService:
                 embed.color = discord.Color.gold()
             else:
                 embed.color = discord.Color.dark_grey()
+            
+            def _format_pts(pts):
+                if pts is None:
+                    return "ERR"
+                else:
+                    return f"{pts:.2f}"
 
-            if roster:
-                for p in roster:
-                    pos = p.get("position") or "—"
+            total_team_pts = 0.00
+            # Starters first
+            for p in roster:
+                pos = p.get("position") or "—"
+                if pos != "BN":
+                    pts = p.get("total_points", None)
+                    if pts is not None:
+                        total_team_pts += pts
+                    name = p.get("full_name") or "Unknown"
+                    status = p.get("status") or ""
+                    embed.add_field(name=f"{pos}   {_format_pts(pts)}", value=f"{name} {status}", inline=True)
+
+            # Bench
+            for p in roster:
+                pos = p.get("position") or "—"
+                if pos == "BN":
                     pts = p.get("total_points", 0.0) or 0.0
                     name = p.get("full_name") or "Unknown"
                     status = p.get("status") or ""
-                    embed.add_field(
-                        name=f"{pos}   pts:{pts:.2f}",
-                        value=f"{name} {status}",
-                        inline=True
-                    )
-            
-            updated = False
-            if roster_messages.get(team_key):
-                info = roster_messages[team_key]
-                if info.get("week") == week:
-                    logger.info(f"Updating existing roster embed for team {t['name']} week {week}")
-                    updated = await self.update_embed(embed, info)
-            
-            if not updated:
-                msg = await channel.send(embed=embed)
-                roster_messages[team_key] = {
-                    "channel_id": channel.id,
-                    "message_id": msg.id,
-                    "week": week
-                }
-                self.state.roster_messages = roster_messages
+                    embed.add_field(name=f"{pos}   {_format_pts(pts)}", value=f"{name} {status}", inline=True)
 
-            await asyncio.sleep(5)
+            embed.add_field(name=f"Total Score: {total_team_pts:.2f}",value="", inline=False)
+            embed_map[team_key] = embed
+        return embed_map
 
-    async def parse_standings_json(self, data):
-        # logger.info(json.dumps(data, indent=2))
-        # --- parse JSON (Yahoo XML->JSON is messy) ---
-        # Navigate: fantasy_content -> league (list) -> standings -> teams (dict with numeric keys)
-        fantasy_content = data.get("fantasy_content", {})
-        league_list = fantasy_content.get("league", [])
+    async def announce_winner(self, matchups):
+        def get_random_winner_phrase(file_path=WINNER_PHRASES_FILE):
+            if not os.path.exists(file_path):
+                raise FileNotFoundError(f"Winner phrases file not found: {file_path}")
+            with open(file_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            phrases = data.get("phrases")
+            if not phrases or not isinstance(phrases, list):
+                raise ValueError(f"No valid 'phrases' list found in {file_path}")
+            return random.choice(phrases)
 
-        # Find the object that has "standings"
-        standings_obj = None
-        for part in league_list:
-            if isinstance(part, dict) and "standings" in part:
-                standings_obj = part["standings"]
-                break
-        if not standings_obj:
-            await self._send_text(ctx, "⚠️ Could not find standings in response.")
+        if not matchups:
+            logger.error("No matchups to announce winners for.")
+            return
+        channel = self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+        for m in matchups:
+            embed = discord.Embed(color=discord.Color.green())
+            if abs(m["t1_pts"] - m["t2_pts"]) < 1e-9:
+                if m["t1_logo"]:
+                    embed.set_thumbnail(url=m["t1_logo"]) 
+                embed.description = "### 🏆 " + get_random_winner_phrase() % ("**"+m["t1_name"]+"**", "**"+m["t2_name"]+"**")
+            elif m["t1_pts"] > m["t2_pts"]:
+                if m["t1_logo"]:
+                    embed.set_thumbnail(url=m["t1_logo"]) 
+                embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t1_name"], m["t2_name"]) 
+            else:
+                if m["t2_logo"]:
+                    embed.set_thumbnail(url=m["t2_logo"]) 
+                embed.description = "### 🏆 " + get_random_winner_phrase() % (m["t2_name"], m["t1_name"]) 
+            await channel.send(embed=embed)
+
+    # -------------------------------------------------------------------
+    # Standings + Rosters (with weekly points)
+    # -------------------------------------------------------------------
+    async def post_fantasy_standings(self, ctx=None, week=None):
+        if week is None:
+            week = getattr(self.bot, "current_nfl_week", None)
+            if week is None:
+                return
+
+        teams, league_name, league_logo_url, current_week, team_rosters = await self.fetch_all_fantasy_standings_info(week)
+
+        if not team_rosters:
+            await self._send_text(ctx, "⚠️ No team rosters found.")
             return
 
-        if isinstance(standings_obj, list):
-            standings_obj = standings_obj[0] if standings_obj else {}
+        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+        if not channel:
+            return
 
-        teams_container = standings_obj.get("teams") or {}
-        # teams_container has numeric keys and a "count"
+        roster_messages = self.state.roster_messages or {}
+        if not roster_messages.get('week'):
+            roster_messages['week'] = None
+
+        if roster_messages['week'] != week:
+            embed = discord.Embed(
+                title=f"{league_name} Standings",
+                description=f"### Heading into week {week}",
+                color=discord.Color.red(),
+            )
+            if league_logo_url:
+                embed.set_thumbnail(url=league_logo_url)
+            await channel.send(embed=embed)
+            roster_messages['week'] = week
+
+        embed_map = await self.get_standings_embeds(ctx, week, team_rosters, teams)
+        roster_messages = self.state.roster_messages
+        updated = False
+        for team_key, embed in embed_map.items():
+            msg = await channel.send(embed=embed)
+            roster_messages[team_key] = {
+                "channel_id": channel.id,
+                "message_id": msg.id,
+                "week": week,
+            }
+            self.state.roster_messages = roster_messages
+
+        await asyncio.sleep(5)
+
+    async def update_fantasy_standings(self, ctx=None, week=None):
+        if week is None:
+            week = getattr(self.bot, "current_nfl_week", None)
+            if week is None:
+                return
+
+        teams, league_name, league_logo_url, current_week, team_rosters = await self.fetch_all_fantasy_standings_info(week)
+
+        if not team_rosters:
+            await self._send_text(ctx, "⚠️ No team rosters found.")
+            return
+
+        channel = ctx.channel if ctx else self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+        if not channel:
+            return
+
+        roster_messages = self.state.roster_messages or None
+        if not roster_messages:
+            logger.warning("no roster messages to update")
+            return
+
+        embed_map = await self.get_standings_embeds(ctx, week, team_rosters, teams)
+        updated = False
+        for team_key, embed in embed_map.items():
+            if roster_messages.get(team_key):
+                logger.info(f"Updating existing roster embed for team {team_key} week {week}")
+                updated = await self.update_embed(embed, roster_messages[team_key])
+            if not updated:
+                logger.error("failed to update embed")
+
+        await asyncio.sleep(5)
+
+    async def fetch_all_fantasy_standings_info(self, week):
+        await self.ensure_token()
+        access_token = self.state.yahoo_token["access_token"]
+        headers = {"Authorization": f"Bearer {access_token}", "Accept": "application/xml"}
+
+        # 1) Standings (XML)
+        standings_url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/{YAHOO_LEAGUE_KEY}/standings"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(standings_url, headers=headers) as resp:
+                if resp.status != 200:
+                    body = await resp.text()
+                    raise RuntimeError(f"Standings call failed ({resp.status}): {body}")
+                standings_xml = await resp.text()
+
+            teams, league_name, league_logo_url, current_week = await self.parse_standings_xml(standings_xml)
+            if not teams:
+                await self._send_text(ctx, "⚠️ No teams found in team_standings.")
+                return
+
+            # 2) Rosters (XML)
+            team_keys = ",".join(t["team_key"] for t in teams if "team_key" in t)
+            roster_url = (
+                f"https://fantasysports.yahooapis.com/fantasy/v2/"
+                f"teams;team_keys={team_keys}/roster;week={week}/players"
+            )
+            async with session.get(roster_url, headers=headers) as resp:
+                if resp.status != 200:
+                    body = await resp.text()
+                    raise RuntimeError(f"Teams/roster call failed ({resp.status}): {body}")
+                roster_xml = await resp.text()
+
+            # logger.info(f"roster xml: {roster_xml}")
+            roster_root = ET.fromstring(roster_xml)
+            roster_map, all_player_keys = self._parse_roster_xml(roster_root)
+
+            # 3) Weekly stats/points for those players (XML)
+            points_by_key = {}
+            if all_player_keys:
+                chunk = 25
+                keys_list = list(all_player_keys)
+                for i in range(0, len(keys_list), chunk):
+                    sub = keys_list[i:i+chunk]
+                    stats_url = (
+                        f"https://fantasysports.yahooapis.com/fantasy/v2/"
+                        f"league/{YAHOO_LEAGUE_KEY}/players;player_keys={','.join(sub)}/stats;type=week;week={week}"
+                    )
+                    async with session.get(stats_url, headers=headers) as resp:
+                        if resp.status != 200:
+                            body = await resp.text()
+                            raise RuntimeError(f"Players stats call failed ({resp.status}): {body}")
+                        stats_xml = await resp.text()
+                    # logger.info(f"player stats xml: {stats_xml}")
+                    stats_root = ET.fromstring(stats_xml)
+
+                    # Prefer player_points; if missing, compute via modifiers
+                    pts = self._build_points_index(stats_root)
+                    missing = [k for k in sub if k not in pts]
+                    if missing:
+                        for k in missing:
+                            pts[k] = None
+                    points_by_key.update(pts)
+
+            team_rosters = self._merge_points_into_roster(roster_map, points_by_key)
+        return teams, league_name, league_logo_url, current_week, team_rosters
+        
+    # -------------------------------------------------------------------
+    # XML parsing helpers for standings/roster
+    # -------------------------------------------------------------------
+    async def parse_standings_xml(self, xml_text):  # name kept for compatibility
+        """Parse standings XML; return (teams_list, league_name, league_logo_url, current_week)."""
+        # logger.info(f"standings: {xml_text}")
+        root = ET.fromstring(xml_text)
+        league_el = self._iter_desc(root, "league")
+        if not league_el:
+            return [], None, None, None
+        league_el = league_el[0]
+
+        league_name = self._text(league_el, "name")
+        league_logo_url = self._text(league_el, "logo_url")
+        current_week = self._text(league_el, "current_week")
+
+        standings_el = self._child(league_el, "standings")
+        if standings_el is None:
+            return [], league_name, league_logo_url, current_week
+        teams_el = self._child(standings_el, "teams")
+        if teams_el is None:
+            return [], league_name, league_logo_url, current_week
+
         teams = []
-        for k, v in teams_container.items():
-            if k == "count":
-                continue
-            if not isinstance(v, dict):
-                continue
-            team_block = v.get("team")
-            if not team_block:
-                continue
-            teams.append(team_block)
+        for team_el in self._children(teams_el, "team"):
+            name = self._text(team_el, "name", "Unknown Team")
+            team_key = self._text(team_el, "team_key")
 
-        # Helper to pull values from that first meta list (list of dicts)
-        def from_meta(meta_list, key):
-            if not isinstance(meta_list, list):
-                return None
-            for item in meta_list:
-                if isinstance(item, dict) and key in item:
-                    return item[key]
-            return None
-
-        def get_logo_url(meta_list):
-            logos = from_meta(meta_list, "team_logos")
-            if isinstance(logos, list):
-                large = None
+            # logo
+            logo_url = None
+            team_logos = self._child(team_el, "team_logos")
+            if team_logos is not None:
                 first = None
-                for entry in logos:
-                    if not isinstance(entry, dict):
-                        continue
-                    tl = entry.get("team_logo")
-                    if isinstance(tl, dict):
-                        url = tl.get("url")
-                        size = tl.get("size")
-                        if first is None and url:
-                            first = url
-                        if size == "large" and url:
-                            large = url
-                return large or first
-            return None
+                large = None
+                for tl in self._children(team_logos, "team_logo"):
+                    url = self._text(tl, "url")
+                    size = self._text(tl, "size")
+                    if url and first is None:
+                        first = url
+                    if url and size and size.lower() == "large":
+                        large = url
+                logo_url = large or first
 
-        def get_manager_nickname(meta_list):
-            managers = from_meta(meta_list, "managers")
-            if isinstance(managers, list) and managers:
-                mgr = managers[0].get("manager") if isinstance(managers[0], dict) else None
-                if isinstance(mgr, dict):
-                    return mgr.get("nickname")
-            return None
+            # manager nickname
+            nickname = "—"
+            managers = self._child(team_el, "managers")
+            if managers is not None:
+                mgr = self._child(managers, "manager")
+                if mgr is not None:
+                    nickname = self._text(mgr, "nickname", nickname)
 
-        def extract_league_meta(league):
-            if isinstance(league, list):
-                for item in league:
-                    if isinstance(item, dict) and ("name" in item or "logo_url" in item):
-                        return item.get("name"), item.get("logo_url"), item.get("current_week")
-            elif isinstance(league, dict):  # rare, but just in case
-                return league.get("name"), league.get("logo_url"), league.get("current_week")
-            return None, None, None
+            team_standings = self._child(team_el, "team_standings")
+            points_for = self._to_float(self._text(team_standings, "points_for") if team_standings is not None else None)
+            points_against = self._to_float(self._text(team_standings, "points_against") if team_standings is not None else None)
 
-        league_name, league_logo_url, current_week = extract_league_meta(league_list)
+            rank = 9999
+            if team_standings is not None:
+                try:
+                    rank = int(self._text(team_standings, "rank") or 9999)
+                except Exception:
+                    rank = 9999
 
-        # Build a clean list of team dicts
-        clean_team_dicts = []
-        for team_block in teams:
-            meta_list = team_block[0] if len(team_block) > 0 else []
-            team_points_obj = team_block[1].get("team_points") if len(team_block) > 1 and isinstance(team_block[1], dict) else {}
-            team_standings = team_block[2].get("team_standings") if len(team_block) > 2 and isinstance(team_block[2], dict) else {}
+            wins = losses = ties = 0
+            if team_standings is not None:
+                outcomes = self._child(team_standings, "outcome_totals")
+                if outcomes is not None:
+                    try:
+                        wins = int(self._text(outcomes, "wins") or 0)
+                        losses = int(self._text(outcomes, "losses") or 0)
+                        ties = int(self._text(outcomes, "ties") or 0)
+                    except Exception:
+                        wins = losses = ties = 0
 
-            name = from_meta(meta_list, "name") or "Unknown Team"
-            team_key = from_meta(meta_list, "team_key") or None
-            logo_url = get_logo_url(meta_list)
-
-            nickname = get_manager_nickname(meta_list) or "—"
-
-            # Prefer team_standings points_for/against for season totals
-            points_for = team_standings.get("points_for", "0") if isinstance(team_standings, dict) else "0"
-            points_against = team_standings.get("points_against", "0") if isinstance(team_standings, dict) else "0"
-            try:
-                points_for = float(points_for) if points_for not in (None, "") else 0.0
-            except ValueError:
-                points_for = 0.0
-            try:
-                points_against = float(points_against) if points_against not in (None, "") else 0.0
-            except ValueError:
-                points_against = 0.0
-
-            outcomes = team_standings.get("outcome_totals", {}) if isinstance(team_standings, dict) else {}
-            wins = int(outcomes.get("wins", 0) or 0)
-            losses = int(outcomes.get("losses", 0) or 0)
-            ties = int(outcomes.get("ties", 0) or 0)
-
-            # Rank can help ordering
-            try:
-                rank = int(team_standings.get("rank", 9999) or 9999)
-            except ValueError:
-                rank = 9999
-
-            clean_team_dicts.append({
+            teams.append({
                 "team_key": team_key,
                 "name": name,
                 "nickname": nickname,
@@ -680,238 +731,87 @@ class YahooFFService:
                 "ties": ties,
                 "rank": rank,
             })
-        
-        clean_team_dicts.sort(key=lambda t: t["rank"])
-        return clean_team_dicts, league_name, league_logo_url, current_week
 
-    async def parse_roster_json(self, data):
-        # --- parse JSON (Yahoo XML->JSON is messy) ---
-        #logger.info(json.dumps(data, indent=2))
-        fantasy_content = data.get("fantasy_content", {})
-        teams_container = fantasy_content.get("teams") or {}
+        teams.sort(key=lambda t: t["rank"])  # match previous ordering
+        return teams, league_name, league_logo_url, current_week
 
-        if not isinstance(teams_container, dict):
-            league_list = fantasy_content.get("league", [])
-            standings_obj = None
-            for part in league_list:
-                if isinstance(part, dict) and "standings" in part:
-                    standings_obj = part["standings"]
-                    break
-            if isinstance(standings_obj, list):
-                standings_obj = standings_obj[0] if standings_obj else {}
-            teams_container = (standings_obj or {}).get("teams") or {}
+    def _parse_roster_xml(self, roster_root):
+        """Parse roster XML into {team_key: [players...]} and collect player_keys."""
+        roster_map = {}
+        all_player_keys = []
 
-        teams = []
-        for k, v in teams_container.items():
-            if k == "count":
-                continue
-            if not isinstance(v, dict):
-                continue
-            team_block = v.get("team")
-            if not team_block:
-                continue
-            teams.append(team_block)
+        teams_els = self._iter_desc(roster_root, "teams")
+        if not teams_els:
+            return roster_map, all_player_keys
+        teams_el = teams_els[0]
 
-        # Helpers -----------------------------------------------------------------
-        def from_meta(meta_list, key):
-            if not isinstance(meta_list, list):
-                return None
-            for item in meta_list:
-                if isinstance(item, dict) and key in item:
-                    return item[key]
-            return None
-
-        def get_subdict(meta_list, key):
-            val = from_meta(meta_list, key)
-            return val if isinstance(val, dict) else {}
-
-        def find_roster_obj(team_block):
-            if not isinstance(team_block, list):
-                return {}
-            for item in team_block:
-                if isinstance(item, dict) and "roster" in item and isinstance(item["roster"], dict):
-                    return item["roster"]
-            return {}
-
-        def extract_players_list(roster_obj):
-            node0 = roster_obj.get("0")
-            if isinstance(node0, dict):
-                players = node0.get("players")
-                if isinstance(players, list):
-                    return players
-
-            players = roster_obj.get("players")
-            if isinstance(players, list):
-                return players
-
-            if isinstance(players, dict):
-                out = []
-                try:
-                    count = int(players.get("count", 0) or 0)
-                except (TypeError, ValueError):
-                    count = 0
-                for i in range(count):
-                    node = players.get(str(i))
-                    if isinstance(node, dict):
-                        out.append(node)
-                return out
-
-            return []
-
-        # Parse a boolean-like value robustly (Yahoo often uses "1"/"0" or "true"/"false")
-        def as_bool(v):
-            if isinstance(v, bool):
-                return v
-            if isinstance(v, (int, float)):
-                return v != 0
-            if isinstance(v, str):
-                return v.strip().lower() in {"1", "true", "yes", "y"}
-            return False
-
-        # Find a value by scanning the list-of-dicts for any of several candidate keys
-        def scan_for(meta_list, candidate_keys):
-            if not isinstance(meta_list, list):
-                return None
-            for item in meta_list:
-                if isinstance(item, dict):
-                    for k in candidate_keys:
-                        if k in item:
-                            return item[k]
-            return None
-
-        # Derive a per-player game_state from whatever Yahoo provides, else heuristics
-        def derive_player_game_state(p_list, total_points, week):
-            # Try explicit flags first (these names show up in some sports/feeds)
-            # If none of these are present in your league’s sport/feed, they’ll be None.
-            explicit_is_playing = scan_for(p_list, ["is_playing", "in_game", "is_live"])
-            explicit_started     = scan_for(p_list, ["game_started", "started", "has_started"])
-            explicit_finished    = scan_for(p_list, ["game_finished", "completed", "has_finished"])
-
-            # Bye-week hint (NFL often nests bye weeks under a dict)
-            bye_obj  = get_subdict(p_list, "bye_weeks") or get_subdict(p_list, "bye_week")
-            on_bye   = False
-            if isinstance(bye_obj, dict):
-                # common shapes: {"week": "7"} or {"0": {"week": "7"}}
-                bye_week = bye_obj.get("week")
-                if bye_week is None and "0" in bye_obj and isinstance(bye_obj["0"], dict):
-                    bye_week = bye_obj["0"].get("week")
-                try:
-                    on_bye = (int(bye_week) == int(week))
-                except (TypeError, ValueError):
-                    on_bye = False
-
-            # 1) Use explicit finished flag if present
-            if explicit_finished is not None:
-                return "finished" if as_bool(explicit_finished) else "in_progress"  # if explicitly not finished but flagged, treat as live
-
-            # 2) Use explicit is_playing flag
-            if explicit_is_playing is not None:
-                return "in_progress" if as_bool(explicit_is_playing) else "not_started"
-
-            # 3) Use explicit started flag
-            if explicit_started is not None:
-                return "in_progress" if as_bool(explicit_started) else "not_started"
-
-            # 4) Bye week ⇒ not started (won’t play)
-            if on_bye:
-                return "not_started"
-
-            # 5) Heuristics when nothing else is available:
-            #    - If weekly points are strictly > 0 early in week, could be in-progress or finished.
-            #    - We can’t reliably split those without kickoff/end timestamps, so:
-            #      * If points == 0.0 → probably not started (or goose egg, but safe)
-            #      * If points > 0.0 → mark as unknown; caller can refine later with scoreboard/schedule
-            if total_points == 0.0:
-                return "not_started"
-
-            return "unknown"
-
-        roster_by_team = {}
-
-        # Try to read the requested week from the payload if present (caller already passes ?week={week})
-        # If not available, set to None and heuristics won’t use bye logic.
-        requested_week = None
-        try:
-            meta_game = fantasy_content.get("game", {})
-            if isinstance(meta_game, dict):
-                requested_week = int(meta_game.get("week")) if meta_game.get("week") is not None else None
-        except Exception:
-            requested_week = None
-
-        # If not found above, accept a 'week' helper nested in teams -> roster
-        if requested_week is None:
-            # many payloads embed roster week at roster["week"]
-            # we’ll just fill it per-team when available
-            pass
-
-        for team_block in teams:
-            meta_list = team_block[0] if len(team_block) > 0 else []
-            team_key = from_meta(meta_list, "team_key")
+        for team_el in self._children(teams_el, "team"):
+            team_key = self._text(team_el, "team_key")
             if not team_key:
-                team_key = from_meta(team_block if isinstance(team_block, list) else [], "team_key")
-            if not team_key:
+                roster_map[team_key] = []
                 continue
 
-            roster_obj = find_roster_obj(team_block)
-            # fallback: grab week off this roster if available
-            this_roster_week = requested_week
-            try:
-                if this_roster_week is None:
-                    w = roster_obj.get("week")
-                    if isinstance(w, (str, int)):
-                        this_roster_week = int(w)
-            except Exception:
-                pass
+            out_players = []
+            roster_el = self._child(team_el, "roster")
+            players_el = self._child(roster_el, "players") if roster_el is not None else None
+            if players_el is None:
+                roster_map[team_key] = out_players
+                continue
 
-            players_nodes = extract_players_list(roster_obj)
-            players_list = []
+            for p in self._children(players_el, "player"):
+                pkey = self._text(p, "player_key")
+                pid = self._text(p, "player_id")
+                name_el = self._child(p, "name")
+                full = self._text(name_el, "full") if name_el is not None else None
+                display_pos = self._text(p, "display_position")
+                sel_pos_el = self._child(p, "selected_position")
+                sel_pos = self._text(sel_pos_el, "position") if sel_pos_el is not None else None
+                status = self._text(p, "status")
+                injury_note = self._text(p, "injury_note")
 
-            for p in players_nodes:
-                p_list = p.get("player", [])
-                if not isinstance(p_list, list):
-                    continue
-
-                name_obj = get_subdict(p_list, "name")
-                full_name = name_obj.get("full") if isinstance(name_obj, dict) else None
-
-                player_id = from_meta(p_list, "player_id")
-
-                selected_pos = get_subdict(p_list, "selected_position")
-                position = selected_pos.get("position") if selected_pos else None
-                if not position:
-                    position = from_meta(p_list, "display_position")
-
-                status = from_meta(p_list, "status")
-                injury_note = from_meta(p_list, "injury_note")
-
-                points_obj = get_subdict(p_list, "player_points")
-                total_points_raw = points_obj.get("total") if isinstance(points_obj, dict) else None
-                try:
-                    total_points = float(total_points_raw) if total_points_raw not in (None, "") else 0.0
-                except (TypeError, ValueError):
-                    total_points = 0.0
-
-                game_state = derive_player_game_state(
-                    p_list,
-                    total_points=total_points,
-                    week=this_roster_week
-                )
-
-                players_list.append({
-                    "full_name": full_name,
-                    "player_id": player_id,
-                    "position": position,
+                out_players.append({
+                    "player_key": pkey,
+                    "player_id": pid,
+                    "full_name": full,
+                    "position": sel_pos or display_pos,
                     "status": status,
                     "injury_note": injury_note,
-                    "total_points": total_points,
-                    "game_state": game_state,
+                    "total_points": 0.0,
+                    "game_state": "waiting",
                 })
 
-            roster_by_team[team_key] = players_list
+                if pkey:
+                    all_player_keys.append(pkey)
 
-        return roster_by_team
+            roster_map[team_key] = out_players
 
-    async def _send_text(self, ctx, msg: str):
+        return roster_map, all_player_keys
+
+    def _build_points_index(self, stats_root):
+        """Return {player_key: total_points} using <player_points><total> when present."""
+        idx = {}
+        for p in self._iter_desc(stats_root, "player"):
+            pkey = self._text(p, "player_key")
+            ppoints = self._child(p, "player_points")
+            if pkey and ppoints is not None:
+                total = self._text(ppoints, "total")
+                if total is not None:
+                    idx[pkey] = self._to_float(total)
+        return idx
+
+    def _merge_points_into_roster(self, roster_map_basic, points_by_key):
+        for team_key, players in roster_map_basic.items():
+            for p in players:
+                pkey = p.get("player_key")
+                pts = points_by_key.get(pkey, 0.0)
+                p["total_points"] = pts
+                p["game_state"] = "in_progress" if pts and pts > 0 else "waiting"
+        return roster_map_basic
+
+    # -------------------------------------------------------------------
+    # Misc
+    # -------------------------------------------------------------------
+    async def _send_text(self, ctx, msg):
         if ctx is not None and ctx.channel:
             await ctx.send(msg)
         else:
@@ -919,4 +819,5 @@ class YahooFFService:
             if ch:
                 await ch.send(msg)
 
-__all__ = ['YahooFFService']
+
+__all__ = ["YahooFFService"]

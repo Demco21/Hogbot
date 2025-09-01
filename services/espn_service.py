@@ -346,7 +346,7 @@ class ESPNService:
                     "game_id": game_id
                 })
             
-            logger.info(games)
+            # logger.info(games)
             return games
 
     async def dump_regular_season_games(self, year: int, out_path: str = None):
