@@ -444,6 +444,24 @@ class YahooFFService:
                     return "ERR"
                 else:
                     return f"{pts:.2f}"
+            
+            def _format_status(status=None):
+                if not status:
+                    return ""
+                return f"`({status})`"
+
+            def _format_pos(pos=None):
+                pos_map = {
+                    "QB": "🏈 QB",
+                    "WR": "🎯 WR",
+                    "RB": "🐂 RB",
+                    "TE": "🪢 TE",
+                    "W/R/T": "⚡ W/R/T",
+                    "K": "👟 K",
+                    "DEF": "🛡️ DEF",
+                    "BN": "🪑 BN"
+                }
+                return pos_map.get(pos, pos)
 
             total_team_pts = 0.00
             # Starters first
@@ -453,18 +471,22 @@ class YahooFFService:
                     pts = p.get("total_points", None)
                     if pts is not None:
                         total_team_pts += pts
-                    name = p.get("full_name") or "Unknown"
+                    player_name = p.get("full_name") or "Unknown"
                     status = p.get("status") or ""
-                    embed.add_field(name=f"{pos}   {_format_pts(pts)}", value=f"{name} {status}", inline=True)
+                    value = f"{player_name} {_format_status(status)}"
+                    embed_name = f"{_format_pos(pos)}   {_format_pts(pts)}"
+                    embed.add_field(name=embed_name, value=value, inline=True)
 
             # Bench
             for p in roster:
                 pos = p.get("position") or "—"
                 if pos == "BN":
                     pts = p.get("total_points", 0.0) or 0.0
-                    name = p.get("full_name") or "Unknown"
+                    player_name = p.get("full_name") or "Unknown"
                     status = p.get("status") or ""
-                    embed.add_field(name=f"{pos}   {_format_pts(pts)}", value=f"{name} {status}", inline=True)
+                    value = f"{player_name} {_format_status(status)}"
+                    embed_name = f"{_format_pos(pos)}   {_format_pts(pts)}"
+                    embed.add_field(name=embed_name, value=value, inline=True)
 
             embed.add_field(name=f"Total Score: {total_team_pts:.2f}",value="", inline=False)
             embed_map[team_key] = embed
@@ -574,8 +596,7 @@ class YahooFFService:
                 updated = await self.update_embed(embed, roster_messages[team_key])
             if not updated:
                 logger.error("failed to update embed")
-
-        await asyncio.sleep(5)
+            await asyncio.sleep(5)
 
     async def fetch_all_fantasy_standings_info(self, week):
         await self.ensure_token()

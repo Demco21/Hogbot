@@ -59,14 +59,14 @@ def setup_scheduler(bot):
     scheduler = AsyncIOScheduler()
     # NFL Schedule
     scheduler.add_job(post_nfl_schedule, CronTrigger(day_of_week='tue', hour=6, minute=25, timezone=timezone('America/New_York')))
-    scheduler.add_job(upd_nfl_schedule, CronTrigger(hour='*', minute=55, timezone=timezone('America/New_York')))
+    scheduler.add_job(upd_nfl_schedule, CronTrigger(hour='*', minute='*/15', timezone=timezone('America/New_York')))
     scheduler.add_job(update_nfl_states, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
 
     # Yahoo Fantasy Football
     scheduler.add_job(post_yahoo_standings, CronTrigger(day_of_week='tue', hour=6, minute=30, timezone=timezone('America/New_York')))
-    scheduler.add_job(update_yahoo_standings, CronTrigger(day_of_week='thu,fri,sat,sun,mon', minute='*/5', timezone=timezone('America/New_York')))
+    scheduler.add_job(update_yahoo_standings, CronTrigger(minute='4-59/5', timezone=timezone('America/New_York')))
     scheduler.add_job(post_yahoo_matchups, CronTrigger(day_of_week='tue', hour=6, minute=35, timezone=timezone('America/New_York')))
-    scheduler.add_job(update_yahoo_matchups, CronTrigger(day_of_week='thu,fri,sat,sun,mon', minute='*/5', timezone=timezone('America/New_York')))
+    scheduler.add_job(update_yahoo_matchups, CronTrigger(minute='*/5', timezone=timezone('America/New_York')))
 
     # Misc
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))
