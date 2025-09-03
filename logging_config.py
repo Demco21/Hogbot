@@ -1,10 +1,11 @@
 import logging
 from logging.handlers import RotatingFileHandler
+import os
 
 logger = logging.getLogger("hogbot")
 logger.setLevel(logging.INFO)
 handler = RotatingFileHandler(
-    filename='hogbot.log',
+    filename=os.path.join("data", "hogbot.log"),
     mode='a',
     maxBytes=5*1024*1024,
     backupCount=2,

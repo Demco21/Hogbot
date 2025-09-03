@@ -210,7 +210,7 @@ class YahooFFService:
                 return
 
             def need_to_announce_winner():
-                if self.state.scoreboard_msg and self.state.scoreboard_msg.get("week") != week:
+                if self.state.scoreboard_msg and week and week > self.state.scoreboard_msg.get("week"):
                     return True
                 return False
 
@@ -452,14 +452,15 @@ class YahooFFService:
 
             def _format_pos(pos=None):
                 pos_map = {
-                    "QB": "🏈 QB",
+                    "QB": "🏹 QB",
                     "WR": "🎯 WR",
-                    "RB": "🐂 RB",
-                    "TE": "🪢 TE",
+                    "RB": "🐎 RB",
+                    "TE": "⚔ TE",
                     "W/R/T": "⚡ W/R/T",
                     "K": "👟 K",
                     "DEF": "🛡️ DEF",
-                    "BN": "🪑 BN"
+                    "BN": "🪑 BN",
+                    "IR": "♿ IR"
                 }
                 return pos_map.get(pos, pos)
 
@@ -467,7 +468,7 @@ class YahooFFService:
             # Starters first
             for p in roster:
                 pos = p.get("position") or "—"
-                if pos != "BN":
+                if pos not in ("BN", "IR"):
                     pts = p.get("total_points", None)
                     if pts is not None:
                         total_team_pts += pts
@@ -480,7 +481,7 @@ class YahooFFService:
             # Bench
             for p in roster:
                 pos = p.get("position") or "—"
-                if pos == "BN":
+                if pos in ("BN", "IR"):
                     pts = p.get("total_points", 0.0) or 0.0
                     player_name = p.get("full_name") or "Unknown"
                     status = p.get("status") or ""
