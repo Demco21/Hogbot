@@ -143,15 +143,15 @@ kill [PID]
 ### Voice Tracking  
 - `!thisweek [voice|muted|deafened|streaming|username]`  
 - `!lifetime [voice|muted|deafened|streaming|username]`  
-- `!dump` (admin only, forces data dump)  
+- `!dump` (admin only, forces data dump)
 
-### Yahoo Fantasy  
-- `!auth` – authorize Yahoo Fantasy (admin only)  
+### Yahoo Fantasy (Admin Only)
+- `!auth` – authorize Yahoo Fantasy
 - `!matchups` / `!matchupsupd`  
 - `!standings` / `!standingsupd`  
 
-### NFL / ESPN  
-- `!nfldump` (admin only, refresh full schedule)  
+### NFL / ESPN (Admin Only)
+- `!nfldump` (refresh full schedule)
 - `!games` – post current week  
 - `!gamesupd` – update schedule  
 
@@ -163,4 +163,4 @@ kill [PID]
 - **Yahoo Fantasy**: Post standings/matchups Tuesday mornings, update every 5 minutes.  
 - **Chancellor**: Appointed weekly on Sunday mornings.  
 - **Channel Rename**: Midnight rename.  
-- **Data Dump**: Hourly persistence.   
+- **Data Dump**: Hourly persistence.
