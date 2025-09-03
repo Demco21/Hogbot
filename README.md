@@ -60,7 +60,7 @@ HogBot tracks time spent in Discord voice channels, appoints a weekly “Chancel
 
 ### Installation  
 ```bash
-git clone https://github.com/yourusername/hogbot.git
+git clone https://github.com/Demco21/hogbot.git
 cd hogbot
 python3 -m venv venv
 source venv/bin/activate
