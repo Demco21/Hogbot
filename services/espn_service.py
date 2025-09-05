@@ -8,7 +8,6 @@ import asyncio
 from zoneinfo import ZoneInfo
 from bot_state import BotState
 from config import ANNOUNCEMENTS_CHANNEL_ID
-from constants import NFL_SCHEDULE_FILE
 from config import (
     GIANTS_EMOJI_ID, JETS_EMOJI_ID, BILLS_EMOJI_ID, PATRIOTS_EMOJI_ID, DOLPHINS_EMOJI_ID,
     RAVENS_EMOJI_ID, BENGALS_EMOJI_ID, BROWNS_EMOJI_ID, STEELERS_EMOJI_ID, TITANS_EMOJI_ID,
@@ -259,6 +258,62 @@ class ESPNService:
                 "spread": spread_str,      # str like "PHI -6.5"
             }
 
+    async def get_nfl_week_game_states(self, year: int, week: int):
+        """
+        Fetch all NFL games for a given season week from ESPN Core API and return:
+        [
+          {
+            "home_team": "Philadelphia Eagles",
+            "away_team": "Dallas Cowboys",
+            "home_abbrv": "PHI",
+            "away_abbrv": "DAL",
+            "game_state": "pre"
+          },
+          ...
+        ]
+        """
+        try:
+            url = ESPN_EVENTS_URL.format(year=year, week=week)
+            async with aiohttp.ClientSession() as session:
+                index = await self.fetch_json(session, url)
+                items = index.get("items") or []
+                games: list[dict] = []
+
+                for item in items:
+                    event = await self.deref_if_needed(session, item)
+                    if not isinstance(event, dict):
+                        continue
+
+                    short_name = event.get("shortName") or None
+                    if short_name:
+                        tokens = short_name.split(" VS ")
+                        if len(tokens) != 2:
+                            tokens = short_name.split(" @ ")
+                        if len(tokens) != 2:
+                            away_abbrv = ""
+                            home_abbrv = ""
+                        away_abbrv = tokens[0].strip()
+                        home_abbrv = tokens[1].strip()
+                    competitions = await self.deref_if_needed(session, event.get("competitions") or [])
+                    if not competitions:
+                        continue
+                    comp = competitions[0]
+
+                    status = await self.deref_if_needed(session, comp.get("status"))
+                    if status:
+                        game_state = status.get("type", {}).get("state") or None
+
+                    games.append({
+                        "home_abbrv": home_abbrv,
+                        "away_abbrv": away_abbrv,
+                        "game_state": game_state
+                    })
+                
+                return games
+        except Exception as e:
+            logger.exception(f"Error in get_nfl_week_game_states: {e}")
+            return []
+    
     async def get_nfl_week_games(self, year: int, week: int):
         """
         Fetch all NFL games for a given season week from ESPN Core API and return:
@@ -328,8 +383,12 @@ class ESPNService:
                     location_parts = [p for p in (city, country) if p]
                 location = ", ".join(location_parts) if location_parts else None
 
-                # status / odds / leaders / probabilities $ref
                 game_id = comp.get("id") or ""
+
+                status = await self.deref_if_needed(session, comp.get("status"))
+                # logger.info(f"status: {status}")
+                if status:
+                    game_state = status.get("type", {}).get("state") or None
 
                 # broadcasts
                 tv_networks, streaming_networks = await self.get_broadcasts(session, comp.get("broadcasts"))
@@ -343,7 +402,8 @@ class ESPNService:
                     "kickoff_est": kickoff_iso_est,
                     "tv_networks": tv_networks,
                     "streaming_networks": streaming_networks,
-                    "game_id": game_id
+                    "game_id": game_id,
+                    "game_state": game_state
                 })
             
             # logger.info(games)

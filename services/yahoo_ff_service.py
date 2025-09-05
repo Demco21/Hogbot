@@ -284,6 +284,7 @@ class YahooFFService:
     # Embeds
     # -------------------------------------------------------------------
     async def get_matchups_embed(self, ctx, week, xml_text):
+        # logger.info(f"Scoreboard XML: {xml_text}")
         root = ET.fromstring(xml_text)
 
         # League meta
@@ -329,7 +330,6 @@ class YahooFFService:
                             large = url
                     logo_url = large or first
 
-                # points (either <team_points total=".."> OR <team_points><total>..)</n                    pts = 0.0
                 tp = self._child(team_el, "team_points")
                 if tp is not None:
                     total_attr = tp.attrib.get("total") if hasattr(tp, "attrib") else None
@@ -377,10 +377,9 @@ class YahooFFService:
             else:
                 line = f"{a} vs 🏆 {b}"
 
-            if m["status"] == "preevent":
-                wp_a = f"{int(m['t1_wp']*100)}%" if isinstance(m["t1_wp"], float) else "—"
-                wp_b = f"{int(m['t2_wp']*100)}%" if isinstance(m["t2_wp"], float) else "—"
-                line += f"\nWP: {wp_a} vs {wp_b}"
+            wp_a = f"{int(m['t1_wp']*100)}%" if isinstance(m["t1_wp"], float) else "—"
+            wp_b = f"{int(m['t2_wp']*100)}%" if isinstance(m["t2_wp"], float) else "—"
+            line += f"\nWP: {wp_a} vs {wp_b}"
 
             embed.add_field(name="", value=line, inline=False)
         
@@ -405,13 +404,13 @@ class YahooFFService:
     async def get_standings_embeds(self, ctx, week, team_rosters, teams):
         def get_overall_game_state(roster):
             if not roster:
-                return "waiting"
+                return "pre"
             states = [p.get("game_state") for p in roster]
-            if states and all(s == "finished" for s in states):
-                return "finished"
-            if any(s == "in_progress" for s in states):
-                return "active"
-            return "waiting"
+            if states and all(s == "post" for s in states):
+                return "post"
+            if any(s == "in" for s in states):
+                return "in"
+            return "pre"
 
         embed_map = {}
         for t in teams:
@@ -430,9 +429,9 @@ class YahooFFService:
             roster = team_rosters.get(team_key, [])
             game_state = get_overall_game_state(roster)
 
-            if game_state == "finished":
+            if game_state == "post":
                 embed.color = discord.Color.green()
-            elif game_state == "active":
+            elif game_state == "in":
                 embed.color = discord.Color.gold()
             else:
                 embed.color = discord.Color.dark_grey()
@@ -591,7 +590,7 @@ class YahooFFService:
         updated = False
         for team_key, embed in embed_map.items():
             if roster_messages.get(team_key):
-                logger.info(f"Updating existing roster embed for team {team_key} week {week}")
+                # logger.info(f"Updating existing roster embed for team {team_key} week {week}")
                 updated = await self.update_embed(embed, roster_messages[team_key])
             if not updated:
                 logger.error("failed to update embed")
@@ -629,8 +628,10 @@ class YahooFFService:
                 roster_xml = await resp.text()
 
             # logger.info(f"roster xml: {roster_xml}")
-            roster_root = ET.fromstring(roster_xml)
-            roster_map, all_player_keys = self._parse_roster_xml(roster_root)
+            this_weeks_games = await self.bot.espn_service.get_nfl_week_game_states(2025, 1)
+            roster_map, all_player_keys = self._parse_roster_xml(roster_xml, this_weeks_games)
+
+            # call espn service to fetch map of teams currently playing by abbrv use that to merge in game_state
 
             # 3) Weekly stats/points for those players (XML)
             points_by_key = {}
@@ -665,7 +666,7 @@ class YahooFFService:
     # -------------------------------------------------------------------
     # XML parsing helpers for standings/roster
     # -------------------------------------------------------------------
-    async def parse_standings_xml(self, xml_text):  # name kept for compatibility
+    async def parse_standings_xml(self, xml_text):
         """Parse standings XML; return (teams_list, league_name, league_logo_url, current_week)."""
         # logger.info(f"standings: {xml_text}")
         root = ET.fromstring(xml_text)
@@ -751,16 +752,30 @@ class YahooFFService:
         teams.sort(key=lambda t: t["rank"])  # match previous ordering
         return teams, league_name, league_logo_url, current_week
 
-    def _parse_roster_xml(self, roster_root):
+    def _parse_roster_xml(self, roster_xml, this_weeks_games=None):
         """Parse roster XML into {team_key: [players...]} and collect player_keys."""
+        # logger.info(f"roster xml {ET.tostring(roster_root, encoding='unicode')}")
+        roster_root = ET.fromstring(roster_xml)
         roster_map = {}
         all_player_keys = []
 
         teams_els = self._iter_desc(roster_root, "teams")
         if not teams_els:
             return roster_map, all_player_keys
+
         teams_el = teams_els[0]
 
+        def _get_team_game_state(team_abbrv):
+            if not team_abbrv or not this_weeks_games:
+                return None
+            if team_abbrv.upper() == "WAS":
+                team_abbrv = "WSH"
+            for g in this_weeks_games:
+                if g.get("home_abbrv").upper() == team_abbrv.upper() or g.get("away_abbrv").upper() == team_abbrv.upper():
+                    if g.get("game_state"):
+                        return g.get("game_state")
+            return None
+        
         for team_el in self._children(teams_el, "team"):
             team_key = self._text(team_el, "team_key")
             if not team_key:
@@ -784,6 +799,8 @@ class YahooFFService:
                 sel_pos = self._text(sel_pos_el, "position") if sel_pos_el is not None else None
                 status = self._text(p, "status")
                 injury_note = self._text(p, "injury_note")
+                team_abbrv = self._text(p, "editorial_team_abbr")
+                game_state = _get_team_game_state(team_abbrv)
 
                 out_players.append({
                     "player_key": pkey,
@@ -793,7 +810,8 @@ class YahooFFService:
                     "status": status,
                     "injury_note": injury_note,
                     "total_points": 0.0,
-                    "game_state": "waiting",
+                    "team_abbrv": team_abbrv,
+                    "game_state": game_state,
                 })
 
                 if pkey:
@@ -821,7 +839,6 @@ class YahooFFService:
                 pkey = p.get("player_key")
                 pts = points_by_key.get(pkey, 0.0)
                 p["total_points"] = pts
-                p["game_state"] = "in_progress" if pts and pts > 0 else "waiting"
         return roster_map_basic
 
     # -------------------------------------------------------------------
