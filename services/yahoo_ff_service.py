@@ -354,10 +354,8 @@ class YahooFFService:
                 "status": status,
             })
 
-        color = discord.Color.blurple()
-        if statuses == {"preevent"}:
-            color = discord.Color.dark_grey()
-        elif "inprogress" in statuses:
+        color = discord.Color.dark_grey()
+        if "inprogress" in statuses  or "midevent" in statuses:
             color = discord.Color.gold()
         elif statuses == {"postevent"}:
             color = discord.Color.green()
