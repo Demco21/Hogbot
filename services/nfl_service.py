@@ -345,6 +345,7 @@ class NFLService:
                 tv_list = g.get("tv_networks") or []
                 stream_list = g.get("streaming_networks") or []
                 parts = [f"🕒 {time_str}"]
+
                 if tv_list:
                     parts.append(f"📺 {', '.join(tv_list)}")
                 if stream_list:
@@ -379,10 +380,10 @@ class NFLService:
                 if ou:
                     ou_and_spread.append(f"📈📉 **OverUnder** {_fmt_ou(ou)}")
                 
-                moneylines = []
+                moneylines = ""
                 if home_ml is not None or away_ml is not None:
                     moneylines = (
-                        f"\n💵 **Moneylines** {away_abbrv} {_fmt_ml(away_ml)}"
+                        f"\n💵 **Moneyline** {away_abbrv} {_fmt_ml(away_ml)}"
                         f" | {home_abbrv} {_fmt_ml(home_ml)}"
                     )
                 
@@ -391,6 +392,7 @@ class NFLService:
 
                 game_line += f"\n{' | '.join(parts)}"
                 location = g.get("location")
+
                 if location:
                     game_line += f"\n📍 {location}"
 
