@@ -13,6 +13,7 @@ class BotState:
         self.roster_messages = {}
         self.scoreboard_msg = {}
         self.current_nfl_week = 1
+        self.current_nfl_season = 2025
         self.nfl_season_started = False
         self.nfl_games_msgs = {}
 

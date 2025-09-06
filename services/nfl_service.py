@@ -144,7 +144,7 @@ class NFLService:
                         pass
         if not all_times:
             logger.info("No games found in schedule, NFL season not started.")
-            self.bot.nfl_season_started = False
+            self.bot.state.nfl_season_started = False
         else:
             first_game_date = min(all_times).date()
             last_game_date = max(all_times).date()
@@ -152,10 +152,10 @@ class NFLService:
 
             if not ((first_game_date - timedelta(days=3)) <= today <= last_game_date):
                 logger.info(f"Today {today} is outside the regular season ({first_game_date} to {last_game_date}), NFL season not started.")
-                self.bot.nfl_season_started = False
+                self.bot.state.nfl_season_started = False
             else:
                 logger.info(f"Today {today} is inside the regular season ({first_game_date} to {last_game_date}), NFL season has started.")
-                self.bot.nfl_season_started = True
+                self.bot.state.nfl_season_started = True
 
         spans = self._games_date_span(weeks)
         if not spans:
@@ -169,18 +169,18 @@ class NFLService:
             logger.info(f"start_dt {start_dt}, end_dt {end_dt}")
             if (start_dt.date() - timedelta(days=3)) <= eff <= end_dt.date():
                 logger.info(f"Current effective date {eff} falls in week {wk} span {start_dt.date()}–{end_dt.date()}")
-                self.bot.current_nfl_week = wk
+                self.bot.state.current_nfl_week = wk
                 return
         
         for wk in sorted(spans):
             if eff <= spans[wk][1].date():
                 logger.info(f"Choosing next upcoming week {wk} for date {eff}")
-                self.bot.current_nfl_week = wk
+                self.bot.state.current_nfl_week = wk
                 return
         
         last_wk = max(spans)
         logger.info(f"After last scheduled game window; defaulting to week {last_wk}")
-        self.bot.current_nfl_week = last_wk
+        self.bot.state.current_nfl_week = last_wk
         return
 
     def _group_new_games_by_date(self, week_games: list[dict]):
@@ -210,11 +210,11 @@ class NFLService:
             weeks: dict = data.get("weeks", {})
             byes_map: dict = data.get("byes", {}) or {}
 
-            if not self.bot.nfl_season_started:
+            if not self.bot.state.nfl_season_started:
                 logger.info(f"NFL Season has not started. Skipping.")
                 return
 
-            current_week = self.bot.current_nfl_week
+            current_week = self.bot.state.current_nfl_week
             if current_week is None:
                 logger.info("Could not determine current NFL week from schedule; skipping.")
                 return
@@ -284,11 +284,11 @@ class NFLService:
 
             weeks: dict = data.get("weeks", {})
 
-            if not self.bot.nfl_season_started:
+            if not self.bot.state.nfl_season_started:
                 logger.info(f"NFL Season has not started. Skipping.")
                 return
 
-            current_week = self.bot.current_nfl_week
+            current_week = self.bot.state.current_nfl_week
             if current_week is None:
                 logger.info("Could not determine current NFL week from schedule; skipping.")
                 return

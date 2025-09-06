@@ -180,7 +180,7 @@ class YahooFFService:
             access_token = self.state.yahoo_token["access_token"]
 
             if week is None:
-                week = getattr(self.bot, "current_nfl_week", None)
+                week = getattr(self.bot.state, "current_nfl_week", None)
                 if week is None:
                     return
 
@@ -243,7 +243,7 @@ class YahooFFService:
             access_token = self.state.yahoo_token["access_token"]
 
             if week is None:
-                week = getattr(self.bot, "current_nfl_week", None)
+                week = getattr(self.bot.state, "current_nfl_week", None)
                 if week is None:
                     return
 
@@ -526,7 +526,7 @@ class YahooFFService:
     # -------------------------------------------------------------------
     async def post_fantasy_standings(self, ctx=None, week=None):
         if week is None:
-            week = getattr(self.bot, "current_nfl_week", None)
+            week = getattr(self.bot.state, "current_nfl_week", None)
             if week is None:
                 return
 
@@ -571,7 +571,7 @@ class YahooFFService:
 
     async def update_fantasy_standings(self, ctx=None, week=None):
         if week is None:
-            week = getattr(self.bot, "current_nfl_week", None)
+            week = getattr(self.bot.state, "current_nfl_week", None)
             if week is None:
                 return
 
@@ -628,7 +628,9 @@ class YahooFFService:
                 roster_xml = await resp.text()
 
             # logger.info(f"roster xml: {roster_xml}")
-            this_weeks_games = await self.bot.espn_service.get_nfl_week_game_states(2025, 1)
+            current_nfl_season = getattr(self.bot.state, "current_nfl_season", None)
+            logger.info(f"current nfl season: {current_nfl_season}, week: {week}")
+            this_weeks_games = await self.bot.espn_service.get_nfl_week_game_states(current_nfl_season, week)
             roster_map, all_player_keys = self._parse_roster_xml(roster_xml, this_weeks_games)
 
             # call espn service to fetch map of teams currently playing by abbrv use that to merge in game_state

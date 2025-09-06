@@ -10,7 +10,7 @@ class EspnCog(commands.Cog):
     async def espn(self, ctx):
         if ctx.author.id != ADMIN_USER_ID:
             return
-        await self.bot.espn_service.dump_regular_season_games(2025)
+        await self.bot.espn_service.dump_regular_season_games(self.bot.state.current_nfl_season)
 
     @commands.command(name="games")
     async def games(self, ctx):
