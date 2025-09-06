@@ -461,30 +461,40 @@ class YahooFFService:
                 }
                 return pos_map.get(pos, pos)
 
-            total_team_pts = 0.00
-            # Starters first
-            for p in roster:
-                pos = p.get("position") or "—"
-                if pos not in ("BN", "IR"):
-                    pts = p.get("total_points", None)
-                    if pts is not None:
-                        total_team_pts += pts
-                    player_name = p.get("full_name") or "Unknown"
-                    status = p.get("status") or ""
-                    value = f"{player_name} {_format_status(status)}"
-                    embed_name = f"{_format_pos(pos)}   {_format_pts(pts)}"
-                    embed.add_field(name=embed_name, value=value, inline=True)
+            total_team_pts = 0.0
 
-            # Bench
-            for p in roster:
+            def _is_bench(pos: str) -> bool:
+                return pos in ("BN", "IR")
+
+            def _embed_name(pos, pts, game_state):
+                if game_state == "pre":
+                    return f"{_format_pos(pos)}   --"
+                live = "🔴" if game_state == "in" else ""
+                # rstrip() trims the trailing space if live is empty
+                return f"{_format_pos(pos)}   {_format_pts(pts)} {live}".rstrip()
+
+            # starters first, then bench
+            ordered = sorted(roster, key=lambda p: _is_bench((p.get("position") or "—")))
+
+            for p in ordered:
                 pos = p.get("position") or "—"
-                if pos in ("BN", "IR"):
-                    pts = p.get("total_points", 0.0) or 0.0
-                    player_name = p.get("full_name") or "Unknown"
-                    status = p.get("status") or ""
-                    value = f"{player_name} {_format_status(status)}"
-                    embed_name = f"{_format_pos(pos)}   {_format_pts(pts)}"
-                    embed.add_field(name=embed_name, value=value, inline=True)
+                bench = _is_bench(pos)
+                pts = p.get("total_points")
+                if bench:
+                    pts = pts or 0.0  # keep your bench default
+
+                game_state = (p.get("game_state") or "").lower()
+                player_name = p.get("full_name") or "Unknown"
+                status = p.get("status") or ""
+
+                embed.add_field(
+                    name=_embed_name(pos, pts, game_state),
+                    value=f"{player_name} {_format_status(status)}",
+                    inline=True,
+                )
+
+                if not bench and pts is not None:
+                    total_team_pts += pts
 
             embed.add_field(name=f"Total Score: {total_team_pts:.2f}",value="", inline=False)
             embed_map[team_key] = embed
