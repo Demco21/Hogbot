@@ -116,10 +116,10 @@ class NFLService:
         return now
 
     async def set_nfl_bot_states(self):
+        logger.info("Setting NFL bot states")
         try:
             with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
                 nfl_schedule = json.load(f)
-            logger.info(f"Loaded schedule file: {NFL_SCHEDULE_FILE}")
         except Exception as e:
             logger.error(f"Failed to load schedule JSON: {e}")
             return
@@ -198,11 +198,11 @@ class NFLService:
         return by_date
 
     async def post_schedule_current_week(self):
+        logger.info("Posting NFL schedule for current week")
         try:
             try:
                 with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
                     data = json.load(f)
-                logger.info(f"Loaded schedule file: {NFL_SCHEDULE_FILE}")
             except Exception as e:
                 logger.error(f"Failed to load schedule JSON: {e}")
                 return
@@ -223,13 +223,12 @@ class NFLService:
             week_games = weeks.get(week_key, [])
             bye_teams = byes_map.get(week_key) or []
             await self.post_schedule(current_week, week_games, bye_teams)
+            logger.info("Successfully posted NFL schedule for current week")
         except Exception as e:
             logger.error(f"Failed to post NFL schedule for current week: {e}")
 
     async def post_schedule(self, week, games, bye_teams):
         try:
-            logger.info("Posting NFL schedule")
-
             channel = self.bot.get_channel(NFL_SCHEDULE_CHANNEL_ID)
             if not channel:
                 logger.error("Channel not found")
@@ -273,11 +272,11 @@ class NFLService:
             logger.error(f"Failed to post NFL schedule: {e}")
     
     async def update_schedule_current_week(self):
+        logger.info("Updating NFL schedule for current week")
         try:
             try:
                 with open(NFL_SCHEDULE_FILE, "r", encoding="utf-8") as f:
                     data = json.load(f)
-                logger.info(f"Loaded schedule file: {NFL_SCHEDULE_FILE}")
             except Exception as e:
                 logger.error(f"Failed to load schedule JSON: {e}")
                 return
@@ -296,12 +295,12 @@ class NFLService:
             week_key = str(current_week)
             week_games = weeks.get(week_key, [])
             await self.update_schedule(current_week, week_games)
+            logger.info("Successfully updated NFL schedule for current week")
         except Exception as e:
             logger.error(f"Failed to post NFL schedule for current week: {e}")
     
     async def update_schedule(self, week, games):
         try:
-            logger.info("Updating NFL schedule")
             games_embed = await self.get_games_embed(games)
             for date, embed in games_embed.items():
                 info = self.state.nfl_games_msgs[date]

@@ -182,7 +182,9 @@ class YahooFFService:
             if week is None:
                 week = getattr(self.bot.state, "current_nfl_week", None)
                 if week is None:
+                    logger.error(f"Failed to fetch NFL week posting matchups: {week}")
                     return
+            logger.info(f"Posting fantasy matchups for week {week}")
 
             async def get_scoreboard_xml(week):
                 url = (
@@ -205,8 +207,7 @@ class YahooFFService:
             channel = ctx.channel if ctx else self.bot.get_channel(FANTASY_FOOTBALL_CHANNEL_ID)
 
             if embed is None:
-                if channel:
-                    await channel.send(f"⚠️ No matchups found for week {week}.")
+                logger.warn(f"⚠️ No matchups found for week {week}.")
                 return
 
             def need_to_announce_winner():
@@ -228,6 +229,7 @@ class YahooFFService:
                 "message_id": msg.id,
                 "week": week
             }
+            logger.info(f"Successfully posted fantasy matchups for week {week}")
         except Exception as e:
             logger.exception(f"Error fetching XML matchups for week {week}: {e}")
             if ctx:
@@ -245,7 +247,9 @@ class YahooFFService:
             if week is None:
                 week = getattr(self.bot.state, "current_nfl_week", None)
                 if week is None:
+                    logger.error(f"Failed to fetch NFL wee updating matchups: {week}")
                     return
+            logger.info(f"Updating fantasy matchups for week {week}")
 
             async def get_scoreboard_xml(week):
                 url = (
@@ -268,7 +272,7 @@ class YahooFFService:
 
             if embed is None:
                 if channel:
-                    logger.info(f"⚠️ No matchups found for week {week}.")
+                    logger.warn(f"⚠️ No matchups found for week {week}.")
                 return
 
             updated = await self.update_embed(embed, self.state.scoreboard_msg)
@@ -278,8 +282,7 @@ class YahooFFService:
                 logger.error(f"Failed to update fantasy matchups for week {week}")
         except Exception as e:
             logger.exception(f"Error fetching XML matchups for week {week}: {e}")
-            if ctx:
-                await ctx.send(f"⚠️ Could not fetch matchups: {e}")
+
     # -------------------------------------------------------------------
     # Embeds
     # -------------------------------------------------------------------
@@ -329,11 +332,14 @@ class YahooFFService:
                         if url and size and size.lower() == "large":
                             large = url
                     logo_url = large or first
-
+                
                 tp = self._child(team_el, "team_points")
                 if tp is not None:
-                    total_attr = tp.attrib.get("total") if hasattr(tp, "attrib") else None
-                    pts = self._to_float(total_attr if total_attr is not None else self._text(tp, "total"))
+                    pts = self._to_float(tp.get("total") or self._text(tp, "total"))
+
+                tpp = self._child(team_el, "team_projected_points")
+                if tpp is not None:
+                    proj_pts = self._to_float(tpp.get("total") or self._text(tpp, "total"))
 
                 wp = None
                 wp_txt = self._text(team_el, "win_probability")
@@ -343,14 +349,14 @@ class YahooFFService:
                     except Exception:
                         wp = None
 
-                return name, pts, logo_url, wp
+                return name, pts, proj_pts, logo_url, wp
 
-            t1_name, t1_pts, t1_logo, t1_wp = parse_team(teams[0])
-            t2_name, t2_pts, t2_logo, t2_wp = parse_team(teams[1])
+            t1_name, t1_pts, t1_proj_pts, t1_logo, t1_wp = parse_team(teams[0])
+            t2_name, t2_pts, t2_proj_pts, t2_logo, t2_wp = parse_team(teams[1])
 
             matchups.append({
-                "t1_name": t1_name, "t1_pts": t1_pts, "t1_logo": t1_logo, "t1_wp": t1_wp,
-                "t2_name": t2_name, "t2_pts": t2_pts, "t2_logo": t2_logo, "t2_wp": t2_wp,
+                "t1_name": t1_name, "t1_pts": t1_pts, "t1_proj_pts": t1_proj_pts, "t1_logo": t1_logo, "t1_wp": t1_wp,
+                "t2_name": t2_name, "t2_pts": t2_pts, "t2_proj_pts": t2_proj_pts, "t2_logo": t2_logo, "t2_wp": t2_wp,
                 "status": status,
             })
 
@@ -368,20 +374,15 @@ class YahooFFService:
             return None
 
         for m in matchups:
-            a = f"**{m['t1_name']}** ({m['t1_pts']:.2f})"
-            b = f"**{m['t2_name']}** ({m['t2_pts']:.2f})"
-            if abs(m["t1_pts"] - m["t2_pts"]) < 1e-9:
-                line = f"{a} vs {b}"
-            elif m["t1_pts"] > m["t2_pts"]:
-                line = f"🏆 {a} vs {b}"
-            else:
-                line = f"{a} vs 🏆 {b}"
-
             wp_a = f"{int(m['t1_wp']*100)}%" if isinstance(m["t1_wp"], float) else "—"
             wp_b = f"{int(m['t2_wp']*100)}%" if isinstance(m["t2_wp"], float) else "—"
-            line += f"\nWP: {wp_a} vs {wp_b}"
+            trophy_a = " 🥇" if m["t1_pts"] > m["t2_pts"] else ""
+            trophy_b = " 🥇" if m["t2_pts"] > m["t1_pts"] else ""
 
-            embed.add_field(name="", value=line, inline=False)
+            embed.add_field(name="\u200b", value="\u200b", inline=False)
+            embed.add_field(name=f"{m['t1_name']}", value=f"🔸 {m['t1_pts']:.2f}{trophy_a}\n📊 {m['t1_proj_pts']:.2f} ({wp_a})", inline=True)
+            embed.add_field(name=f"{m['t2_name']}", value=f"🔸 {m['t2_pts']:.2f}{trophy_b}\n📊 {m['t2_proj_pts']:.2f} ({wp_b})",  inline=True)
+
         
         return embed, matchups
     
@@ -538,12 +539,14 @@ class YahooFFService:
         if week is None:
             week = getattr(self.bot.state, "current_nfl_week", None)
             if week is None:
+                logger.error(f"Failed to fetch NFL week posting standings: {week}")
                 return
+        logger.info(f"Posting fantasy standings for week {week}")
 
         teams, league_name, league_logo_url, current_week, team_rosters = await self.fetch_all_fantasy_standings_info(week)
 
         if not team_rosters:
-            await self._send_text(ctx, "⚠️ No team rosters found.")
+            logger.warning("no team rosters found")
             return
 
         channel = ctx.channel if ctx else self.bot.get_channel(FANTASY_FOOTBALL_CHANNEL_ID)
@@ -577,18 +580,20 @@ class YahooFFService:
             }
             self.state.roster_messages = roster_messages
 
-        await asyncio.sleep(5)
+        logger.info(f"Successfully posted fantasy standings for week {week}")
 
     async def update_fantasy_standings(self, ctx=None, week=None):
         if week is None:
             week = getattr(self.bot.state, "current_nfl_week", None)
             if week is None:
+                logger.error(f"Failed to fetch NFL week updating standings: {week}")
                 return
+        logger.info(f"Updating fantasy standings for week {week}")
 
         teams, league_name, league_logo_url, current_week, team_rosters = await self.fetch_all_fantasy_standings_info(week)
 
         if not team_rosters:
-            await self._send_text(ctx, "⚠️ No team rosters found.")
+            logger.warning("no team rosters found")
             return
 
         roster_messages = self.state.roster_messages or None
@@ -598,13 +603,18 @@ class YahooFFService:
 
         embed_map = await self.get_standings_embeds(ctx, week, team_rosters, teams)
         updated = False
+        success = True
         for team_key, embed in embed_map.items():
             if roster_messages.get(team_key):
                 # logger.info(f"Updating existing roster embed for team {team_key} week {week}")
                 updated = await self.update_embed(embed, roster_messages[team_key])
             if not updated:
-                logger.error("failed to update embed")
+                success = False
+                logger.error(f"failed to update embed for team {team_key}")
             await asyncio.sleep(5)
+        if success:
+            logger.info(f"Successfully updated fantasy standings for week {week}")
+        
 
     async def fetch_all_fantasy_standings_info(self, week):
         await self.ensure_token()
@@ -639,7 +649,6 @@ class YahooFFService:
 
             # logger.info(f"roster xml: {roster_xml}")
             current_nfl_season = getattr(self.bot.state, "current_nfl_season", None)
-            logger.info(f"current nfl season: {current_nfl_season}, week: {week}")
             this_weeks_games = await self.bot.espn_service.get_nfl_week_game_states(current_nfl_season, week)
             roster_map, all_player_keys = self._parse_roster_xml(roster_xml, this_weeks_games)
 
