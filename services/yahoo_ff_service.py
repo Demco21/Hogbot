@@ -212,7 +212,7 @@ class YahooFFService:
                 return
 
             def need_to_announce_winner():
-                if self.state.scoreboard_msg and week and int(week) > self.state.scoreboard_msg.get("week"):
+                if self.state.scoreboard_msg and week and int(week) > int(self.state.scoreboard_msg.get("week")):
                     return True
                 return False
 
