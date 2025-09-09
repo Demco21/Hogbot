@@ -250,7 +250,6 @@ class YahooFFService:
                 if week is None:
                     logger.error(f"Failed to fetch NFL wee updating matchups: {week}")
                     return
-            logger.info(f"Updating fantasy matchups for week {week}")
 
             async def get_scoreboard_xml(week):
                 url = (
@@ -583,7 +582,6 @@ class YahooFFService:
             if week is None:
                 logger.error(f"Failed to fetch NFL week updating standings: {week}")
                 return
-        logger.info(f"Updating fantasy standings for week {week}")
 
         teams, league_name, league_logo_url, current_week, team_rosters = await self.fetch_all_fantasy_standings_info(week)
 
@@ -884,11 +882,13 @@ class YahooFFService:
                 logger.error:("No existing scoreboard message; cannot update matchups.")
             else:
                 week = self.state.scoreboard_msg.get("week")
+                logger.info(f"Updating fantasy standings for week {week}")
                 await self.update_fantasy_standings(None, week)
             if not self.state.roster_messages:
                 logger.error("No existing roster messages; cannot update standings.")
             else:
                 week = self.state.roster_messages.get("week")
+                logger.info(f"Updating fantasy matchups for week {week}")
                 await self.update_fantasy_matchups(None, week)
         except Exception as e:
             logger.exception(f"Error updating fantasy football: {e}")
