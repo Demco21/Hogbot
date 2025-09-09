@@ -2,12 +2,13 @@ from logging_config import logger
 from bot_state import BotState
 import discord
 from discord.ext import commands
-from datetime import datetime, timezone as dt_timezone
+from datetime import datetime, time as dt_time, timezone as dt_timezone
+from pytz import timezone as pytz_timezone
+import time as time_module
 from requests_oauthlib import OAuth2Session
 from typing import Optional, Any, Dict, List, Tuple
 import xml.etree.ElementTree as ET
 import aiohttp
-import time
 import asyncio
 import json
 import os
@@ -78,7 +79,7 @@ class YahooFFService:
             )
 
             # Add expiry timestamp for refresh logic
-            token["expires_at"] = time.time() + int(token.get("expires_in", 0))
+            token["expires_at"] = time_module.time() + int(token.get("expires_in", 0))
 
             # Save token to file
             with open(YAHOO_TOKEN_FILE, "w") as f:
@@ -97,7 +98,7 @@ class YahooFFService:
         if not self.state.yahoo_token:
             raise RuntimeError("No token available. You must authorize once manually first.")
 
-        if self.state.yahoo_token.get("expires_at", 0) <= time.time():
+        if self.state.yahoo_token.get("expires_at", 0) <= time_module.time():
             refresh_token = self.state.yahoo_token.get("refresh_token")
             async with aiohttp.ClientSession() as session:
                 data = {
@@ -110,7 +111,7 @@ class YahooFFService:
                 async with session.post(TOKEN_URL, data=data) as resp:
                     new_token = await resp.json()
                     new_token["refresh_token"] = refresh_token  # Yahoo often doesn't return it again
-                    new_token["expires_at"] = time.time() + int(new_token.get("expires_in", 0) or 0)
+                    new_token["expires_at"] = time_module.time() + int(new_token.get("expires_in", 0) or 0)
                     self.state.yahoo_token = new_token
                     with open(YAHOO_TOKEN_FILE, "w") as f:
                         json.dump(new_token, f)
@@ -211,7 +212,7 @@ class YahooFFService:
                 return
 
             def need_to_announce_winner():
-                if self.state.scoreboard_msg and week and week > self.state.scoreboard_msg.get("week"):
+                if self.state.scoreboard_msg and week and int(week) > self.state.scoreboard_msg.get("week"):
                     return True
                 return False
 
@@ -553,24 +554,18 @@ class YahooFFService:
         if not channel:
             return
 
-        roster_messages = self.state.roster_messages or {}
-        if not roster_messages.get('week'):
-            roster_messages['week'] = None
-
-        if roster_messages['week'] != week:
-            embed = discord.Embed(
-                title=f"{league_name} Standings",
-                description=f"### Heading into week {week}",
-                color=discord.Color.red(),
-            )
-            if league_logo_url:
-                embed.set_thumbnail(url=league_logo_url)
-            await channel.send(embed=embed)
-            roster_messages['week'] = week
+        embed = discord.Embed(
+            title=f"{league_name} Standings",
+            description=f"### Heading into week {week}",
+            color=discord.Color.red(),
+        )
+        if league_logo_url:
+            embed.set_thumbnail(url=league_logo_url)
+        await channel.send(embed=embed)
 
         embed_map = await self.get_standings_embeds(ctx, week, team_rosters, teams)
-        roster_messages = self.state.roster_messages
         updated = False
+        roster_messages = {}
         for team_key, embed in embed_map.items():
             msg = await channel.send(embed=embed)
             roster_messages[team_key] = {
@@ -578,7 +573,7 @@ class YahooFFService:
                 "message_id": msg.id,
                 "week": week,
             }
-            self.state.roster_messages = roster_messages
+        self.state.roster_messages = roster_messages
 
         logger.info(f"Successfully posted fantasy standings for week {week}")
 
@@ -611,7 +606,7 @@ class YahooFFService:
             if not updated:
                 success = False
                 logger.error(f"failed to update embed for team {team_key}")
-            await asyncio.sleep(5)
+            await asyncio.sleep(10)
         if success:
             logger.info(f"Successfully updated fantasy standings for week {week}")
         
@@ -872,6 +867,36 @@ class YahooFFService:
             ch = self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
             if ch:
                 await ch.send(msg)
+
+    async def update_fantasy_football(self):
+        """Update both matchups and standings."""
+        def is_between_4_and_7_am_eastern():
+            eastern = pytz_timezone("US/Eastern")
+            now = datetime.now(eastern).time()
+            start = dt_time(4, 0)   # 4:00 AM
+            end = dt_time(7, 0)     # 7:00 AM
+            return start <= now < end
+        try:
+            if is_between_4_and_7_am_eastern():
+                logger.info("Skipping fantasy football update between 4-7 AM Eastern.")
+                return
+            if not self.state.scoreboard_msg:
+                logger.error:("No existing scoreboard message; cannot update matchups.")
+            else:
+                week = self.state.scoreboard_msg.get("week")
+                await self.update_fantasy_standings(None, week)
+            if not self.state.roster_messages:
+                logger.error("No existing roster messages; cannot update standings.")
+            else:
+                week = self.state.roster_messages.get("week")
+                await self.update_fantasy_matchups(None, week)
+        except Exception as e:
+            logger.exception(f"Error updating fantasy football: {e}")
+
+    async def post_fantasy_football(self):
+        """Post both matchups and standings."""
+        await self.post_fantasy_standings(None, None)
+        await self.post_fantasy_matchups(None, None)
 
 
 __all__ = ["YahooFFService"]

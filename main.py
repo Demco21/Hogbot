@@ -47,11 +47,8 @@ async def on_ready():
 def setup_scheduler(bot):
     post_nfl_schedule = bot.nfl_service.post_schedule_current_week
     upd_nfl_schedule = bot.nfl_service.update_schedule_current_week
-    update_nfl_states = bot.nfl_service.set_nfl_bot_states
-    post_yahoo_matchups = bot.yahoo_ff_service.post_fantasy_matchups
-    update_yahoo_matchups = bot.yahoo_ff_service.update_fantasy_matchups
-    post_yahoo_standings = bot.yahoo_ff_service.post_fantasy_standings
-    update_yahoo_standings = bot.yahoo_ff_service.update_fantasy_standings
+    post_yahoo_fantasy = bot.yahoo_ff_service.post_fantasy_football
+    update_yahoo_fantasy = bot.yahoo_ff_service.update_fantasy_football
     change_channel_job = bot.channel_change_service.change_channel_name
     dump_data_job = bot.time_service.dump_data
     decide_chancellor_job = bot.chancellor_service.decide_chancellor
@@ -60,13 +57,10 @@ def setup_scheduler(bot):
     # NFL Schedule
     scheduler.add_job(post_nfl_schedule, CronTrigger(day_of_week='tue', hour=6, minute=25, timezone=timezone('America/New_York')))
     scheduler.add_job(upd_nfl_schedule, CronTrigger(hour='*', minute='*/15', timezone=timezone('America/New_York')))
-    scheduler.add_job(update_nfl_states, CronTrigger(day_of_week='tue', hour=6, minute=5, timezone=timezone('America/New_York')))
 
     # Yahoo Fantasy Football
-    scheduler.add_job(post_yahoo_standings, CronTrigger(day_of_week='tue', hour=6, minute=30, timezone=timezone('America/New_York')))
-    scheduler.add_job(update_yahoo_standings, CronTrigger(minute='4-59/5', timezone=timezone('America/New_York')))
-    scheduler.add_job(post_yahoo_matchups, CronTrigger(day_of_week='tue', hour=6, minute=35, timezone=timezone('America/New_York')))
-    scheduler.add_job(update_yahoo_matchups, CronTrigger(minute='*/5', timezone=timezone('America/New_York')))
+    scheduler.add_job(post_yahoo_fantasy, CronTrigger(day_of_week='tue', hour=6, minute=30, timezone=timezone('America/New_York')))
+    scheduler.add_job(update_yahoo_fantasy, CronTrigger(minute='*/5', timezone=timezone('America/New_York')))
 
     # Misc
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))

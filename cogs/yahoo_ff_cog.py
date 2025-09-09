@@ -13,10 +13,10 @@ class YahooFFCog(commands.Cog):
         await self.bot.yahoo_ff_service.fantasy_auth(ctx)
 
     @commands.command(name="matchups")
-    async def matchups(self, ctx):
+    async def matchups(self, ctx, week=None):
         if ctx.author.id != ADMIN_USER_ID:
             return
-        await self.bot.yahoo_ff_service.post_fantasy_matchups()
+        await self.bot.yahoo_ff_service.post_fantasy_matchups(None, week)
 
     @commands.command(name="matchupsupd")
     async def matchupsupd(self, ctx):
@@ -25,10 +25,10 @@ class YahooFFCog(commands.Cog):
         await self.bot.yahoo_ff_service.update_fantasy_matchups()
 
     @commands.command(name="standings")
-    async def standings(self, ctx):
+    async def standings(self, ctx, week=None):
         if ctx.author.id != ADMIN_USER_ID:
             return
-        await self.bot.yahoo_ff_service.post_fantasy_standings()
+        await self.bot.yahoo_ff_service.post_fantasy_standings(None, week)
 
     @commands.command(name="standingsupd")
     async def standingsupd(self, ctx):
