@@ -12,6 +12,7 @@ import aiohttp
 import asyncio
 import json
 import os
+import base64
 import random
 from config import (
     YAHOO_CLIENT_ID,
@@ -94,27 +95,58 @@ class YahooFFService:
             await ctx.send("❌ Authorization failed, please try again.")
 
     async def ensure_token(self):
-        """Ensure a valid access token by refreshing if needed."""
         if not self.state.yahoo_token:
             raise RuntimeError("No token available. You must authorize once manually first.")
 
-        if self.state.yahoo_token.get("expires_at", 0) <= time_module.time():
+        now = time_module.time()
+        # Refresh a little early to avoid race at request time
+        if self.state.yahoo_token.get("expires_at", 0) <= now + 120:
             refresh_token = self.state.yahoo_token.get("refresh_token")
+            basic = base64.b64encode(f"{YAHOO_CLIENT_ID}:{YAHOO_CLIENT_SECRET}".encode()).decode()
+            headers = {
+                "Authorization": f"Basic {basic}",
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+            data = {
+                "grant_type": "refresh_token",
+                "refresh_token": refresh_token,
+            }
             async with aiohttp.ClientSession() as session:
-                data = {
-                    "client_id": YAHOO_CLIENT_ID,
-                    "client_secret": YAHOO_CLIENT_SECRET,
-                    "redirect_uri": REDIRECT_URI,
-                    "refresh_token": refresh_token,
-                    "grant_type": "refresh_token",
-                }
-                async with session.post(TOKEN_URL, data=data) as resp:
+                async with session.post(TOKEN_URL, headers=headers, data=data) as resp:
+                    if resp.status != 200:
+                        body = await resp.text()
+                        raise RuntimeError(f"Token refresh failed ({resp.status}): {body}")
                     new_token = await resp.json()
-                    new_token["refresh_token"] = refresh_token  # Yahoo often doesn't return it again
-                    new_token["expires_at"] = time_module.time() + int(new_token.get("expires_in", 0) or 0)
-                    self.state.yahoo_token = new_token
-                    with open(YAHOO_TOKEN_FILE, "w") as f:
-                        json.dump(new_token, f)
+            # Yahoo sometimes omits refresh_token on refresh
+            new_token["refresh_token"] = new_token.get("refresh_token") or refresh_token
+            new_token["expires_at"] = now + int(new_token.get("expires_in", 0) or 0)
+            self.state.yahoo_token = new_token
+            with open(YAHOO_TOKEN_FILE, "w") as f:
+                json.dump(new_token, f)
+
+    async def _yahoo_get(self, url, *, accept_xml=True):
+        await self.ensure_token()
+        headers = {
+            "Authorization": f"Bearer {self.state.yahoo_token['access_token']}",
+            "Accept": "application/xml" if accept_xml else "*/*",
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as resp:
+                if resp.status == 401:
+                    # force refresh and retry once
+                    # (bump expires_at so ensure_token refreshes)
+                    self.state.yahoo_token["expires_at"] = 0
+                    await self.ensure_token()
+                    headers["Authorization"] = f"Bearer {self.state.yahoo_token['access_token']}"
+                    async with session.get(url, headers=headers) as resp2:
+                        body2 = await resp2.text()
+                        if resp2.status != 200:
+                            raise RuntimeError(f"{url} failed after refresh ({resp2.status}): {body2}")
+                        return body2
+                body = await resp.text()
+                if resp.status != 200:
+                    raise RuntimeError(f"{url} failed ({resp.status}): {body}")
+                return body
 
     # -------------------------------------------------------------------
     # XML helpers (namespace-agnostic; Yahoo sometimes wraps tags)
@@ -177,9 +209,6 @@ class YahooFFService:
         Crowns the leader with 🏆. Colors reflect preevent/inprogress/postevent.
         """
         try:
-            await self.ensure_token()
-            access_token = self.state.yahoo_token["access_token"]
-
             if week is None:
                 week = getattr(self.bot.state, "current_nfl_week", None)
                 if week is None:
@@ -192,16 +221,8 @@ class YahooFFService:
                     f"https://fantasysports.yahooapis.com/fantasy/v2/"
                     f"league/{YAHOO_LEAGUE_KEY}/scoreboard;week={week}"
                 )
-                headers = {
-                    "Authorization": f"Bearer {access_token}",
-                    "Accept": "application/xml",
-                }
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url, headers=headers) as resp:
-                        if resp.status != 200:
-                            body = await resp.text()
-                            raise RuntimeError(f"Scoreboard call failed ({resp.status}): {body}")
-                        return await resp.text()
+                return await self._yahoo_get(url)
+
 
             scoreboard_xml = await get_scoreboard_xml(week)
             embed, matchups = await self.get_matchups_embed(ctx, week, scoreboard_xml)
@@ -242,9 +263,6 @@ class YahooFFService:
         Crowns the leader with 🏆. Colors reflect preevent/inprogress/postevent.
         """
         try:
-            await self.ensure_token()
-            access_token = self.state.yahoo_token["access_token"]
-
             if week is None:
                 week = getattr(self.bot.state, "current_nfl_week", None)
                 if week is None:
@@ -256,23 +274,13 @@ class YahooFFService:
                     f"https://fantasysports.yahooapis.com/fantasy/v2/"
                     f"league/{YAHOO_LEAGUE_KEY}/scoreboard;week={week}"
                 )
-                headers = {
-                    "Authorization": f"Bearer {access_token}",
-                    "Accept": "application/xml",
-                }
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url, headers=headers) as resp:
-                        if resp.status != 200:
-                            body = await resp.text()
-                            raise RuntimeError(f"Scoreboard call failed ({resp.status}): {body}")
-                        return await resp.text()
+                return await self._yahoo_get(url)
 
             scoreboard_xml = await get_scoreboard_xml(week)
             embed, matchups = await self.get_matchups_embed(ctx, week, scoreboard_xml)
 
             if embed is None:
-                if channel:
-                    logger.warn(f"⚠️ No matchups found for week {week}.")
+                logger.warn(f"⚠️ No matchups found for week {week}.")
                 return
 
             updated = await self.update_embed(embed, self.state.scoreboard_msg)
@@ -610,71 +618,51 @@ class YahooFFService:
         
 
     async def fetch_all_fantasy_standings_info(self, week):
-        await self.ensure_token()
-        access_token = self.state.yahoo_token["access_token"]
-        headers = {"Authorization": f"Bearer {access_token}", "Accept": "application/xml"}
-
-        # 1) Standings (XML)
+        # Standings XML
         standings_url = f"https://fantasysports.yahooapis.com/fantasy/v2/league/{YAHOO_LEAGUE_KEY}/standings"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(standings_url, headers=headers) as resp:
-                if resp.status != 200:
-                    body = await resp.text()
-                    raise RuntimeError(f"Standings call failed ({resp.status}): {body}")
-                standings_xml = await resp.text()
+        standings_xml = await self._yahoo_get(standings_url)
+        teams, league_name, league_logo_url, current_week = await self.parse_standings_xml(standings_xml)
 
-            teams, league_name, league_logo_url, current_week = await self.parse_standings_xml(standings_xml)
-            if not teams:
-                await self._send_text(ctx, "⚠️ No teams found in team_standings.")
-                return
+        if not teams:
+            await self._send_text(ctx, "⚠️ No teams found in team_standings.")
+            return
 
-            # 2) Rosters (XML)
-            team_keys = ",".join(t["team_key"] for t in teams if "team_key" in t)
-            roster_url = (
-                f"https://fantasysports.yahooapis.com/fantasy/v2/"
-                f"teams;team_keys={team_keys}/roster;week={week}/players"
-            )
-            async with session.get(roster_url, headers=headers) as resp:
-                if resp.status != 200:
-                    body = await resp.text()
-                    raise RuntimeError(f"Teams/roster call failed ({resp.status}): {body}")
-                roster_xml = await resp.text()
+        # Rosters XML
+        team_keys = ",".join(t["team_key"] for t in teams if "team_key" in t)
+        roster_url = (
+            f"https://fantasysports.yahooapis.com/fantasy/v2/"
+            f"teams;team_keys={team_keys}/roster;week={week}/players"
+        )
+        roster_xml = await self._yahoo_get(roster_url)
 
-            # logger.info(f"roster xml: {roster_xml}")
-            current_nfl_season = getattr(self.bot.state, "current_nfl_season", None)
-            this_weeks_games = await self.bot.espn_service.get_nfl_week_game_states(current_nfl_season, week)
-            roster_map, all_player_keys = self._parse_roster_xml(roster_xml, this_weeks_games)
+        # logger.info(f"roster xml: {roster_xml}")
+        current_nfl_season = getattr(self.bot.state, "current_nfl_season", None)
+        this_weeks_games = await self.bot.espn_service.get_nfl_week_game_states(current_nfl_season, week)
+        roster_map, all_player_keys = self._parse_roster_xml(roster_xml, this_weeks_games)
 
-            # call espn service to fetch map of teams currently playing by abbrv use that to merge in game_state
+        # Stats XML
+        points_by_key = {}
+        if all_player_keys:
+            chunk = 25
+            keys_list = list(all_player_keys)
+            for i in range(0, len(keys_list), chunk):
+                sub = keys_list[i:i+chunk]
+                stats_url = (
+                    f"https://fantasysports.yahooapis.com/fantasy/v2/"
+                    f"league/{YAHOO_LEAGUE_KEY}/players;player_keys={','.join(sub)}/stats;type=week;week={week}"
+                )
+                stats_xml = await self._yahoo_get(stats_url)
+                # logger.info(f"player stats xml: {stats_xml}")
+                stats_root = ET.fromstring(stats_xml)
 
-            # 3) Weekly stats/points for those players (XML)
-            points_by_key = {}
-            if all_player_keys:
-                chunk = 25
-                keys_list = list(all_player_keys)
-                for i in range(0, len(keys_list), chunk):
-                    sub = keys_list[i:i+chunk]
-                    stats_url = (
-                        f"https://fantasysports.yahooapis.com/fantasy/v2/"
-                        f"league/{YAHOO_LEAGUE_KEY}/players;player_keys={','.join(sub)}/stats;type=week;week={week}"
-                    )
-                    async with session.get(stats_url, headers=headers) as resp:
-                        if resp.status != 200:
-                            body = await resp.text()
-                            raise RuntimeError(f"Players stats call failed ({resp.status}): {body}")
-                        stats_xml = await resp.text()
-                    # logger.info(f"player stats xml: {stats_xml}")
-                    stats_root = ET.fromstring(stats_xml)
+                pts = self._build_points_index(stats_root)
+                missing = [k for k in sub if k not in pts]
+                if missing:
+                    for k in missing:
+                        pts[k] = None
+                points_by_key.update(pts)
 
-                    # Prefer player_points; if missing, compute via modifiers
-                    pts = self._build_points_index(stats_root)
-                    missing = [k for k in sub if k not in pts]
-                    if missing:
-                        for k in missing:
-                            pts[k] = None
-                    points_by_key.update(pts)
-
-            team_rosters = self._merge_points_into_roster(roster_map, points_by_key)
+        team_rosters = self._merge_points_into_roster(roster_map, points_by_key)
         return teams, league_name, league_logo_url, current_week, team_rosters
         
     # -------------------------------------------------------------------
