@@ -47,11 +47,5 @@ class TimeCog(commands.Cog):
         else:
             await self.bot.time_service.time_spent_all_members(ctx, self.bot.state.this_week_time_sums, arg)
 
-    @commands.command(name=DUMP_COMMAND)
-    async def dump_data_command(self, ctx):
-        if ctx.author.id != ADMIN_USER_ID:
-            return
-        await self.bot.time_service.dump_data(ctx)
-
 async def setup(bot):
     await bot.add_cog(TimeCog(bot))

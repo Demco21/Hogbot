@@ -35,8 +35,8 @@ HogBot tracks time spent in Discord voice channels, appoints a weekly “Chancel
 ├── main.py                  # Bot entrypoint and scheduler
 ├── cogs/                    # Command definitions
 │   ├── time_cog.py          # Voice tracking commands
-│   ├── yahoo_ff_cog.py      # Yahoo fantasy commands
-│   ├── espn_cog.py          # ESPN schedule commands
+│   ├── admin_cog.py         # Admin commands
+│   ├── pvp_cog.py           # PVP and move commands
 ├── services/                # Core bot services
 │   ├── time_service.py      # Voice activity tracking
 │   ├── channel_change_service.py # Channel renamer

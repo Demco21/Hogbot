@@ -8,6 +8,7 @@ from services.nfl_service import NFLService
 from services.chancellor_service import ChancellorService
 from services.yahoo_ff_service import YahooFFService
 from services.espn_service import ESPNService
+from services.pvp_service import PVPService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -24,11 +25,12 @@ class HogBot(commands.Bot):
         self.chancellor_service = ChancellorService(self.state, self)
         self.yahoo_ff_service = YahooFFService(self.state, self)
         self.espn_service = ESPNService(self.state, self)
+        self.pvp_service = PVPService(self.state, self)
 
     async def setup_hook(self):
         await self.load_extension("cogs.time_cog")
-        await self.load_extension("cogs.yahoo_ff_cog")
-        await self.load_extension("cogs.espn_cog")
+        await self.load_extension("cogs.admin_cog")
+        await self.load_extension("cogs.pvp_service_cog")
 
 bot = HogBot()
 
@@ -52,6 +54,7 @@ def setup_scheduler(bot):
     change_channel_job = bot.channel_change_service.change_channel_name
     dump_data_job = bot.time_service.dump_data
     decide_chancellor_job = bot.chancellor_service.decide_chancellor
+    enable_pvp_job = bot.pvp_service.check_reenable_pvp
 
     scheduler = AsyncIOScheduler()
     # NFL Schedule
@@ -61,6 +64,9 @@ def setup_scheduler(bot):
     # Yahoo Fantasy Football
     scheduler.add_job(post_yahoo_fantasy, CronTrigger(day_of_week='tue', hour=6, minute=30, timezone=timezone('America/New_York')))
     scheduler.add_job(update_yahoo_fantasy, CronTrigger(minute='*/5', timezone=timezone('America/New_York')))
+
+    #PvP Enablement
+    scheduler.add_job(enable_pvp_job, CronTrigger(minute='*/1', timezone=timezone('America/New_York')))
 
     # Misc
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))

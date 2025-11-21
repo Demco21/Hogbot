@@ -16,6 +16,7 @@ class BotState:
         self.current_nfl_season = 2025
         self.nfl_season_started = False
         self.nfl_games_msgs = {}
+        self.pvp_disabled_members = {}
 
     def reset_week(self):
         self.this_week_time_sums = {}

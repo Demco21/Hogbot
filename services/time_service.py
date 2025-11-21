@@ -167,6 +167,11 @@ class TimeService:
                 self.state.scoreboard_msg = data.get("scoreboard_msg", {})
                 self.state.roster_messages = data.get("roster_messages", {})
                 self.state.nfl_games_msgs = data.get("nfl_games_msgs", {})
+                raw_pvp_disabled_members = data.get("pvp_disabled_members", {})
+                self.state.pvp_disabled_members = {
+                    int(member_id): datetime.fromisoformat(dt_str)
+                    for member_id, dt_str in raw_pvp_disabled_members.items()
+                }
                 
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
@@ -270,7 +275,11 @@ class TimeService:
                 "current_chancellor_id": self.state.current_chancellor_id,
                 "scoreboard_msg": self.state.scoreboard_msg,
                 "roster_messages": self.state.roster_messages,
-                "nfl_games_msgs": self.state.nfl_games_msgs
+                "nfl_games_msgs": self.state.nfl_games_msgs,
+                "pvp_disabled_members": {
+                    str(member_id): dt.isoformat()
+                    for member_id, dt in self.state.pvp_disabled_members.items()
+                }
             }
 
             with open(TIME_DATA_FILE, "w") as file:
