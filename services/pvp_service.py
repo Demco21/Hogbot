@@ -47,14 +47,14 @@ class PVPService:
         await ctx.author.add_roles(pvp_disabled_role)
         self.state.pvp_disabled_members[ctx.author.id] = datetime.now()
         logger.info(f"Disabled PVP {self.state.pvp_disabled_members}")
-        await ctx.send(f"PVP has been disabled for {self.get_name(ctx.author)} and will be re-enabled in 1 hour.")
+        await ctx.send(f"PVP has been disabled for {self.get_name(ctx.author)} and will be re-enabled in 20 minutes.")
 
     async def check_reenable_pvp(self):
         try:
             now = datetime.now()
             to_reenable = []
             for member_id, disabled_time in self.state.pvp_disabled_members.items():
-                if now - disabled_time >= timedelta(minutes=1):
+                if now - disabled_time >= timedelta(minutes=20):
                     to_reenable.append(member_id)
 
             for member_id in to_reenable:
