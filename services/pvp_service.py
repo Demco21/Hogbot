@@ -6,23 +6,6 @@ from datetime import datetime, timedelta
 from config import PVP_DISABLED_ROLE_ID, PVP_ENABLED_ROLE_ID, MOD_ROLE_ID, HOGBOT_SERVER_ID
 import re
 
-# Matches all emoji glyphs
-EMOJI_REGEX = re.compile(
-    "[" 
-    "\U0001F600-\U0001F64F"  # emoticons
-    "\U0001F300-\U0001F5FF"  # symbols & pictographs
-    "\U0001F680-\U0001F6FF"  # transport & map symbols
-    "\U0001F1E0-\U0001F1FF"  # flags
-    "\U00002600-\U000026FF"  # misc symbols
-    "\U00002700-\U000027BF"  # dingbats
-    "\U0001F900-\U0001F9FF"  # supplemental symbols
-    "\U0001FA70-\U0001FAFF"  # extended-A
-    "]+" 
-)
-
-def remove_emojis(text: str) -> str:
-    return EMOJI_REGEX.sub("", text).strip()
-
 class PVPService:
 
     def __init__(self, bot_state: BotState, bot):
@@ -72,31 +55,36 @@ class PVPService:
             logger.error(f"Error in check_reenable_pvp: {e}")
 
     async def move(self, ctx, member: discord.Member, channel_arg: str):
+
+        def clean_channel_name(name: str) -> str:
+            # remove emojis and non-word characters
+            name = re.sub(r"[^\w\s]", "", name)       # removes punctuation and special symbols
+            name = re.sub(r"[\u2600-\u26FF\u2700-\u27BF]+", "", name)  # extra symbol ranges
+            name = name.strip().lower()
+            return name
+
         mod_role = ctx.guild.get_role(MOD_ROLE_ID)
         if not mod_role or mod_role not in ctx.author.roles:
             return await ctx.send("Only moderators can use this command.")
 
-        # Clean and normalize the provided channel name
-        channel_name = (
-            channel_arg.strip()
-            .strip('"')
-            .strip("'")
-            .lower()
-        )
+        # clean / normalize user input
+        channel_name = clean_channel_name(channel_arg)
 
-        # Look for voice channel whose name matches ignoring emojis
-        channel = None
-        for c in ctx.guild.voice_channels:
-            cleaned = remove_emojis(c.name).lower()
-            if cleaned == channel_name:
-                channel = c
+        if not channel_name:
+            return await ctx.send("You need to provide a channel name.")
+
+        # find first voice channel where the cleaned input is contained in the cleaned channel name
+        target_channel = None
+        for vc in ctx.guild.voice_channels:
+            cleaned_vc_name = clean_channel_name(vc.name)
+            if channel_name in cleaned_vc_name:
+                target_channel = vc
                 break
 
-        if channel is None:
-            return await ctx.send(f"Voice channel '{channel_name}' not found.")
+        if target_channel is None:
+            return await ctx.send(f"Voice channel containing '{channel_name}' not found.")
 
-        # Move the member
-        await member.move_to(channel)
-        await ctx.send(f"Moved {member.display_name} to `{channel.name}`")
+        await member.move_to(target_channel)
+        await ctx.send(f"Moved {member.display_name} to `{target_channel.name}`")
 
 __all__ = ['PVPService']
