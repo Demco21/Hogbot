@@ -7,16 +7,16 @@ class PVPServiceCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="enablepvp")
-    async def enable_pvp(self, ctx):
-        try:
-            mod_role = ctx.guild.get_role(MOD_ROLE_ID)
-            if mod_role in ctx.author.roles:
-                await self.bot.pvp_service.enable_pvp(ctx)
-            else:
-                await ctx.send("Only moderators can use this command.")
-        except Exception as e:
-            logger.error(f"Error in enable pvp command: {e}")
+    # @commands.command(name="enablepvp")
+    # async def enable_pvp(self, ctx):
+    #     try:
+    #         mod_role = ctx.guild.get_role(MOD_ROLE_ID)
+    #         if mod_role in ctx.author.roles:
+    #             await self.bot.pvp_service.enable_pvp(ctx)
+    #         else:
+    #             await ctx.send("Only moderators can use this command.")
+    #     except Exception as e:
+    #         logger.error(f"Error in enable pvp command: {e}")
 
     @commands.command(name="disablepvp")
     async def disable_pvp(self, ctx):
