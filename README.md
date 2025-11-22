@@ -44,6 +44,7 @@ HogBot tracks time spent in Discord voice channels, appoints a weekly “Chancel
 │   ├── nfl_service.py       # NFL schedules/weeks
 │   ├── espn_service.py      # ESPN API integration
 │   ├── yahoo_ff_service.py  # Yahoo Fantasy API integration
+│   ├── pvp_service.py       # Toggle PvP mode and move members
 ├── data/                    # Logs and persistent data
 │   └── hogbot.log           # Rotating log file
 ```
@@ -85,6 +86,8 @@ ADMIN_USER_ID=
 YAHOO_CLIENT_ID=
 YAHOO_CLIENT_SECRET=
 YAHOO_LEAGUE_KEY=
+PVP_DISABLED_ROLE_ID=
+PVP_ENABLED_ROLE_ID=
 GIANTS_EMOJI_ID=
 JETS_EMOJI_ID=
 BILLS_EMOJI_ID=
@@ -145,6 +148,10 @@ kill [PID]
 - `!lifetime [voice|muted|deafened|streaming|username]`  
 - `!dump` (admin only, forces data dump)
 
+### PvP
+- `!move @member [channel name]`
+- `!disablepvp`
+
 ### Yahoo Fantasy (Admin Only)
 - `!auth` – authorize Yahoo Fantasy
 - `!matchups` / `!matchupsupd`  
@@ -164,3 +171,4 @@ kill [PID]
 - **Chancellor**: Appointed weekly on Sunday mornings.  
 - **Channel Rename**: Midnight rename.  
 - **Data Dump**: Hourly persistence.
+- **PvP Check**: Every minute check all members with PvP disabled and re-enable if longer than defined threshold
