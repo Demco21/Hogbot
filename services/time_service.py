@@ -83,9 +83,9 @@ class TimeService:
 
             # ----- Header text -----
             if ctx.command and ctx.command.name == LIFETIME_COMMAND:
-                title = f"Most {time_type} time spent since {self.state.hogbot_start_date}:"
+                title = f"Most {time_type} time spent since {self.state.hogbot_start_date}"
             else:
-                title = f"Most {time_type} time spent this week:"
+                title = f"Most {time_type} time spent this week"
 
             type_label = time_type.capitalize()
 
@@ -98,9 +98,11 @@ class TimeService:
 
             lines = []
             rank = 1
+            MAX_FIELD_LEN = 1024
+            current_len = 0
 
             for key, time_spent in sorted_times:
-                # Extract member ID from keys like "123456789_voice"
+                # Extract member ID
                 try:
                     raw_member_id = key.split("_", 1)[0]
                     member_id = int(raw_member_id)
@@ -111,30 +113,32 @@ class TimeService:
                 if not member:
                     continue
 
-                member_name = self.get_name(member)
+                member_display = member.mention
                 formatted_time = self.format_time_spent(time_spent)
 
-                line = f"**{rank}. {member_name}** — {formatted_time}"
-                lines.append(line)
-                rank += 1
+                # Line format: "1. demco21 - 1m 2s"
+                line = f"{rank}. {member_display} - {formatted_time}"
 
-                # Embeds have practical limits (6000 chars, 25 fields, etc.)
-                # This is a simple safety cap so things don't explode.
-                if rank > 25:  # top 25 entries
+                # Check for Discord embed 1024-char limit
+                extra_len = len(line) + (1 if lines else 0)
+                if current_len + extra_len > MAX_FIELD_LEN:
                     break
+
+                lines.append(line)
+                current_len += extra_len
+                rank += 1
 
             if not lines:
                 await ctx.send(f"No data found for {time_type}.")
                 return
 
             embed.add_field(
-                name="Results",
+                name="",
                 value="\n".join(lines),
                 inline=False
             )
 
             embed.set_footer(text="Hogbot activity tracker")
-
             await ctx.send(embed=embed)
 
         except Exception as e:
@@ -142,37 +146,66 @@ class TimeService:
 
     async def time_spent_member(self, ctx, time_sums, member: discord.Member):
         try:
+            # Keys for this member in your tracking dicts
             keys = {
-                'channel': f'{member.id}{KEY_SUFFIX_VOICE}',
-                'mute': f'{member.id}{KEY_SUFFIX_MUTE}',
-                'deafen': f'{member.id}{KEY_SUFFIX_DEAFEN}',
-                'stream': f'{member.id}{KEY_SUFFIX_STREAM}'
+                "channel": f"{member.id}{KEY_SUFFIX_VOICE}",
+                "mute": f"{member.id}{KEY_SUFFIX_MUTE}",
+                "deafen": f"{member.id}{KEY_SUFFIX_DEAFEN}",
+                "stream": f"{member.id}{KEY_SUFFIX_STREAM}",
             }
 
+            # Use mention for title and readable name for fallback
+            member_display = member.mention
             member_name = self.get_name(member)
-            messages = {
-                'channel': f"{member_name} has spent {{time_spent}} in voice channels.",
-                'mute': f"{member_name} has spent {{time_spent}} muted.",
-                'deafen': f"{member_name} has spent {{time_spent}} deafened.",
-                'stream': f"{member_name} has spent {{time_spent}} streaming."
+
+            # Human-friendly labels
+            labels = {
+                "channel": "Voice Channels",
+                "mute": "Muted",
+                "deafen": "Deafened",
+                "stream": "Streaming",
             }
 
+            # Header text based on command (weekly vs lifetime)
             if ctx.command and ctx.command.name == LIFETIME_COMMAND:
-                await ctx.send(f"Since {self.state.hogbot_start_date}:")
+                timeframe_text = f"Since {self.state.hogbot_start_date}"
             else:
-                await ctx.send(f"This week:")
+                timeframe_text = "This week"
 
+            # ----- Build embed -----
+            embed = discord.Embed(
+                title=f"Time Spent {timeframe_text}",
+                description=member_display,
+                color=discord.Color.gold()
+            )
+
+            # Calculate time for each category and add as simple fields
             for key_type, key in keys.items():
                 time_spent = timedelta()
+
+                # Add stored total time
                 if key in time_sums:
                     time_spent += time_sums[key]
+
+                # Add active session time (if still ongoing)
                 if key in self.state.timestamps:
                     join_time = self.state.timestamps[key]
                     time_spent += datetime.now() - join_time
+
                 formatted_time = self.format_time_spent(time_spent)
-                await ctx.send(messages[key_type].format(time_spent=formatted_time))
+
+                embed.add_field(
+                    name="",
+                    value=f"**{labels[key_type]}:** {formatted_time}",
+                    inline=False
+                )
+
+            embed.set_footer(text="Hogbot activity tracker")
+
+            await ctx.send(embed=embed)
+
         except Exception as e:
-            logger.error(f'Error in time_spent_member: {e}')
+            logger.error(f"Error in time_spent_member: {e}", exc_info=True)
 
     async def restore_data(self):
         # Function to convert "H:MM:SS" strings to timedelta
@@ -230,12 +263,12 @@ class TimeService:
 
         formatted_time_parts = []
         if days > 0:
-            formatted_time_parts.append(f"{days} Day(s)")
+            formatted_time_parts.append(f"{days}d")
         if hours > 0:
-            formatted_time_parts.append(f"{hours} Hour(s)")
+            formatted_time_parts.append(f"{hours}hr")
         if minutes > 0:
-            formatted_time_parts.append(f"{minutes} Minute(s)")
-        formatted_time_parts.append(f"{seconds} Second(s)")
+            formatted_time_parts.append(f"{minutes}m")
+        formatted_time_parts.append(f"{seconds}s")
 
         formatted_time = " ".join(formatted_time_parts)
         return formatted_time
