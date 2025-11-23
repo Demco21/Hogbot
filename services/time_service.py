@@ -47,55 +47,98 @@ class TimeService:
             this_week_time_sums[key] += time_spent
             return time_spent
 
-    async def time_spent_all_members(self, ctx, time_sums, time_type: str = ''):
+    async def time_spent_all_members(self, ctx, time_sums, time_type: str = 'voice'):
         try:
-            if not time_type:
-                time_type = 'voice'
-
             if time_type not in VALID_ARG_TYPES:
                 await ctx.send("Invalid type! Please choose from 'voice', 'muted', 'deafened', or 'streaming'.")
                 return
+            sorted_times = self.get_sorted_times(time_sums, time_type)
+            await self.announce_time_spent_all_members(ctx, sorted_times, time_type)
+        except Exception as e:
+            logger.error(f"Error in time_spent_all_members: {e}")
 
-            suffix = SUFFIXES[time_type]
-            filtered_time_sums = {key: value for key, value in time_sums.items() if key.endswith(suffix)}
-            filtered_timestamps = {key: value for key, value in self.state.timestamps.items() if key.endswith(suffix)}
 
-            for key, timestamp in filtered_timestamps.items():
-                if key not in filtered_time_sums:
-                    filtered_time_sums[key] = datetime.now() - timestamp
-                else:
-                    filtered_time_sums[key] += datetime.now() - timestamp
+    def get_sorted_times(self, time_sums, time_type: str = 'voice'):
+        if time_type not in VALID_ARG_TYPES:
+                logger.error(f"Invalid type: {time_type} Please choose from 'voice', 'muted', 'deafened', or 'streaming'.")
+                return
+        suffix = SUFFIXES[time_type]
+        filtered_time_sums = {key: value for key, value in time_sums.items() if key.endswith(suffix)}
+        filtered_timestamps = {key: value for key, value in self.state.timestamps.items() if key.endswith(suffix)}
 
-            sorted_times = sorted(filtered_time_sums.items(), key=lambda item: item[1], reverse=True)
+        for key, timestamp in filtered_timestamps.items():
+            if key not in filtered_time_sums:
+                filtered_time_sums[key] = datetime.now() - timestamp
+            else:
+                filtered_time_sums[key] += datetime.now() - timestamp
 
+        sorted_times = sorted(filtered_time_sums.items(), key=lambda item: item[1], reverse=True)
+        return sorted_times
+
+    async def announce_time_spent_all_members(self, ctx, sorted_times, time_type: str = "voice"):
+        try:
             if not sorted_times:
                 await ctx.send(f"No data found for {time_type}.")
                 return
 
-            message_header = f"Most {time_type} time spent this week:"
+            # ----- Header text -----
             if ctx.command and ctx.command.name == LIFETIME_COMMAND:
-                message_header = f"Most {time_type} time spent since {self.state.hogbot_start_date}:"
+                title = f"Most {time_type} time spent since {self.state.hogbot_start_date}:"
+            else:
+                title = f"Most {time_type} time spent this week:"
 
-            message_lines = [message_header]
+            type_label = time_type.capitalize()
+
+            # ----- Build embed -----
+            embed = discord.Embed(
+                title=title,
+                description=f"Leaderboard by {type_label} time",
+                color=discord.Color.gold()
+            )
+
+            lines = []
+            rank = 1
+
             for key, time_spent in sorted_times:
-                member_id = key.replace(suffix, '')
-                member = ctx.guild.get_member(int(member_id))
-                if member:
-                    member_name = self.get_name(member)
-                    formatted_time = self.format_time_spent(time_spent)
-                    message = f"{member_name}: {formatted_time}"
-                    total_size = sum(len(line) for line in message_lines) + len(message) + len(message_lines)
-                    if (total_size < MAX_MESSAGE_SIZE):
-                        message_lines.append(message)
-                    else:
-                        logger.info(f'MAX_MESSAGE_SIZE reached: {MAX_MESSAGE_SIZE}')
-                        break
+                # Extract member ID from keys like "123456789_voice"
+                try:
+                    raw_member_id = key.split("_", 1)[0]
+                    member_id = int(raw_member_id)
+                except (ValueError, IndexError):
+                    continue
 
-            await ctx.send("\n".join(message_lines))
-            return sorted_times
+                member = ctx.guild.get_member(member_id)
+                if not member:
+                    continue
+
+                member_name = self.get_name(member)
+                formatted_time = self.format_time_spent(time_spent)
+
+                line = f"**{rank}. {member_name}** — {formatted_time}"
+                lines.append(line)
+                rank += 1
+
+                # Embeds have practical limits (6000 chars, 25 fields, etc.)
+                # This is a simple safety cap so things don't explode.
+                if rank > 25:  # top 25 entries
+                    break
+
+            if not lines:
+                await ctx.send(f"No data found for {time_type}.")
+                return
+
+            embed.add_field(
+                name="Results",
+                value="\n".join(lines),
+                inline=False
+            )
+
+            embed.set_footer(text="Hogbot activity tracker")
+
+            await ctx.send(embed=embed)
 
         except Exception as e:
-            logger.error(f"Error in time_spent_all_members: {e}")
+            logger.error(f"Error in announce_time_spent_all_members: {e}", exc_info=True)
 
     async def time_spent_member(self, ctx, time_sums, member: discord.Member):
         try:

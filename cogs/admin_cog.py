@@ -101,5 +101,15 @@ class AdminCog(commands.Cog):
         except Exception as e:
             logger.error(f"Error in standingsupd command: {e}")
 
+    @commands.command(name="decidechancellor")
+    async def decide_chancellor(self, ctx):
+        try:
+            if ctx.author.id != ADMIN_USER_ID:
+                ctx.send("You do not have permission to use this command.")
+                return
+            await self.bot.chancellor_service.decide_chancellor()
+        except Exception as e:
+            logger.error(f"Error in decide_chancellor command: {e}")
+
 async def setup(bot):
     await bot.add_cog(AdminCog(bot))
