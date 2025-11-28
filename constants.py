@@ -10,9 +10,6 @@ SUFFIXES = {
     VALID_ARG_TYPES[2]: KEY_SUFFIX_DEAFEN,
     VALID_ARG_TYPES[3]: KEY_SUFFIX_STREAM
 }
-MAX_MESSAGE_SIZE = 2000
-APPROVALS_NEEDED = 2
-POWER_DURATION = 60 * 15 # 15 minutes
 DAY_OVERRIDES = {
     "monday": "🍺 Monday Beers",
     "tuesday": "🍺 Tuesday Beers",
@@ -31,5 +28,3 @@ YAHOO_TOKEN_FILE = "data/yahoo_token.json"
 THISWEEK_COMMAND = 'thisweek'
 LIFETIME_COMMAND = 'lifetime'
 DUMP_COMMAND = 'dump'
-POWER_COMMAND = 'power'
-APPROVE_COMMAND = 'approve'

@@ -2,7 +2,8 @@ from bot_state import BotState
 from config import (
     ANNOUNCEMENTS_CHANNEL_ID,
     CHANCELLOR_ROLE_ID,
-    HOGBOT_SERVER_ID
+    HOGBOT_SERVER_ID,
+    ADMIN_USER_ID
 )
 from constants import KEY_SUFFIX_VOICE
 from logging_config import logger
@@ -38,8 +39,16 @@ class ChancellorService:
             if not sorted_times:
                 logger.info("No time data found for this week.")
                 sorted_times = []
+            else:
+                sorted_times = [item for item in sorted_times if item[0].split("_", 1)[0] != str(ADMIN_USER_ID)]
 
             server_booster_ids = await self.get_server_boosters(guild)
+
+            if not server_booster_ids:
+                logger.info("No server boosters found for this week.")
+                server_booster_ids = []
+            else:
+                server_booster_ids = [member_id for member_id in server_booster_ids if member_id != str(ADMIN_USER_ID)]
 
             # If both are empty, stop here
             if not sorted_times and not server_booster_ids:

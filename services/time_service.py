@@ -5,14 +5,12 @@ from bot_state import BotState
 from constants import (
     VALID_ARG_TYPES, 
     SUFFIXES, 
-    MAX_MESSAGE_SIZE, 
     LIFETIME_COMMAND, 
     KEY_SUFFIX_VOICE,
     KEY_SUFFIX_DEAFEN,
     KEY_SUFFIX_MUTE,
     KEY_SUFFIX_STREAM,
-    TIME_DATA_FILE,
-    DAY_OVERRIDES
+    TIME_DATA_FILE
 )
 from config import (
     AFK_CHANNEL_ID,
@@ -47,13 +45,13 @@ class TimeService:
             this_week_time_sums[key] += time_spent
             return time_spent
 
-    async def time_spent_all_members(self, ctx, time_sums, time_type: str = 'voice'):
+    async def time_spent_all_members(self, interaction, time_sums, time_type: str = 'voice'):
         try:
             if time_type not in VALID_ARG_TYPES:
-                await ctx.send("Invalid type! Please choose from 'voice', 'muted', 'deafened', or 'streaming'.")
+                await interaction.response.send_message("Invalid type! Please choose from 'voice', 'muted', 'deafened', or 'streaming'.")
                 return
             sorted_times = self.get_sorted_times(time_sums, time_type)
-            await self.announce_time_spent_all_members(ctx, sorted_times, time_type)
+            await self.announce_time_spent_all_members(interaction, sorted_times, time_type)
         except Exception as e:
             logger.error(f"Error in time_spent_all_members: {e}")
 
@@ -75,14 +73,14 @@ class TimeService:
         sorted_times = sorted(filtered_time_sums.items(), key=lambda item: item[1], reverse=True)
         return sorted_times
 
-    async def announce_time_spent_all_members(self, ctx, sorted_times, time_type: str = "voice"):
+    async def announce_time_spent_all_members(self, interaction, sorted_times, time_type: str = "voice"):
         try:
             if not sorted_times:
-                await ctx.send(f"No data found for {time_type}.")
+                await interaction.response.send_message(f"No data found for {time_type}.")
                 return
 
             # ----- Header text -----
-            if ctx.command and ctx.command.name == LIFETIME_COMMAND:
+            if interaction and interaction.command and interaction.command.name == LIFETIME_COMMAND:
                 title = f"Most {time_type} time spent since {self.state.hogbot_start_date}"
             else:
                 title = f"Most {time_type} time spent this week"
@@ -109,7 +107,7 @@ class TimeService:
                 except (ValueError, IndexError):
                     continue
 
-                member = ctx.guild.get_member(member_id)
+                member = interaction.guild.get_member(member_id)
                 if not member:
                     continue
 
@@ -129,7 +127,7 @@ class TimeService:
                 rank += 1
 
             if not lines:
-                await ctx.send(f"No data found for {time_type}.")
+                await interaction.response.send_message(f"No data found for {time_type}.")
                 return
 
             embed.add_field(
@@ -139,12 +137,12 @@ class TimeService:
             )
 
             embed.set_footer(text="Hogbot activity tracker")
-            await ctx.send(embed=embed)
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             logger.error(f"Error in announce_time_spent_all_members: {e}", exc_info=True)
 
-    async def time_spent_member(self, ctx, time_sums, member: discord.Member):
+    async def time_spent_member(self, interaction, time_sums, member: discord.Member):
         try:
             # Keys for this member in your tracking dicts
             keys = {
@@ -167,7 +165,7 @@ class TimeService:
             }
 
             # Header text based on command (weekly vs lifetime)
-            if ctx.command and ctx.command.name == LIFETIME_COMMAND:
+            if interaction and interaction.command and interaction.command.name == LIFETIME_COMMAND:
                 timeframe_text = f"Since {self.state.hogbot_start_date}"
             else:
                 timeframe_text = "This week"
@@ -202,7 +200,7 @@ class TimeService:
 
             embed.set_footer(text="Hogbot activity tracker")
 
-            await ctx.send(embed=embed)
+            await interaction.response.send_message(embed=embed)
 
         except Exception as e:
             logger.error(f"Error in time_spent_member: {e}", exc_info=True)
