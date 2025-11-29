@@ -19,6 +19,14 @@ class TimeCog(commands.Cog):
     async def on_voice_state_update(self, member, before, after):
         await self.bot.time_service.update_timestamps(member, before, after)
 
+    @commands.command(name=LIFETIME_COMMAND)
+    async def time_spent_lifetime_deprecated(self, ctx, arg: str = ''):
+        await ctx.send(f"Prefix `!` commands were deprecated in favor of slash commands. Please use `/{LIFETIME_COMMAND}` to access this functionality.")
+
+    @commands.command(name=THISWEEK_COMMAND)
+    async def time_spent_this_week_deprecated(self, ctx, arg: str = ''):
+        await ctx.send(f"Prefix `!` commands were deprecated in favor of slash commands. Please use `/{THISWEEK_COMMAND}` to access this functionality.")
+
     @app_commands.command(
         name=LIFETIME_COMMAND,
         description="Show time spent all-time for a member or all members."

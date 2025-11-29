@@ -269,4 +269,51 @@ class ChancellorService:
         else:
             logger.error(f'Member with ID {member_id} not found in guild.')
 
+    async def deprecate_chancellor(self):
+        logger.info("Deprecating Chancellor role")
+
+        guild = self.bot.get_guild(HOGBOT_SERVER_ID)
+        if guild is None:
+            logger.warning("Guild not found!")
+            return
+
+        chancellor = guild.get_role(CHANCELLOR_ROLE_ID)
+        if chancellor is None:
+            logger.warning("Chancellor role not found!")
+            return
+
+        # Remove role from all members safely
+        logger.info("Chancellor role found, removing from all members")
+        for member in list(chancellor.members):
+            try:
+                await member.remove_roles(chancellor, reason="Chancellery deprecated")
+            except discord.Forbidden:
+                logger.warning(f"Missing permissions to remove {chancellor.name} from {member}")
+            except discord.HTTPException as e:
+                logger.error(f"Failed to remove {chancellor.name} from {member}: {e}")
+
+        # Update internal state
+        self.state.current_chancellor_id = None
+
+        # Prepare the embed
+        embed = discord.Embed(
+            title="",
+            description=(
+                "The Chancellor’s seal fades. The banners are folded. "
+                "The crown set to rest. New voices rise, free and unbound, "
+                "as the Hog Pen looks with clearer eyes to dawn once more."
+            ),
+            color=discord.Color.gold()
+        )
+        embed.set_footer(text="Thus ends the Age of the Chancellor.")
+        embed.set_thumbnail(url="https://backtozero.co/cdn/shop/products/DSC_0770_18e5d7d1-3a6d-4592-ae24-7ae4ebe04451_600x.jpg?v=1673327655")  # optional decorative icon
+
+        # Send to announcements channel
+        channel = self.bot.get_channel(ANNOUNCEMENTS_CHANNEL_ID)
+        if channel:
+            await channel.send(embed=embed)
+            logger.info("Deprecation message sent to announcements channel.")
+        else:
+            logger.warning("Announcements channel not found!")
+
 __all__ = ['ChancellorService']
