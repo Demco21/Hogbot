@@ -8,6 +8,7 @@ from services.nfl_service import NFLService
 from services.yahoo_ff_service import YahooFFService
 from services.espn_service import ESPNService
 from services.chancellor_service import ChancellorService
+from services.gamble_service import GambleService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -26,11 +27,13 @@ class HogBot(commands.Bot):
         self.yahoo_ff_service = YahooFFService(self.state, self)
         self.espn_service = ESPNService(self.state, self)
         self.chancellor_service = ChancellorService(self.state, self)
+        self.gamble_service = GambleService(self.state, self)
         self.synced = False
 
     async def setup_hook(self):
         await self.load_extension("cogs.time_cog")
         await self.load_extension("cogs.admin_cog")
+        await self.load_extension("cogs.gamble_cog")
         logger.info("Setup_hook completed")
         logger.info(f"Discord version: {discord.__version__}")
 
@@ -78,13 +81,6 @@ def setup_scheduler(bot):
     update_yahoo_fantasy = bot.yahoo_ff_service.update_fantasy_football
     scheduler.add_job(post_yahoo_fantasy, CronTrigger(day_of_week='tue', hour=6, minute=30, timezone=timezone('America/New_York')))
     scheduler.add_job(update_yahoo_fantasy, CronTrigger(minute='*/5', timezone=timezone('America/New_York')))
-
-    # Deprecate Chancellor Role
-    decide_chancellor_job = bot.chancellor_service.deprecate_chancellor
-    eastern = timezone('America/New_York')
-    run_time = eastern.localize(datetime(2025, 11, 30, 0, 0))
-    trigger = DateTrigger(run_date=run_time)
-    scheduler.add_job(decide_chancellor_job, trigger)
 
     # Misc
     change_channel_job = bot.channel_change_service.change_channel_name
