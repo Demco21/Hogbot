@@ -85,7 +85,7 @@ class RideTheBusView(discord.ui.View):
             return False
         return True
 
-    def _base_embed(self, description: str, *, win: bool | None = None, game_over: bool | None = None):
+    def _base_embed(self, description: str, *, win: bool = None, game_over: bool = None):
         color = discord.Color.blurple()
         if win is True:
             color = discord.Color.green()
