@@ -44,21 +44,21 @@ class RideTheBusView(discord.ui.View):
         return self.deck.pop()
 
     @staticmethod
-    def _rank_str(rank: int) -> str:
+    def _rank_str(rank: int):
         mapping = {11: "J", 12: "Q", 13: "K", 14: "A"}
         return mapping.get(rank, str(rank))
 
-    def format_card(self, card) -> str:
+    def format_card(self, card):
         return f"{self._rank_str(card['rank'])}{card['suit']}"
 
     @staticmethod
-    def card_color(card) -> str:
+    def card_color(card):
         # Hearts / Diamonds = red; Clubs / Spades = black
         if card["suit"] in {"♥️", "♦️"}:
             return "red"
         return "black"
 
-    def cards_summary(self) -> str:
+    def cards_summary(self):
         if not self.cards:
             return "❓ ❓ ❓ ❓"
         if len(self.cards) == 1:
@@ -69,10 +69,10 @@ class RideTheBusView(discord.ui.View):
             return f"{self.format_card(self.cards[0])} {self.format_card(self.cards[1])} {self.format_card(self.cards[2])} ❓"
         return " ".join(self.format_card(c) for c in self.cards)
 
-    def potential_payout(self, multiplier: int) -> int:
+    def potential_payout(self, multiplier: int):
         return self.bet * multiplier
 
-    async def _ensure_player(self, interaction: discord.Interaction) -> bool:
+    async def _ensure_player(self, interaction: discord.Interaction):
         if interaction.user.id != self.player.id:
             try:
                 await interaction.response.send_message(
@@ -85,7 +85,7 @@ class RideTheBusView(discord.ui.View):
             return False
         return True
 
-    def _base_embed(self, description: str, *, win: bool | None = None, game_over: bool | None = None) -> discord.Embed:
+    def _base_embed(self, description: str, *, win: bool | None = None, game_over: bool | None = None):
         color = discord.Color.blurple()
         if win is True:
             color = discord.Color.green()
@@ -168,7 +168,7 @@ class RideTheBusView(discord.ui.View):
 
     # ---------- Round 1: Red / Black ----------
 
-    def build_intro_embed(self) -> discord.Embed:
+    def build_intro_embed(self):
         desc = (
             f"{self.player.mention} is **riding the bus!**\n\n"
             "**Round 1 – Red or Black?**\n"

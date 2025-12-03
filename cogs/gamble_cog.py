@@ -9,7 +9,7 @@ class GambleCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def is_in_allowed_channel(self, interaction: discord.Interaction) -> bool:
+    def is_in_allowed_channel(self, interaction: discord.Interaction):
         """Utility method to check if command is used in the allowed channel."""
         return interaction.channel and interaction.channel.id == CASINO_CHANNEL_ID
 
