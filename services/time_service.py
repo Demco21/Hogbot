@@ -245,6 +245,12 @@ class TimeService:
                     int(member_id): datetime.fromisoformat(dt_str)
                     for member_id, dt_str in raw_pvp_disabled_members.items()
                 }
+
+                member_wallets = data.get("member_wallets", {})
+                self.state.member_wallets = {
+                    int(member_id): int(balance)
+                    for member_id, balance in member_wallets.items()
+                }
                 
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
@@ -352,6 +358,10 @@ class TimeService:
                 "pvp_disabled_members": {
                     str(member_id): dt.isoformat()
                     for member_id, dt in self.state.pvp_disabled_members.items()
+                },
+                "member_wallets": {
+                    str(member_id): balance
+                    for member_id, balance in self.state.member_wallets.items()
                 }
             }
 

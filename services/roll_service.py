@@ -1,11 +1,10 @@
-from datetime import datetime, timedelta
 from bot_state import BotState
 from logging_config import logger
 import discord
 from discord.ext import commands
 import random
 
-class GambleService:
+class RollService:
     def __init__(self, bot_state: BotState, bot):
         self.state = bot_state
         self.bot = bot
@@ -56,4 +55,4 @@ class GambleService:
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
 
-__all__ = ['GambleService']
+__all__ = ['RollService']
