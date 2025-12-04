@@ -13,6 +13,7 @@ class GambleCog(commands.Cog):
         """Utility method to check if command is used in the allowed channel."""
         return interaction.channel and interaction.channel.id == CASINO_CHANNEL_ID
 
+
     @app_commands.command(
         name="roll",
         description="Rolls a die from 1 - 100 by default."
@@ -24,9 +25,10 @@ class GambleCog(commands.Cog):
     @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
     async def roll(self, interaction: discord.Interaction, from_value: int = 1, to_value: int = 100):
         try:
-            await self.bot.roll_service.roll(interaction, from_value, to_value)
+            await self.bot.gamble_service.roll(interaction, from_value, to_value)
         except Exception as e:
             logger.error(f"Error in roll command: {e}")
+
 
     @app_commands.command(
         name="ridethebus",
@@ -49,6 +51,7 @@ class GambleCog(commands.Cog):
         except Exception as e:
             logger.error(f"Error in ridethebus command: {e}")
 
+
     @app_commands.command(
         name="mywallet",
         description="Show your current Hog Coin balance."
@@ -59,6 +62,51 @@ class GambleCog(commands.Cog):
             await self.bot.ride_the_bus_service.my_wallet(interaction)
         except Exception as e:
             logger.error(f"Error in ridethebus command: {e}")
+
+    
+    @app_commands.command(
+        name="loan",
+        description="Loan Hog Coins to another player."
+    )
+    @app_commands.describe(
+        target="The player who will receive the loan.",
+        amount="Amount of Hog Coins to loan."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def loan(self, interaction: discord.Interaction, target: discord.Member, amount: int):
+        """Slash command entrypoint for /loan."""
+        try:
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the designated casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            await self.bot.gamble_service.loan(interaction, target, amount)
+        except Exception as e:
+            logger.error(f"Error in loan command: {e}")
+
+
+    @app_commands.command(
+        name="leaderboard",
+        description="Show the top Hog Coin holders."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def leaderboard(self, interaction: discord.Interaction):
+        """Slash command entrypoint for /leaderboard."""
+        try:
+            # Restrict to casino channel like /ridethebus and /loan
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the designated casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            await self.bot.gamble_service.leaderboard(interaction)
+        except Exception as e:
+            logger.error(f"Error in leaderboard command: {e}")
 
 async def setup(bot):
     await bot.add_cog(GambleCog(bot))

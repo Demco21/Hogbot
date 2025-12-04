@@ -93,16 +93,22 @@ class RideTheBusView(discord.ui.View):
             color = discord.Color.red()
 
         embed = discord.Embed(
-            title="🃏 Ride the Bus",
-            description=description,
+            title=f"🃏 Ride the Bus",
+            description=f"**Player**: {self.player.mention}\n\n" + description,
             color=color
         )
         embed.add_field(name="Bet", value=f"🪙 {str(self.bet)}", inline=True)
-        if not game_over:
-            embed.add_field(name="Potential Payout", value=f"🪙 {self.potential_payout(self.current_multiplier)}", inline=True)
-            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]+self.bet}", inline=True)
-        if game_over is True:
-            embed.add_field(name="Payout", value=f"🪙 {self.potential_payout(self.current_multiplier)}", inline=True)
+        # first round, no win/loss yet
+        if self.stage == 1 and win is not True:
+            embed.add_field(name="Cashout Value", value=f"🪙 0", inline=True)
+            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
+        # ongoing game, show cashout value
+        elif not game_over:
+            embed.add_field(name="Cashout Value", value=f"🪙 {self.potential_payout(self.current_multiplier)}", inline=True)
+            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
+        # game over, show final payout if any
+        elif game_over is True:
+            embed.add_field(name="Final Payout", value=f"🪙 {self.potential_payout(self.current_multiplier)}", inline=True)
             embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
         embed.add_field(name="Cards so far", value=self.cards_summary(), inline=False)
         return embed
@@ -126,7 +132,7 @@ class RideTheBusView(discord.ui.View):
             if not await self._ensure_player(interaction):
                 return
             winnings = self.potential_payout(self.current_multiplier)
-            self.state.member_wallets[self.player.id] += winnings + self.bet
+            self.state.member_wallets[self.player.id] += winnings
             desc = (
                 f"You chose to **cash out**.\n\n"
                 f"Final multiplier: **x{self.current_multiplier}**\n"
@@ -146,7 +152,7 @@ class RideTheBusView(discord.ui.View):
             elif next_stage == 4:
                 await self.prompt_round_four(interaction)
 
-        cash_button.callback = cashout_callback
+        cash_button.callback = cashout_callback(interaction)
         cont_button.callback = continue_callback
         self.add_item(cash_button)
         self.add_item(cont_button)
@@ -157,6 +163,7 @@ class RideTheBusView(discord.ui.View):
 
     async def on_timeout(self):
         self.disable_all_items()
+        guild = self.message.guild if self.message else None
         if self.message:
             try:
                 embed = self.message.embeds[0] if self.message.embeds else self._base_embed("Game timed out.")
@@ -164,16 +171,22 @@ class RideTheBusView(discord.ui.View):
                 await self.message.edit(embed=embed, view=None)
             except discord.HTTPException:
                 pass
+
+        if guild is not None:
+            try:
+                await self._update_richest_member_after_game(guild)
+            except Exception:
+                logger.error("Failed to update richest member role on timeout", exc_info=True)
+
         self.stop()
 
     # ---------- Round 1: Red / Black ----------
 
     def build_intro_embed(self):
         desc = (
-            f"{self.player.mention} is **riding the bus!**\n\n"
             "**Round 1 – Red or Black?**\n"
-            "Guess the **color** of the first card.\n"
-            "Payout if you win and cash out now: **x2**\n\n"
+            "Guess the **color** of the first card.\n\n"
+            "**Round 1 Multiplier**: 🪙x2\n\n"
         )
         self._reset_buttons_for_round1()
         self.current_multiplier = 2
@@ -209,20 +222,20 @@ class RideTheBusView(discord.ui.View):
                 f"Current multiplier: **x{self.current_multiplier}**\n"
             )
             self.clear_items()
-            self._add_cashout_and_continue_buttons(next_stage=2)
             embed = self._base_embed(desc, win=True)
-            await interaction.response.edit_message(embed=embed, view=self)
+            await self.prompt_round_two(interaction, embed)
         else:
             desc += "\n❌ You **lost**. The house takes your bet."
             self.current_multiplier = 0
             self.disable_all_items()
             embed = self._base_embed(desc, win=False, game_over=True)
             await interaction.response.edit_message(embed=embed, view=None)
+            await self._update_richest_member_after_game(interaction.guild)
             self.stop()
 
     # ---------- Round 2: Higher / Lower ----------
 
-    async def prompt_round_two(self, interaction: discord.Interaction):
+    async def prompt_round_two(self, interaction: discord.Interaction, embed):
         self.stage = 2
         self.clear_items()
 
@@ -232,6 +245,10 @@ class RideTheBusView(discord.ui.View):
         )
         lower_button = discord.ui.Button(
             label="⬇️ Lower",
+            style=discord.ButtonStyle.primary
+        )
+        cashout_button = discord.ui.Button(
+            label="💰 Cashout",
             style=discord.ButtonStyle.primary
         )
 
@@ -247,18 +264,19 @@ class RideTheBusView(discord.ui.View):
 
         higher_button.callback = higher_cb
         lower_button.callback = lower_cb
+        cashout_button.callback = self.cashout_callback
 
         self.add_item(higher_button)
         self.add_item(lower_button)
+        self.add_item(cashout_button)
 
         first_card = self.cards[0]
         desc = (
             "**Round 2 – Higher or Lower**\n"
             "Guess if the **next card** will be **higher** or **lower**.\n"
             "_Ties lose._\n\n"
-            "Payout if you win and cash out after this round: **x3**."
+            "**Round 2 Multiplier**: 🪙x3"
         )
-        self.current_multiplier = 3
         embed = self._base_embed(desc)
         await interaction.response.edit_message(embed=embed, view=self)
 
@@ -277,6 +295,7 @@ class RideTheBusView(discord.ui.View):
             self.disable_all_items()
             embed = self._base_embed(desc, win=False, game_over=True)
             await interaction.response.edit_message(embed=embed, view=None)
+            await self._update_richest_member_after_game(interaction.guild)
             self.stop()
             return
 
@@ -291,20 +310,20 @@ class RideTheBusView(discord.ui.View):
                 f"Current multiplier: **x{self.current_multiplier}**\n"
             )
             self.clear_items()
-            self._add_cashout_and_continue_buttons(next_stage=3)
             embed = self._base_embed(desc, win=True)
-            await interaction.response.edit_message(embed=embed, view=self)
+            await self.prompt_round_three(interaction, embed)
         else:
             desc += "\n❌ You **lost** this round. The house takes your bet."
             self.current_multiplier = 0
             self.disable_all_items()
             embed = self._base_embed(desc, win=False, game_over=True)
             await interaction.response.edit_message(embed=embed, view=None)
+            await self._update_richest_member_after_game(interaction.guild)
             self.stop()
 
     # ---------- Round 3: Inside / Outside ----------
 
-    async def prompt_round_three(self, interaction: discord.Interaction):
+    async def prompt_round_three(self, interaction: discord.Interaction, embed):
         self.stage = 3
         self.clear_items()
 
@@ -314,6 +333,10 @@ class RideTheBusView(discord.ui.View):
         )
         outside_button = discord.ui.Button(
             label="⬜ Outside",
+            style=discord.ButtonStyle.primary
+        )
+        cashout_button = discord.ui.Button(
+            label="💰 Cashout",
             style=discord.ButtonStyle.primary
         )
 
@@ -329,9 +352,11 @@ class RideTheBusView(discord.ui.View):
 
         inside_button.callback = inside_cb
         outside_button.callback = outside_cb
+        cashout_button.callback = self.cashout_callback
 
         self.add_item(inside_button)
         self.add_item(outside_button)
+        self.add_item(cashout_button)
 
         first, second = self.cards[0], self.cards[1]
         low = min(first["rank"], second["rank"])
@@ -341,9 +366,8 @@ class RideTheBusView(discord.ui.View):
             "**Round 3 – Inside or Outside**\n"
             "\nGuess if the **next card** will be **inside** or **outside** the first two cards.\n"
             "If it **matches** either card exactly, you **lose**.\n\n"
-            "Payout if you win and cash out after this round: **x4**."
+            "**Round 3 Multiplier**: 🪙x4"
         )
-        self.current_multiplier = 4
         embed = self._base_embed(desc)
         await interaction.response.edit_message(embed=embed, view=self)
 
@@ -367,6 +391,7 @@ class RideTheBusView(discord.ui.View):
             self.disable_all_items()
             embed = self._base_embed(desc, win=False, game_over=True)
             await interaction.response.edit_message(embed=embed, view=None)
+            await self._update_richest_member_after_game(interaction.guild)
             self.stop()
             return
 
@@ -382,20 +407,20 @@ class RideTheBusView(discord.ui.View):
                 f"If you cash out now, you take 🪙 **{potential}**.\n\n"
             )
             self.clear_items()
-            self._add_cashout_and_continue_buttons(next_stage=4)
             embed = self._base_embed(desc, win=True)
-            await interaction.response.edit_message(embed=embed, view=self)
+            await self.prompt_round_four(interaction, embed)
         else:
             desc += "\n❌ You **lost** this round. The house takes your bet."
             self.current_multiplier = 0
             self.disable_all_items()
             embed = self._base_embed(desc, win=False, game_over=True)
             await interaction.response.edit_message(embed=embed, view=None)
+            await self._update_richest_member_after_game(interaction.guild)
             self.stop()
 
     # ---------- Round 4: Guess the Suit ----------
 
-    async def prompt_round_four(self, interaction: discord.Interaction):
+    async def prompt_round_four(self, interaction: discord.Interaction, embed):
         self.stage = 4
         self.clear_items()
 
@@ -420,13 +445,18 @@ class RideTheBusView(discord.ui.View):
             button.callback = suit_cb
             self.add_item(button)
 
+        cashout_button = discord.ui.Button(
+            label="💰 Cashout",
+            style=discord.ButtonStyle.primary
+        )
+        cashout_button.callback = self.cashout_callback
+        self.add_item(cashout_button)
+
         desc = (
             "**Round 4 – Guess the Suit**\n"
             "\nFinal card! Guess the **suit** of the last card.\n\n"
-            "If you're right, you win **x8** your bet.\n"
-            "If you're wrong, you lose it all."
+            "**Round 4 Multiplier**: 🪙x8\n"
         )
-        self.current_multiplier = 8
         embed = self._base_embed(desc)
         await interaction.response.edit_message(embed=embed, view=self)
 
@@ -441,10 +471,10 @@ class RideTheBusView(discord.ui.View):
         if fourth["suit"] == suit_symbol:
             self.current_multiplier = 8
             winnings = self.potential_payout(self.current_multiplier)
-            self.state.member_wallets[self.player.id] += winnings + self.bet
+            self.state.member_wallets[self.player.id] += winnings
             desc += (
-                "\n🎉 **Jackpot!** You guessed correctly.\n"
-                f"Final multiplier: **x{self.current_multiplier}**\n"
+                "\n🎉 **Jackpot!** You guessed correctly.\n\n"
+                f"**Final Multiplier**: 🪙x{self.current_multiplier}\n"
             )
             embed = self._base_embed(desc, win=True, game_over=True)
         else:
@@ -454,7 +484,42 @@ class RideTheBusView(discord.ui.View):
 
         self.disable_all_items()
         await interaction.response.edit_message(embed=embed, view=None)
+        await self._update_richest_member_after_game(interaction.guild)
         self.stop()
+
+    async def cashout_callback(self, interaction: discord.Interaction):
+        if not await self._ensure_player(interaction):
+            return
+        winnings = self.potential_payout(self.current_multiplier)
+        self.state.member_wallets[self.player.id] += winnings
+        desc = (
+            f"You chose to **cash out**.\n\n"
+            f"**Final Multiplier**: 🪙x{self.current_multiplier}\n"
+        )
+        embed = self._base_embed(desc, win=True, game_over=True)
+        self.disable_all_items()
+        await interaction.response.edit_message(embed=embed, view=None)
+        await self._update_richest_member_after_game(interaction.guild)
+        self.stop()
+
+    async def _update_richest_member_after_game(self, guild: discord.Guild = None):
+        """
+        Call back into the RideTheBusService to update the richest member role
+        after a game concludes (win, loss, cashout, or timeout).
+        """
+        if guild is None:
+            return
+
+        service = getattr(self.bot, "gamble_service", None)
+        if service is None:
+            # In case the bot wasn't wired with this attribute
+            logger.warning("gamble_service not found on bot when updating richest member.")
+            return
+
+        try:
+            await service.update_richest_member_role(guild)
+        except Exception:
+            logger.error("Failed to update richest member role", exc_info=True)
 
 class RideTheBusService:
 
@@ -505,7 +570,7 @@ class RideTheBusService:
                 await interaction.followup.send(error_msg, ephemeral=True)
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
-
+    
     async def my_wallet(self, interaction: discord.Interaction):
         """
         Entry point for the /mywallet slash command.

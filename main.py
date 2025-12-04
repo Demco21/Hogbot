@@ -8,7 +8,7 @@ from services.nfl_service import NFLService
 from services.yahoo_ff_service import YahooFFService
 from services.espn_service import ESPNService
 from services.chancellor_service import ChancellorService
-from services.roll_service import RollService
+from services.gamble_service import GambleService
 from services.ride_the_bus_service import RideTheBusService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -28,7 +28,7 @@ class HogBot(commands.Bot):
         self.yahoo_ff_service = YahooFFService(self.state, self)
         self.espn_service = ESPNService(self.state, self)
         self.chancellor_service = ChancellorService(self.state, self)
-        self.roll_service = RollService(self.state, self)
+        self.gamble_service = GambleService(self.state, self)
         self.ride_the_bus_service = RideTheBusService(self.state, self)
         self.synced = False
 
