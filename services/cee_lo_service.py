@@ -51,8 +51,8 @@ class CeeLoView(discord.ui.View):
         self.scores: dict[int, dict] = {}
         self.eliminated: set[int] = set()  # players who rolled 1-2-3
 
-        self.message: discord.Message | None = None
-        self.channel: discord.abc.Messageable | None = None
+        self.message = None
+        self.channel = None
 
         # Pot starts with host's buy-in (already deducted by service)
         self.pot: int = buy_in
@@ -228,7 +228,7 @@ class CeeLoView(discord.ui.View):
             return score_a["category"] - score_b["category"]
         return score_a["value"] - score_b["value"]
 
-    async def _update_richest_member_after_game(self, guild: discord.Guild | None):
+    async def _update_richest_member_after_game(self, guild: discord.Guild = None):
         """
         Call back into GambleService to update the richest member role
         after a Cee-Lo game concludes.
