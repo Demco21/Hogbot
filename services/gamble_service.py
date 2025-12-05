@@ -271,15 +271,14 @@ class GambleService:
 
             embed = discord.Embed(
                 title="🏆 Hog Coin Leaderboard",
-                description="Top 10 richest **high rollers** in the **HOG PEN** casino.",
                 color=discord.Color.gold(),
             )
-            embed.add_field(
-                name="Standings",
-                value="\n".join(lines),
-                inline=False
+            embed.description = (
+                "Top 10 richest **high rollers** in the **HOG PEN** casino.\n\n"
+                + "\n".join(lines)
             )
             embed.set_footer(text="Only members with activity in the Hog Coin economy are shown.")
+
 
             if interaction.response.is_done():
                 await interaction.followup.send(embed=embed)
@@ -300,8 +299,8 @@ class GambleService:
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
 
-    async def shakecup(self, interaction: discord.Interaction):
-        """Give the user 1 Hog Coin."""
+    async def beg(self, interaction: discord.Interaction):
+        """Allows a broke player to beg for a random amount (1–50) of Hog Coins once they hit 0."""
         try:
             user = interaction.user
 
@@ -311,18 +310,45 @@ class GambleService:
 
             wallets = self.state.member_wallets
 
-            # Default starting balance (same behavior as other features)
+            # Default starting balance if not found
             if user.id not in wallets:
-                wallets[user.id] = 1000
+                wallets[user.id] = 0
 
-            wallets[user.id] += 1
+            current_balance = wallets[user.id]
+
+            # Only allow if user is completely broke
+            if current_balance > 0:
+                msg = (
+                    f"🫳 {user.mention}, you're not desperate enough *yet*.\n"
+                    f"You still have 🪙 **{current_balance}** Hog Coins."
+                )
+                if interaction.response.is_done():
+                    await interaction.followup.send(msg, ephemeral=True)
+                else:
+                    await interaction.response.send_message(msg, ephemeral=True)
+                return
+
+            # Give a random amount between 1 and 50
+            beg_amount = random.randint(1, 50)
+            wallets[user.id] += beg_amount
             new_balance = wallets[user.id]
 
-            msg = (
-                f"🤲 {interaction.user.mention} *shakes the cup...* 🪙\n\n"
-                f"And gained **1** Hog Coin!\n"
-                f"**New Balance:** 🪙 **{new_balance}**"
-            )
+            # Funny, slightly edgy messages
+            messages = [
+                f"🤲 {user.mention} begged outside the casino... a kind stranger took pity and dropped **{beg_amount} Hog Coins** into your cup.",
+                f"💍 {user.mention} pawned their wedding ring for **{beg_amount} Hog Coins**. Time to gamble it all away again!",
+                f"😔 {user.mention} mumbled, *'spare some change for the slots?'* — and somehow got **{beg_amount} Hog Coins**.",
+                f"🎰 {user.mention} swept the casino floor for coins and found **{beg_amount} Hog Coins** under the slot machine.",
+                f"🐖 {user.mention} squealed for mercy and the Hog Gods blessed you with **{beg_amount} Hog Coins**. Try not to lose them in 2 minutes.",
+                f"🧎 {user.mention} groveled before the casino door — **{beg_amount} Hog Coins** jingled into your cup. Pathetic, but effective.",
+                f"🤡 {user.mention} performed a little dance for the high rollers and earned **{beg_amount} Hog Coins** in pity tips.",
+                f"🎣 {user.mention} fished **{beg_amount} Hog Coins** out of the fountain. Smells like chlorine and shame.",
+                f"♻️ {user.mention} recycled empty bottles behind the casino for **{beg_amount} Hog Coins**. Recycling *and* relapsing.",
+                f"🐀 {user.mention} wrestled a rat in the alley for a dropped coin pouch. You earned **{beg_amount} Hog Coins**, and tetanus.",
+                f"🎟️ {user.mention} sold fake concert tickets in the casino lobby for **{beg_amount} Hog Coins**. You’re not proud of it.",
+            ]
+
+            msg = random.choice(messages) + f"\n\n**New Balance:** 🪙 **{new_balance}**"
 
             if interaction.response.is_done():
                 await interaction.followup.send(msg)
@@ -330,15 +356,17 @@ class GambleService:
                 await interaction.response.send_message(msg)
 
             logger.info(
-                f"{user} ({user.id}) used /shakecup and now has {new_balance} Hog Coins."
+                f"{user} ({user.id}) used /beg and received {beg_amount} Hog Coins (balance: {new_balance})."
             )
 
         except Exception:
-            logger.error("Error in shakecup method", exc_info=True)
-            error_msg = "An error occurred while shaking the cup. Please try again."
+            logger.error("Error in beg method", exc_info=True)
+            error_msg = "An error occurred while begging for Hog Coins. Please try again."
             if interaction.response.is_done():
                 await interaction.followup.send(error_msg, ephemeral=True)
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
+
+
 
 __all__ = ['GambleService']

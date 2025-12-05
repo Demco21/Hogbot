@@ -133,12 +133,12 @@ class GambleCog(commands.Cog):
 
 
     @app_commands.command(
-        name="shakecup",
-        description="Shake the cup for a small Hog Coin bonus."
+        name="beg",
+        description="Beg for a few Hog Coins when you're completely broke."
     )
     @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
-    async def shakecup(self, interaction: discord.Interaction):
-        """Slash command entrypoint for /shakecup."""
+    async def beg(self, interaction: discord.Interaction):
+        """Slash command entrypoint for /beg."""
         try:
             if not self.is_in_allowed_channel(interaction):
                 await interaction.response.send_message(
@@ -147,9 +147,10 @@ class GambleCog(commands.Cog):
                 )
                 return
 
-            await self.bot.gamble_service.shakecup(interaction)
+            await self.bot.gamble_service.beg(interaction)
         except Exception as e:
-            logger.error(f"Error in shakecup command: {e}")
+            logger.error(f"Error in beg command: {e}")
+
 
 
 async def setup(bot):
