@@ -104,14 +104,15 @@ class CeeLoView(discord.ui.View):
             status = ""
 
             if member.id in self.eliminated:
-                status = " — ❌ **1-2-3 (busted)**"
+                status = " — 🎲 **[1, 2, 3] (busted ❌)**"
             elif member.id in self.scores:
                 score = self.scores[member.id]
-                status = f" — 🎯 **{score['label']}**"
+                status = f" — {self._format_dice(list(score['dice']))}"
             elif self.game_started and idx - 1 == self.current_index:
                 status = " — 🎲 **Rolling now...**"
             else:
                 status = " — ⏳ Waiting to roll"
+
 
             lines.append(f"{base}{status}")
 
@@ -140,8 +141,9 @@ class CeeLoView(discord.ui.View):
     # ---------- Score evaluation ----------
 
     @staticmethod
-    def _format_dice(dice: list[int]):
-        return " + ".join(str(d) for d in dice)
+    def _format_dice(dice):
+        # e.g. 🎲 [4, 5, 6]
+        return f"🎲 [{', '.join(str(d) for d in dice)}]"
 
     def _evaluate_roll(self, dice: list[int]):
         """
@@ -207,7 +209,7 @@ class CeeLoView(discord.ui.View):
                 "category": 2,
                 "value": point,  # 6 down to 1
                 "dice": tuple(dice_sorted),
-                "label": f"Point {point} (pair + single)",
+                "label": f"Point {point}",
                 "auto_win": False,
                 "auto_lose": False,
             }
@@ -510,7 +512,7 @@ class CeeLoView(discord.ui.View):
 
         # Non-scoring roll: roll again
         if score is None:
-            msg = f"You rolled **{self._format_dice(dice)}** — no scoring combo. Roll again!"
+            msg = f"You rolled {self._format_dice(dice)} — no scoring combo. Roll again!"
             if interaction.response.is_done():
                 await interaction.followup.send(msg, ephemeral=True)
             else:
@@ -523,7 +525,7 @@ class CeeLoView(discord.ui.View):
         if score["auto_lose"]:
             self.eliminated.add(user.id)
 
-            msg = f"You rolled **{self._format_dice(dice)}** — {score['label']}. You're out of contention for the pot."
+            msg = f"You rolled {self._format_dice(dice)} — {score['label']}. You're out of contention for the pot."
             if interaction.response.is_done():
                 await interaction.followup.send(msg, ephemeral=True)
             else:
@@ -555,7 +557,7 @@ class CeeLoView(discord.ui.View):
         # Normal scoring (triples or point)
         self.scores[user.id] = score
 
-        msg = f"You rolled **{self._format_dice(dice)}** — {score['label']}."
+        msg = f"You rolled {self._format_dice(dice)}."
         if interaction.response.is_done():
             await interaction.followup.send(msg, ephemeral=True)
         else:
@@ -574,7 +576,7 @@ class CeeLoView(discord.ui.View):
         wallets[winner.id] = wallets.get(winner.id, 1000) + self.pot
 
         desc = (
-            f"{winner.mention} rolled **{self._format_dice(dice)}** — {score['label']}!\n\n"
+            f"{winner.mention} rolled {self._format_dice(dice)} — {score['label']}!\n\n"
             f"🎉 **Automatic win!** They take the pot of 🪙 **{self.pot}**."
         )
 
@@ -649,7 +651,7 @@ class CeeLoView(discord.ui.View):
         desc = (
             f"The round is over!\n\n"
             f"🏆 Winner: {winner.mention if winner else f'<@{best_id}>'}\n"
-            f"🎯 Winning roll: **{self._format_dice(list(score['dice']))}** — {score['label']}\n\n"
+            f"Winning roll: {self._format_dice(list(score['dice']))} — {score['label']}\n\n"
             f"They win the pot of 🪙 **{self.pot}**."
         )
 
