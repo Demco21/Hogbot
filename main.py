@@ -10,6 +10,7 @@ from services.espn_service import ESPNService
 from services.chancellor_service import ChancellorService
 from services.gamble_service import GambleService
 from services.ride_the_bus_service import RideTheBusService
+from services.cee_lo_service import CeeLoService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -30,6 +31,7 @@ class HogBot(commands.Bot):
         self.chancellor_service = ChancellorService(self.state, self)
         self.gamble_service = GambleService(self.state, self)
         self.ride_the_bus_service = RideTheBusService(self.state, self)
+        self.cee_lo_service = CeeLoService(self.state, self)
         self.synced = False
 
     async def setup_hook(self):

@@ -108,5 +108,29 @@ class GambleCog(commands.Cog):
         except Exception as e:
             logger.error(f"Error in leaderboard command: {e}")
 
+
+    @app_commands.command(
+        name="ceelo",
+        description="Start a Cee-Lo lobby with a set buy-in."
+    )
+    @app_commands.describe(
+        buy_in="Amount of Hog Coins each player must contribute to the pot."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def ceelo(self, interaction: discord.Interaction, buy_in: int):
+        """Slash command entrypoint for /ceelo."""
+        try:
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the designated casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            await self.bot.cee_lo_service.ceelo(interaction, buy_in)
+        except Exception as e:
+            logger.error(f"Error in ceelo command: {e}")
+
+
 async def setup(bot):
     await bot.add_cog(GambleCog(bot))
