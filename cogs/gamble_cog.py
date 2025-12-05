@@ -132,5 +132,25 @@ class GambleCog(commands.Cog):
             logger.error(f"Error in ceelo command: {e}")
 
 
+    @app_commands.command(
+        name="shakecup",
+        description="Shake the cup for a small Hog Coin bonus."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def shakecup(self, interaction: discord.Interaction):
+        """Slash command entrypoint for /shakecup."""
+        try:
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the designated casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            await self.bot.gamble_service.shakecup(interaction)
+        except Exception as e:
+            logger.error(f"Error in shakecup command: {e}")
+
+
 async def setup(bot):
     await bot.add_cog(GambleCog(bot))

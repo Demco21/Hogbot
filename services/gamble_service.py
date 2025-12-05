@@ -300,4 +300,45 @@ class GambleService:
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
 
+    async def shakecup(self, interaction: discord.Interaction):
+        """Give the user 1 Hog Coin."""
+        try:
+            user = interaction.user
+
+            # Ensure wallets dict exists
+            if not hasattr(self.state, "member_wallets"):
+                self.state.member_wallets = {}
+
+            wallets = self.state.member_wallets
+
+            # Default starting balance (same behavior as other features)
+            if user.id not in wallets:
+                wallets[user.id] = 1000
+
+            wallets[user.id] += 1
+            new_balance = wallets[user.id]
+
+            msg = (
+                f"🤲 {interaction.user.mention} *shakes the cup...* 🪙\n\n"
+                f"And gained **1** Hog Coin!\n"
+                f"**New Balance:** 🪙 **{new_balance}**"
+            )
+
+            if interaction.response.is_done():
+                await interaction.followup.send(msg)
+            else:
+                await interaction.response.send_message(msg)
+
+            logger.info(
+                f"{user} ({user.id}) used /shakecup and now has {new_balance} Hog Coins."
+            )
+
+        except Exception:
+            logger.error("Error in shakecup method", exc_info=True)
+            error_msg = "An error occurred while shaking the cup. Please try again."
+            if interaction.response.is_done():
+                await interaction.followup.send(error_msg, ephemeral=True)
+            else:
+                await interaction.response.send_message(error_msg, ephemeral=True)
+
 __all__ = ['GambleService']
