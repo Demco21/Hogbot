@@ -59,18 +59,18 @@ class CeeLoView(discord.ui.View):
 
     # ---------- Utility helpers ----------
 
-    def _wallets(self) -> dict[int, int]:
+    def _wallets(self):
         if not hasattr(self.state, "member_wallets"):
             self.state.member_wallets = {}
         return self.state.member_wallets
 
-    def _ensure_wallet(self, member_id: int) -> int:
+    def _ensure_wallet(self, member_id: int):
         wallets = self._wallets()
         if member_id not in wallets:
             wallets[member_id] = 1000
         return wallets[member_id]
 
-    def _build_lobby_embed(self) -> discord.Embed:
+    def _build_lobby_embed(self):
         wallets = self._wallets()
         desc_lines = [
             f"**Host**: {self.host.mention}",
@@ -90,7 +90,7 @@ class CeeLoView(discord.ui.View):
         embed.set_footer(text="Join the lobby, then Start when ready (minimum 2 players).")
         return embed
 
-    def _build_game_embed(self) -> discord.Embed:
+    def _build_game_embed(self):
         wallets = self._wallets()
         lines = [
             f"**Buy-in**: 🪙 **{self.buy_in}** per player",
@@ -140,10 +140,10 @@ class CeeLoView(discord.ui.View):
     # ---------- Score evaluation ----------
 
     @staticmethod
-    def _format_dice(dice: list[int]) -> str:
+    def _format_dice(dice: list[int]):
         return " + ".join(str(d) for d in dice)
 
-    def _evaluate_roll(self, dice: list[int]) -> dict | None:
+    def _evaluate_roll(self, dice: list[int]):
         """
         Returns a score dict or None if it's a non-scoring roll that should be re-rolled.
 
@@ -216,7 +216,7 @@ class CeeLoView(discord.ui.View):
         return None
 
     @staticmethod
-    def _compare_scores(score_a: dict, score_b: dict) -> int:
+    def _compare_scores(score_a: dict, score_b: dict):
         """
         Compare two score dicts.
         Returns:
@@ -673,7 +673,7 @@ class CeeLoService:
         self.state = bot_state
         self.bot = bot
 
-    def _wallets(self) -> dict[int, int]:
+    def _wallets(self):
         if not hasattr(self.state, "member_wallets"):
             self.state.member_wallets = {}
         return self.state.member_wallets
