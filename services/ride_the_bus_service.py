@@ -103,7 +103,7 @@ class RideTheBusView(discord.ui.View):
             embed.add_field(name="Cashout Value", value=f"🪙 0", inline=True)
             embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
         # first round, lost
-        if self.stage == 1 and win is not True and game_over is True:
+        elif self.stage == 1 and win is not True and game_over is True:
             embed.add_field(name="Final Payout", value=f"🪙 0", inline=True)
             embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
         # ongoing game, show cashout value
