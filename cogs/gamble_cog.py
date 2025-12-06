@@ -152,6 +152,27 @@ class GambleCog(commands.Cog):
             logger.error(f"Error in beg command: {e}")
 
 
+    @app_commands.command(
+        name="stats",
+        description="Show your Hog Coin balance trend over the last 100 rounds."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def stats(self, interaction: discord.Interaction, member: discord.Member = None):
+        """Show a player's balance progression as a graph."""
+        try:
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            target = member or interaction.user
+            await self.bot.gamble_service.show_balance_graph(interaction, target)
+        except Exception as e:
+            logger.error(f"Error in stats command: {e}")
+
+
 
 async def setup(bot):
     await bot.add_cog(GambleCog(bot))

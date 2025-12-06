@@ -18,6 +18,7 @@ class BotState:
         self.nfl_games_msgs = {}
         self.pvp_disabled_members = {}
         self.member_wallets = {}
+        self.balance_history = {}
 
     def reset_week(self):
         self.this_week_time_sums = {}

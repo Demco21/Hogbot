@@ -67,7 +67,7 @@ class CeeLoView(discord.ui.View):
     def _ensure_wallet(self, member_id: int):
         wallets = self._wallets()
         if member_id not in wallets:
-            wallets[member_id] = 1000
+            self.bot.gamble_service.update_wallet(member_id, 1000)
         return wallets[member_id]
 
     def _build_lobby_embed(self):
@@ -101,18 +101,17 @@ class CeeLoView(discord.ui.View):
 
         for idx, member in enumerate(self.participants, start=1):
             base = f"{idx}. {member.mention}"
-            status = ""
 
             if member.id in self.eliminated:
+                # Eliminated via auto-lose (1-2-3)
                 status = " — 🎲 **[1, 2, 3] (busted ❌)**"
             elif member.id in self.scores:
                 score = self.scores[member.id]
-                status = f" — {self._format_dice(list(score['dice']))}"
+                status = f" — {self._format_dice(list(score['dice']))} — {score['label']}"
             elif self.game_started and idx - 1 == self.current_index:
                 status = " — 🎲 **Rolling now...**"
             else:
                 status = " — ⏳ Waiting to roll"
-
 
             lines.append(f"{base}{status}")
 
@@ -123,6 +122,31 @@ class CeeLoView(discord.ui.View):
         )
         embed.set_footer(text="Roll until you get a scoring combo. Best score wins the pot!")
         return embed
+
+    def _build_final_results_summary(self) -> str:
+        """
+        Build a summary of what each participant ended up with by the end of the round.
+        This is used in final embeds so you can always see everyone's rolls.
+        """
+        lines = ["", "**Final Results:**"]
+        for idx, member in enumerate(self.participants, start=1):
+            base = f"{idx}. {member.mention}"
+
+            if member.id in self.scores:
+                s = self.scores[member.id]
+                dice_str = self._format_dice(list(s["dice"]))
+                extra = ""
+                if s.get("auto_win"):
+                    extra = " — **automatic win**"
+                elif s.get("auto_lose"):
+                    extra = " — **busted ❌**"
+                lines.append(f"{base} — {dice_str} — {s['label']}{extra}")
+            elif member.id in self.eliminated:
+                # Fallback, in case eliminated but somehow not in scores
+                lines.append(f"{base} — 🎲 [1, 2, 3] — 1-2-3 (automatic loss) — **busted ❌**")
+            else:
+                lines.append(f"{base} — ❔ Did not roll.")
+        return "\n".join(lines)
 
     async def _refresh_message(self, interaction: discord.Interaction):
         """Update the lobby/game message based on current state."""
@@ -523,6 +547,7 @@ class CeeLoView(discord.ui.View):
 
         # Auto-lose (1-2-3)
         if score["auto_lose"]:
+            self.scores[user.id] = score
             self.eliminated.add(user.id)
 
             msg = f"You rolled {self._format_dice(dice)} — {score['label']}. You're out of contention for the pot."
@@ -539,8 +564,7 @@ class CeeLoView(discord.ui.View):
                 await self._refund_all_and_finish(interaction, reason="Everyone rolled 1-2-3. Pot refunded.")
                 return
 
-            # If there are more players, continue; otherwise decide winner (which in this case is "no winner"; but we
-            # already handled everyone-busted above, so this only matters if some had scores).
+            # If there are more players, continue; otherwise decide winner
             if self.current_index >= len(self.participants):
                 await self._decide_winner_and_payout(interaction)
                 return
@@ -557,7 +581,7 @@ class CeeLoView(discord.ui.View):
         # Normal scoring (triples or point)
         self.scores[user.id] = score
 
-        msg = f"You rolled {self._format_dice(dice)}."
+        msg = f"You rolled {self._format_dice(dice)} — {score['label']}."
         if interaction.response.is_done():
             await interaction.followup.send(msg, ephemeral=True)
         else:
@@ -571,14 +595,33 @@ class CeeLoView(discord.ui.View):
         else:
             await self._refresh_message(interaction)
 
-    async def _auto_win_payout_and_finish(self, interaction: discord.Interaction, winner: discord.Member, dice: list[int], score: dict):
+    async def _auto_win_payout_and_finish(
+        self,
+        interaction: discord.Interaction,
+        winner: discord.Member,
+        dice: list[int],
+        score: dict
+    ):
         wallets = self._wallets()
-        wallets[winner.id] = wallets.get(winner.id, 1000) + self.pot
+        winner_balance = wallets.get(winner.id, 1000)
+        wallets[winner.id] = winner_balance + self.pot
+
+        # Record wallet history for all participants (if your GambleService supports this).
+        try:
+            self.bot.gamble_service.add_wallet_history_entry(winner.id, wallets[winner.id])
+            for member in self.participants:
+                if member.id != winner.id:
+                    self.bot.gamble_service.add_wallet_history_entry(member.id, wallets.get(member.id, 1000))
+        except Exception:
+            logger.warning("Failed to record wallet history in _auto_win_payout_and_finish.", exc_info=True)
 
         desc = (
             f"{winner.mention} rolled {self._format_dice(dice)} — {score['label']}!\n\n"
             f"🎉 **Automatic win!** They take the pot of 🪙 **{self.pot}**."
         )
+
+        # Append everyone's results to the final message
+        desc += self._build_final_results_summary()
 
         embed = discord.Embed(
             title="🎲 Cee-Lo — Winner!",
@@ -588,8 +631,14 @@ class CeeLoView(discord.ui.View):
         embed.set_footer(text="4-5-6 ends the round immediately.")
 
         self.clear_items()
+
         if interaction.response.is_done():
             await interaction.followup.send(
+                f"{winner.mention} won the Cee-Lo game!",
+                ephemeral=False
+            )
+        else:
+            await interaction.response.send_message(
                 f"{winner.mention} won the Cee-Lo game!",
                 ephemeral=False
             )
@@ -605,9 +654,12 @@ class CeeLoView(discord.ui.View):
         for member in self.participants:
             wallets[member.id] = wallets.get(member.id, 1000) + self.buy_in
 
+        desc = reason
+        desc += self._build_final_results_summary()
+
         embed = discord.Embed(
             title="🎲 Cee-Lo — No Winner",
-            description=reason,
+            description=desc,
             color=discord.Color.orange()
         )
         embed.set_footer(text="All buy-ins have been refunded.")
@@ -645,7 +697,17 @@ class CeeLoView(discord.ui.View):
 
         winner = interaction.guild.get_member(best_id) if interaction.guild else None
         wallets = self._wallets()
-        wallets[best_id] = wallets.get(best_id, 1000) + self.pot
+        winner_balance = wallets.get(best_id, 1000)
+        wallets[best_id] = winner_balance + self.pot
+
+        # Record wallet history for everyone
+        try:
+            self.bot.gamble_service.add_wallet_history_entry(best_id, wallets[best_id])
+            for member in self.participants:
+                if member.id != best_id:
+                    self.bot.gamble_service.add_wallet_history_entry(member.id, wallets.get(member.id, 1000))
+        except Exception:
+            logger.warning("Failed to record wallet history in _decide_winner_and_payout.", exc_info=True)
 
         score = self.scores[best_id]
         desc = (
@@ -654,6 +716,9 @@ class CeeLoView(discord.ui.View):
             f"Winning roll: {self._format_dice(list(score['dice']))} — {score['label']}\n\n"
             f"They win the pot of 🪙 **{self.pot}**."
         )
+
+        # Append everyone's results to the final message
+        desc += self._build_final_results_summary()
 
         embed = discord.Embed(
             title="🎲 Cee-Lo — Winner!",

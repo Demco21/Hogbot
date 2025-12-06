@@ -3,6 +3,8 @@ from logging_config import logger
 import discord
 from discord.ext import commands
 import random
+import io
+import matplotlib.pyplot as plt
 from config import RICHEST_MEMBER_ROLE_ID
 
 class GambleService:
@@ -330,8 +332,9 @@ class GambleService:
 
             # Give a random amount between 1 and 50
             beg_amount = random.randint(1, 50)
-            wallets[user.id] += beg_amount
+            self.add_to_wallet(user.id, beg_amount)
             new_balance = wallets[user.id]
+            self.add_wallet_history_entry(user.id, new_balance)
 
             # Funny, slightly edgy messages
             messages = [
@@ -367,6 +370,95 @@ class GambleService:
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
 
+    def update_wallet(self, member_id: int, amount: int):
+        """Update a member's wallet to a certain amount."""
+        if not hasattr(self.state, "member_wallets"):
+            self.state.member_wallets = {}
 
+        wallets = self.state.member_wallets
+        wallets[member_id] = amount
+
+    def add_to_wallet(self, member_id: int, amount: int):
+        """Add a certain amount to a member's wallet."""
+        if not hasattr(self.state, "member_wallets"):
+            self.state.member_wallets = {}
+
+        wallets = self.state.member_wallets
+        if member_id not in wallets:
+            wallets[member_id] = 0
+
+        wallets[member_id] += amount
+
+    def subtract_from_wallet(self, member_id: int, amount: int):
+        """Subtract a certain amount from a member's wallet."""
+        if not hasattr(self.state, "member_wallets"):
+            self.state.member_wallets = {}
+
+        wallets = self.state.member_wallets
+        if member_id not in wallets:
+            wallets[member_id] = 0
+
+        wallets[member_id] -= amount
+        if wallets[member_id] < 0:
+            wallets[member_id] = 0
+
+    def add_wallet_history_entry(self, member_id: int, amount: int):
+        """Add an entry to a member's balance history."""
+        if not hasattr(self.state, "balance_history"):
+            self.state.balance_history = {}
+
+        history = self.state.balance_history.setdefault(member_id, [])
+        history.append(amount)
+        if len(history) > 100:
+            history.pop(0)  # keep only last 100
+
+    async def show_balance_graph(self, interaction: discord.Interaction, member: discord.Member):
+        """Generate and display a line graph of a player's balance history."""
+        try:
+            user_id = member.id
+
+            # Ensure history exists
+            history = self.state.balance_history.get(user_id, [])
+            if not history:
+                msg = f"{member.mention} has no balance history yet."
+                await interaction.response.send_message(msg, ephemeral=True)
+                return
+
+            # Create the plot
+            plt.figure(figsize=(6, 3))
+            plt.plot(history, marker='o', linewidth=2)
+            plt.title(f"{member.display_name}'s Hog Coin Progression")
+            plt.xlabel("Round")
+            plt.ylabel("Balance")
+            plt.grid(True, alpha=0.3)
+            plt.tight_layout()
+
+            # Save to bytes
+            buffer = io.BytesIO()
+            plt.savefig(buffer, format="png")
+            buffer.seek(0)
+            plt.close()
+
+            # Build the embed
+            file = discord.File(buffer, filename="stats.png")
+            embed = discord.Embed(
+                title=f"📈 {member.display_name}'s Hog Coin Stats",
+                description=f"Showing the last {len(history)} rounds of balance changes.",
+                color=discord.Color.green(),
+            )
+            embed.set_image(url="attachment://stats.png")
+
+            if interaction.response.is_done():
+                await interaction.followup.send(embed=embed, file=file)
+            else:
+                await interaction.response.send_message(embed=embed, file=file)
+
+        except Exception:
+            logger.error("Error generating balance graph", exc_info=True)
+            error_msg = "An error occurred while generating the stats graph."
+            if interaction.response.is_done():
+                await interaction.followup.send(error_msg, ephemeral=True)
+            else:
+                await interaction.response.send_message(error_msg, ephemeral=True)
 
 __all__ = ['GambleService']

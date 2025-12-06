@@ -251,6 +251,12 @@ class TimeService:
                     int(member_id): int(balance)
                     for member_id, balance in member_wallets.items()
                 }
+                raw_balance_history = data.get("balance_history", {})
+                self.state.balance_history = {
+                    int(member_id): [int(b) for b in history]
+                    for member_id, history in raw_balance_history.items()
+                }
+
                 
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
@@ -362,7 +368,12 @@ class TimeService:
                 "member_wallets": {
                     str(member_id): balance
                     for member_id, balance in self.state.member_wallets.items()
+                },
+                "balance_history": {
+                    str(member_id): history
+                    for member_id, history in self.state.balance_history.items()
                 }
+
             }
 
             with open(TIME_DATA_FILE, "w") as file:
