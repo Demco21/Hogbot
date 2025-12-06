@@ -331,7 +331,7 @@ class GambleService:
                 return
 
             # Give a random amount between 1 and 50
-            beg_amount = random.randint(1, 50)
+            beg_amount = random.randint(50, 200)
             self.add_to_wallet(user.id, beg_amount)
             new_balance = wallets[user.id]
             self.add_wallet_history_entry(user.id, new_balance)
