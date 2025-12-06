@@ -177,6 +177,18 @@ class RideTheBusView(discord.ui.View):
         self.cards.append(card)
         actual_color = self.card_color(card)
 
+        try:
+            player_id = self.player.id
+            color_stats = self.state.first_round_color_draws.setdefault(
+                player_id, {"red": 0, "black": 0}
+            )
+            if actual_color == "red":
+                color_stats["red"] += 1
+            else:
+                color_stats["black"] += 1
+        except Exception:
+            logger.error("Error updating first_round_color_draws", exc_info=True)
+
         desc = (
             f"**Round 1 – Red or Black**\n"
         )

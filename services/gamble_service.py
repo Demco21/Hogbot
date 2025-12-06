@@ -424,10 +424,31 @@ class GambleService:
                 await interaction.response.send_message(msg, ephemeral=True)
                 return
 
+            # --- NEW: compute first-round color stats for this player ---
+            color_stats_all = getattr(self.state, "first_round_color_draws", {})
+            player_color_stats = color_stats_all.get(user_id, {"red": 0, "black": 0})
+            red_count = int(player_color_stats.get("red", 0))
+            black_count = int(player_color_stats.get("black", 0))
+            total_round1 = red_count + black_count
+
+            if total_round1 > 0:
+                red_pct = (red_count / total_round1) * 100.0
+                black_pct = (black_count / total_round1) * 100.0
+                color_line = (
+                    f"RTB Rnd 1 – R: {red_count} ({red_pct:.1f}%) | "
+                    f"B: {black_count} ({black_pct:.1f}%)"
+                )
+            else:
+                color_line = "RTB Rnd 1 – no data yet"
+
             # Create the plot
             plt.figure(figsize=(6, 3))
             plt.plot(history, marker='o', linewidth=2)
-            plt.title(f"{member.display_name}'s Hog Coin Progression")
+
+            # Multi-line title: balance + color stats
+            title_line1 = f"{member.display_name}'s Hog Coin Progression"
+            plt.title(f"{title_line1}\n{color_line}")
+
             plt.xlabel("Round")
             plt.ylabel("Balance")
             plt.grid(True, alpha=0.3)
@@ -443,7 +464,10 @@ class GambleService:
             file = discord.File(buffer, filename="stats.png")
             embed = discord.Embed(
                 title=f"📈 {member.display_name}'s Hog Coin Stats",
-                description=f"Showing the last {len(history)} rounds of balance changes.",
+                description=(
+                    f"Showing the last {len(history)} rounds of balance changes.\n"
+                    f"{color_line}"
+                ),
                 color=discord.Color.green(),
             )
             embed.set_image(url="attachment://stats.png")
@@ -460,5 +484,6 @@ class GambleService:
                 await interaction.followup.send(error_msg, ephemeral=True)
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
+
 
 __all__ = ['GambleService']

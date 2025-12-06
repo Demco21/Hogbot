@@ -19,6 +19,7 @@ class BotState:
         self.pvp_disabled_members = {}
         self.member_wallets = {}
         self.balance_history = {}
+        self.first_round_color_draws = {}
 
     def reset_week(self):
         self.this_week_time_sums = {}

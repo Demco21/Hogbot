@@ -256,6 +256,14 @@ class TimeService:
                     int(member_id): [int(b) for b in history]
                     for member_id, history in raw_balance_history.items()
                 }
+                raw_color_draws = data.get("first_round_color_draws", {})
+                self.state.first_round_color_draws = {
+                    int(member_id): {
+                        "red": int(stats.get("red", 0)),
+                        "black": int(stats.get("black", 0)),
+                    }
+                    for member_id, stats in raw_color_draws.items()
+                }
 
                 
             else:
@@ -372,6 +380,10 @@ class TimeService:
                 "balance_history": {
                     str(member_id): history
                     for member_id, history in self.state.balance_history.items()
+                },
+                "first_round_color_draws": {
+                    str(member_id): stats
+                    for member_id, stats in self.state.first_round_color_draws.items()
                 }
 
             }
