@@ -320,6 +320,9 @@ class SlotsView(discord.ui.View):
         # If the player already started at least one spin,
         # don't overwrite the final result – just stop the view.
         if self.spin_started:
+            # clear the player's active slot lock on timeout
+            if hasattr(self.state, "active_slots"):
+                self.state.active_slots.discard(self.player.id)
             self.stop()
             return
 
@@ -350,6 +353,9 @@ class SlotsView(discord.ui.View):
                     "Failed to update richest member role on slots timeout",
                     exc_info=True,
                 )
+        # also clear lock here
+        if hasattr(self.state, "active_slots"):
+            self.state.active_slots.discard(self.player.id)
         self.stop()
 
     # ---------- UI: Crank Button ----------
@@ -475,6 +481,8 @@ class SlotsView(discord.ui.View):
                 self.spun = False
             else:
                 # No bonus – machine is finished for this command
+                if hasattr(self.state, "active_slots"):
+                    self.state.active_slots.discard(self.player.id)
                 self.stop()
 
         else:
@@ -549,6 +557,8 @@ class SlotsView(discord.ui.View):
                 self.spun = False
             else:
                 # No more bonus spins – fully done
+                if hasattr(self.state, "active_slots"):
+                    self.state.active_slots.discard(self.player.id)
                 self.stop()
 
 
@@ -562,9 +572,9 @@ class SlotsService:
         though bonus spins may be triggered manually without extra cost.
     """
 
-    MIN_BET = 20
+    MIN_BET = 100
     MAX_BET = 10_000
-    DEFAULT_BET = 20  # default if no bet provided
+    DEFAULT_BET = 100  # default if no bet provided
 
     # Progressive jackpot configuration
     JACKPOT_SEED = 100_000          # base pool when empty / reset
@@ -578,6 +588,10 @@ class SlotsService:
         if not hasattr(self.state, "slots_progressive_jackpot"):
             self.state.slots_progressive_jackpot = self.JACKPOT_SEED
 
+        # NEW: initialize active slots tracking
+        if not hasattr(self.state, "active_slots"):
+            self.state.active_slots = set()
+
     async def slots(self, interaction: discord.Interaction, bet: Optional[int] = None):
         """
         Entry point for the /slots command.
@@ -589,6 +603,22 @@ class SlotsService:
             the player must use /slots again for another game.
         """
         user = interaction.user
+
+        # Ensure active_slots container exists
+        if not hasattr(self.state, "active_slots"):
+            self.state.active_slots = set()
+
+        # Enforce: one active slots game per user
+        if user.id in self.state.active_slots:
+            msg = (
+                "You already have an active slot machine running.\n"
+                "Finish that game before starting a new one. 🎰"
+            )
+            if interaction.response.is_done():
+                await interaction.followup.send(msg, ephemeral=True)
+            else:
+                await interaction.response.send_message(msg, ephemeral=True)
+            return
 
         # Ensure wallets dict exists and default them if needed
         if not hasattr(self.state, "member_wallets"):
@@ -650,6 +680,9 @@ class SlotsService:
             return
 
         try:
+            # Mark this user as having an active slots game
+            self.state.active_slots.add(user.id)
+
             # Deduct bet up front like a real machine
             new_balance = wallet_balance - bet_amount
             self.bot.gamble_service.update_wallet(user.id, new_balance)
@@ -680,6 +713,10 @@ class SlotsService:
                 f"Balance after bet: {new_balance}. Jackpot: {jackpot}"
             )
         except Exception:
+            # If anything goes wrong starting the game, release their lock
+            if hasattr(self.state, "active_slots"):
+                self.state.active_slots.discard(user.id)
+
             logger.error("Error starting slots game", exc_info=True)
             error_msg = (
                 "An error occurred while starting the slot machine. Please try again."

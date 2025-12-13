@@ -177,13 +177,13 @@ class GambleCog(commands.Cog):
         description="Spin the Hog Pen slot machine."
     )
     @app_commands.describe(
-        bet="Amount to bet (between 20 and 10000 Hog Coins). Leave blank for 20."
+        bet="Amount to bet (between 100 and 10000 Hog Coins). Leave blank for 100."
     )
     @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
     async def slots(
         self,
         interaction: discord.Interaction,
-        bet: app_commands.Range[int, 20, 10000] = 20,
+        bet: app_commands.Range[int, 100, 10000] = 100,
     ):
         """Slash command entrypoint for /slots with adjustable bet."""
         try:
