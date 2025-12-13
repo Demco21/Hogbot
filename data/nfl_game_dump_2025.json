@@ -16,7 +16,8 @@
         "streaming_networks": [
           "Peacock"
         ],
-        "game_id": "401772510"
+        "game_id": "401772510",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -29,7 +30,8 @@
         "streaming_networks": [
           "YouTube"
         ],
-        "game_id": "401772714"
+        "game_id": "401772714",
+        "game_state": "post"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -42,7 +44,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772830"
+        "game_id": "401772830",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -55,7 +58,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772829"
+        "game_id": "401772829",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -68,7 +72,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772719"
+        "game_id": "401772719",
+        "game_state": "post"
       },
       {
         "home_team": "New England Patriots",
@@ -81,7 +86,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772720"
+        "game_id": "401772720",
+        "game_state": "post"
       },
       {
         "home_team": "New Orleans Saints",
@@ -94,7 +100,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772718"
+        "game_id": "401772718",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -107,7 +114,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772721"
+        "game_id": "401772721",
+        "game_state": "post"
       },
       {
         "home_team": "Washington Commanders",
@@ -120,7 +128,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772827"
+        "game_id": "401772827",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -133,7 +142,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772828"
+        "game_id": "401772828",
+        "game_state": "post"
       },
       {
         "home_team": "Denver Broncos",
@@ -146,7 +156,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772832"
+        "game_id": "401772832",
+        "game_state": "post"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -159,7 +170,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772831"
+        "game_id": "401772831",
+        "game_state": "post"
       },
       {
         "home_team": "Green Bay Packers",
@@ -172,7 +184,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772722"
+        "game_id": "401772722",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -185,7 +198,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772723"
+        "game_id": "401772723",
+        "game_state": "post"
       },
       {
         "home_team": "Buffalo Bills",
@@ -198,7 +212,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772918"
+        "game_id": "401772918",
+        "game_state": "post"
       },
       {
         "home_team": "Chicago Bears",
@@ -212,7 +227,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772810"
+        "game_id": "401772810",
+        "game_state": "post"
       }
     ],
     "2": [
@@ -227,7 +243,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772936"
+        "game_id": "401772936",
+        "game_state": "post"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -240,7 +257,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772725"
+        "game_id": "401772725",
+        "game_state": "post"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -253,7 +271,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772834"
+        "game_id": "401772834",
+        "game_state": "post"
       },
       {
         "home_team": "Detroit Lions",
@@ -266,7 +285,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772835"
+        "game_id": "401772835",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -279,7 +299,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772724"
+        "game_id": "401772724",
+        "game_state": "post"
       },
       {
         "home_team": "Miami Dolphins",
@@ -292,7 +313,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772728"
+        "game_id": "401772728",
+        "game_state": "post"
       },
       {
         "home_team": "New Orleans Saints",
@@ -305,7 +327,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772833"
+        "game_id": "401772833",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -318,7 +341,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772727"
+        "game_id": "401772727",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -331,7 +355,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772836"
+        "game_id": "401772836",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -344,7 +369,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772726"
+        "game_id": "401772726",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -357,7 +383,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772729"
+        "game_id": "401772729",
+        "game_state": "post"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -370,7 +397,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772730"
+        "game_id": "401772730",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -383,7 +411,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772837"
+        "game_id": "401772837",
+        "game_state": "post"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -396,7 +425,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772919"
+        "game_id": "401772919",
+        "game_state": "post"
       },
       {
         "home_team": "Houston Texans",
@@ -410,7 +440,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772715"
+        "game_id": "401772715",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -423,7 +454,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772811"
+        "game_id": "401772811",
+        "game_state": "post"
       }
     ],
     "3": [
@@ -438,7 +470,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772937"
+        "game_id": "401772937",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -451,7 +484,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772842"
+        "game_id": "401772842",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -464,7 +498,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772733"
+        "game_id": "401772733",
+        "game_state": "post"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -477,7 +512,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772731"
+        "game_id": "401772731",
+        "game_state": "post"
       },
       {
         "home_team": "New England Patriots",
@@ -490,7 +526,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772732"
+        "game_id": "401772732",
+        "game_state": "post"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -503,7 +540,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772839"
+        "game_id": "401772839",
+        "game_state": "post"
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -516,7 +554,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772840"
+        "game_id": "401772840",
+        "game_state": "post"
       },
       {
         "home_team": "Washington Commanders",
@@ -529,7 +568,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772841"
+        "game_id": "401772841",
+        "game_state": "post"
       },
       {
         "home_team": "Carolina Panthers",
@@ -542,7 +582,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772838"
+        "game_id": "401772838",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -555,7 +596,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772734"
+        "game_id": "401772734",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -568,7 +610,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772735"
+        "game_id": "401772735",
+        "game_state": "post"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -581,7 +624,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772736"
+        "game_id": "401772736",
+        "game_state": "post"
       },
       {
         "home_team": "Chicago Bears",
@@ -594,7 +638,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772844"
+        "game_id": "401772844",
+        "game_state": "post"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -607,7 +652,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772843"
+        "game_id": "401772843",
+        "game_state": "post"
       },
       {
         "home_team": "New York Giants",
@@ -620,7 +666,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772920"
+        "game_id": "401772920",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -634,7 +681,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772812"
+        "game_id": "401772812",
+        "game_state": "post"
       }
     ],
     "4": [
@@ -649,7 +697,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772938"
+        "game_id": "401772938",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -664,7 +713,8 @@
         "streaming_networks": [
           "NFL+"
         ],
-        "game_id": "401772632"
+        "game_id": "401772632",
+        "game_state": "post"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -677,7 +727,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772739"
+        "game_id": "401772739",
+        "game_state": "post"
       },
       {
         "home_team": "Buffalo Bills",
@@ -690,7 +741,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772740"
+        "game_id": "401772740",
+        "game_state": "post"
       },
       {
         "home_team": "Detroit Lions",
@@ -703,7 +755,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772846"
+        "game_id": "401772846",
+        "game_state": "post"
       },
       {
         "home_team": "New England Patriots",
@@ -716,7 +769,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772847"
+        "game_id": "401772847",
+        "game_state": "post"
       },
       {
         "home_team": "New York Giants",
@@ -729,7 +783,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772737"
+        "game_id": "401772737",
+        "game_state": "post"
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -742,7 +797,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772845"
+        "game_id": "401772845",
+        "game_state": "post"
       },
       {
         "home_team": "Houston Texans",
@@ -755,7 +811,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772738"
+        "game_id": "401772738",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -768,7 +825,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772849"
+        "game_id": "401772849",
+        "game_state": "post"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -781,7 +839,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772848"
+        "game_id": "401772848",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -794,7 +853,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772741"
+        "game_id": "401772741",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -807,7 +867,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772742"
+        "game_id": "401772742",
+        "game_state": "post"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -820,7 +881,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772921"
+        "game_id": "401772921",
+        "game_state": "post"
       },
       {
         "home_team": "Miami Dolphins",
@@ -833,7 +895,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772813"
+        "game_id": "401772813",
+        "game_state": "post"
       },
       {
         "home_team": "Denver Broncos",
@@ -846,7 +909,8 @@
           "ABC"
         ],
         "streaming_networks": [],
-        "game_id": "401772716"
+        "game_id": "401772716",
+        "game_state": "post"
       }
     ],
     "5": [
@@ -861,7 +925,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772939"
+        "game_id": "401772939",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -876,7 +941,8 @@
         "streaming_networks": [
           "NFL+"
         ],
-        "game_id": "401772633"
+        "game_id": "401772633",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -889,7 +955,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772851"
+        "game_id": "401772851",
+        "game_state": "post"
       },
       {
         "home_team": "New Orleans Saints",
@@ -902,7 +969,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772744"
+        "game_id": "401772744",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -915,7 +983,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772850"
+        "game_id": "401772850",
+        "game_state": "post"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -928,7 +997,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772745"
+        "game_id": "401772745",
+        "game_state": "post"
       },
       {
         "home_team": "Carolina Panthers",
@@ -941,7 +1011,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772852"
+        "game_id": "401772852",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -954,7 +1025,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772743"
+        "game_id": "401772743",
+        "game_state": "post"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -967,7 +1039,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772747"
+        "game_id": "401772747",
+        "game_state": "post"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -980,7 +1053,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772746"
+        "game_id": "401772746",
+        "game_state": "post"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -993,7 +1067,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772854"
+        "game_id": "401772854",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -1006,7 +1081,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772853"
+        "game_id": "401772853",
+        "game_state": "post"
       },
       {
         "home_team": "Buffalo Bills",
@@ -1019,7 +1095,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772922"
+        "game_id": "401772922",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -1033,7 +1110,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772814"
+        "game_id": "401772814",
+        "game_state": "post"
       }
     ],
     "6": [
@@ -1048,7 +1126,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772940"
+        "game_id": "401772940",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -1063,7 +1142,8 @@
         "streaming_networks": [
           "NFL+"
         ],
-        "game_id": "401772634"
+        "game_id": "401772634",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -1076,7 +1156,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772856"
+        "game_id": "401772856",
+        "game_state": "post"
       },
       {
         "home_team": "Miami Dolphins",
@@ -1089,7 +1170,22 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772750"
+        "game_id": "401772750",
+        "game_state": "post"
+      },
+      {
+        "home_team": "New Orleans Saints",
+        "away_team": "New England Patriots",
+        "home_abbrv": "NO",
+        "away_abbrv": "NE",
+        "location": "New Orleans, LA",
+        "kickoff_est": "2025-10-12T13:00:00-04:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772751",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1102,20 +1198,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772748"
-      },
-      {
-        "home_team": "Tampa Bay Buccaneers",
-        "away_team": "San Francisco 49ers",
-        "home_abbrv": "TB",
-        "away_abbrv": "SF",
-        "location": "Tampa, FL",
-        "kickoff_est": "2025-10-12T13:00:00-04:00",
-        "tv_networks": [
-          "CBS"
-        ],
-        "streaming_networks": [],
-        "game_id": "401772749"
+        "game_id": "401772748",
+        "game_state": "post"
       },
       {
         "home_team": "Carolina Panthers",
@@ -1128,7 +1212,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772858"
+        "game_id": "401772858",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -1141,7 +1226,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772857"
+        "game_id": "401772857",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -1154,7 +1240,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772855"
+        "game_id": "401772855",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -1167,7 +1254,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772859"
+        "game_id": "401772859",
+        "game_state": "post"
       },
       {
         "home_team": "Green Bay Packers",
@@ -1180,20 +1268,22 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772752"
+        "game_id": "401772752",
+        "game_state": "post"
       },
       {
-        "home_team": "New Orleans Saints",
-        "away_team": "New England Patriots",
-        "home_abbrv": "NO",
-        "away_abbrv": "NE",
-        "location": "New Orleans, LA",
+        "home_team": "Tampa Bay Buccaneers",
+        "away_team": "San Francisco 49ers",
+        "home_abbrv": "TB",
+        "away_abbrv": "SF",
+        "location": "Tampa, FL",
         "kickoff_est": "2025-10-12T16:25:00-04:00",
         "tv_networks": [
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772751"
+        "game_id": "401772749",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -1206,7 +1296,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772923"
+        "game_id": "401772923",
+        "game_state": "post"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -1219,7 +1310,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772815"
+        "game_id": "401772815",
+        "game_state": "post"
       },
       {
         "home_team": "Washington Commanders",
@@ -1232,7 +1324,8 @@
           "ABC"
         ],
         "streaming_networks": [],
-        "game_id": "401772717"
+        "game_id": "401772717",
+        "game_state": "post"
       }
     ],
     "7": [
@@ -1247,7 +1340,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772941"
+        "game_id": "401772941",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -1262,7 +1356,8 @@
         "streaming_networks": [
           "NFL+"
         ],
-        "game_id": "401772635"
+        "game_id": "401772635",
+        "game_state": "post"
       },
       {
         "home_team": "Chicago Bears",
@@ -1275,7 +1370,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772861"
+        "game_id": "401772861",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -1288,7 +1384,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772754"
+        "game_id": "401772754",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -1301,7 +1398,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772755"
+        "game_id": "401772755",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -1314,7 +1412,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772753"
+        "game_id": "401772753",
+        "game_state": "post"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -1327,7 +1426,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772862"
+        "game_id": "401772862",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -1340,7 +1440,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772860"
+        "game_id": "401772860",
+        "game_state": "post"
       },
       {
         "home_team": "Denver Broncos",
@@ -1353,7 +1454,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772757"
+        "game_id": "401772757",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -1366,7 +1468,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772756"
+        "game_id": "401772756",
+        "game_state": "post"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -1379,7 +1482,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772864"
+        "game_id": "401772864",
+        "game_state": "post"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -1392,7 +1496,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772863"
+        "game_id": "401772863",
+        "game_state": "post"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -1405,7 +1510,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772924"
+        "game_id": "401772924",
+        "game_state": "post"
       },
       {
         "home_team": "Detroit Lions",
@@ -1419,7 +1525,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772816"
+        "game_id": "401772816",
+        "game_state": "post"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -1432,7 +1539,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772826"
+        "game_id": "401772826",
+        "game_state": "post"
       }
     ],
     "8": [
@@ -1447,7 +1555,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772942"
+        "game_id": "401772942",
+        "game_state": "post"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -1460,7 +1569,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772760"
+        "game_id": "401772760",
+        "game_state": "post"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -1473,7 +1583,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772758"
+        "game_id": "401772758",
+        "game_state": "post"
       },
       {
         "home_team": "New England Patriots",
@@ -1486,7 +1597,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772868"
+        "game_id": "401772868",
+        "game_state": "post"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -1499,7 +1611,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772867"
+        "game_id": "401772867",
+        "game_state": "post"
       },
       {
         "home_team": "Carolina Panthers",
@@ -1512,7 +1625,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772865"
+        "game_id": "401772865",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -1525,7 +1639,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772759"
+        "game_id": "401772759",
+        "game_state": "post"
       },
       {
         "home_team": "Houston Texans",
@@ -1538,7 +1653,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772866"
+        "game_id": "401772866",
+        "game_state": "post"
       },
       {
         "home_team": "New Orleans Saints",
@@ -1551,7 +1667,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772869"
+        "game_id": "401772869",
+        "game_state": "post"
       },
       {
         "home_team": "Denver Broncos",
@@ -1564,7 +1681,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772762"
+        "game_id": "401772762",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -1577,7 +1695,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772761"
+        "game_id": "401772761",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1590,7 +1709,8 @@
           "NBC"
         ],
         "streaming_networks": [],
-        "game_id": "401772925"
+        "game_id": "401772925",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -1604,7 +1724,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772817"
+        "game_id": "401772817",
+        "game_state": "post"
       }
     ],
     "9": [
@@ -1619,7 +1740,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772943"
+        "game_id": "401772943",
+        "game_state": "post"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -1632,7 +1754,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772765"
+        "game_id": "401772765",
+        "game_state": "post"
       },
       {
         "home_team": "Detroit Lions",
@@ -1645,7 +1768,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772871"
+        "game_id": "401772871",
+        "game_state": "post"
       },
       {
         "home_team": "Green Bay Packers",
@@ -1658,7 +1782,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772872"
+        "game_id": "401772872",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -1671,7 +1796,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772764"
+        "game_id": "401772764",
+        "game_state": "post"
       },
       {
         "home_team": "New England Patriots",
@@ -1684,7 +1810,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772763"
+        "game_id": "401772763",
+        "game_state": "post"
       },
       {
         "home_team": "New York Giants",
@@ -1697,7 +1824,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772767"
+        "game_id": "401772767",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -1710,7 +1838,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772766"
+        "game_id": "401772766",
+        "game_state": "post"
       },
       {
         "home_team": "Houston Texans",
@@ -1723,7 +1852,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772870"
+        "game_id": "401772870",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -1736,7 +1866,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772873"
+        "game_id": "401772873",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -1749,7 +1880,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772874"
+        "game_id": "401772874",
+        "game_state": "post"
       },
       {
         "home_team": "Buffalo Bills",
@@ -1762,7 +1894,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772768"
+        "game_id": "401772768",
+        "game_state": "post"
       },
       {
         "home_team": "Washington Commanders",
@@ -1774,8 +1907,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772926"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772926",
+        "game_state": "post"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -1789,7 +1925,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772818"
+        "game_id": "401772818",
+        "game_state": "post"
       }
     ],
     "10": [
@@ -1804,7 +1941,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772944"
+        "game_id": "401772944",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -1819,7 +1957,8 @@
         "streaming_networks": [
           "NFL+"
         ],
-        "game_id": "401772636"
+        "game_id": "401772636",
+        "game_state": "post"
       },
       {
         "home_team": "Chicago Bears",
@@ -1832,7 +1971,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772875"
+        "game_id": "401772875",
+        "game_state": "post"
       },
       {
         "home_team": "Miami Dolphins",
@@ -1845,7 +1985,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772771"
+        "game_id": "401772771",
+        "game_state": "post"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -1858,7 +1999,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772876"
+        "game_id": "401772876",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -1871,7 +2013,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772769"
+        "game_id": "401772769",
+        "game_state": "post"
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -1884,7 +2027,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772772"
+        "game_id": "401772772",
+        "game_state": "post"
       },
       {
         "home_team": "Carolina Panthers",
@@ -1897,7 +2041,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772877"
+        "game_id": "401772877",
+        "game_state": "post"
       },
       {
         "home_team": "Houston Texans",
@@ -1910,7 +2055,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772770"
+        "game_id": "401772770",
+        "game_state": "post"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -1923,7 +2069,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772773"
+        "game_id": "401772773",
+        "game_state": "post"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -1936,7 +2083,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772879"
+        "game_id": "401772879",
+        "game_state": "post"
       },
       {
         "home_team": "Washington Commanders",
@@ -1949,7 +2097,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772878"
+        "game_id": "401772878",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -1961,8 +2110,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772927"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772927",
+        "game_state": "post"
       },
       {
         "home_team": "Green Bay Packers",
@@ -1976,7 +2128,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772630"
+        "game_id": "401772630",
+        "game_state": "post"
       }
     ],
     "11": [
@@ -1991,7 +2144,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772945"
+        "game_id": "401772945",
+        "game_state": "post"
       },
       {
         "home_team": "Miami Dolphins",
@@ -2006,7 +2160,8 @@
         "streaming_networks": [
           "NFL+"
         ],
-        "game_id": "401772631"
+        "game_id": "401772631",
+        "game_state": "post"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -2019,7 +2174,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772882"
+        "game_id": "401772882",
+        "game_state": "post"
       },
       {
         "home_team": "Buffalo Bills",
@@ -2032,7 +2188,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772776"
+        "game_id": "401772776",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -2045,7 +2202,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772881"
+        "game_id": "401772881",
+        "game_state": "post"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -2058,7 +2216,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772880"
+        "game_id": "401772880",
+        "game_state": "post"
       },
       {
         "home_team": "New York Giants",
@@ -2071,7 +2230,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772883"
+        "game_id": "401772883",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -2084,7 +2244,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772774"
+        "game_id": "401772774",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -2097,7 +2258,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772775"
+        "game_id": "401772775",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -2110,7 +2272,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772884"
+        "game_id": "401772884",
+        "game_state": "post"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -2123,7 +2286,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772885"
+        "game_id": "401772885",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -2136,7 +2300,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772777"
+        "game_id": "401772777",
+        "game_state": "post"
       },
       {
         "home_team": "Denver Broncos",
@@ -2149,7 +2314,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772778"
+        "game_id": "401772778",
+        "game_state": "post"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -2161,8 +2327,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772928"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772928",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -2176,7 +2345,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772819"
+        "game_id": "401772819",
+        "game_state": "post"
       }
     ],
     "12": [
@@ -2191,7 +2361,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772946"
+        "game_id": "401772946",
+        "game_state": "post"
       },
       {
         "home_team": "Chicago Bears",
@@ -2204,7 +2375,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772780"
+        "game_id": "401772780",
+        "game_state": "post"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -2217,7 +2389,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772781"
+        "game_id": "401772781",
+        "game_state": "post"
       },
       {
         "home_team": "Detroit Lions",
@@ -2230,7 +2403,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772888"
+        "game_id": "401772888",
+        "game_state": "post"
       },
       {
         "home_team": "Green Bay Packers",
@@ -2243,7 +2417,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772887"
+        "game_id": "401772887",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -2256,7 +2431,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772886"
+        "game_id": "401772886",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -2269,7 +2445,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772779"
+        "game_id": "401772779",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -2282,7 +2459,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772782"
+        "game_id": "401772782",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -2295,7 +2473,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772784"
+        "game_id": "401772784",
+        "game_state": "post"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -2308,7 +2487,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772783"
+        "game_id": "401772783",
+        "game_state": "post"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -2321,7 +2501,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772890"
+        "game_id": "401772890",
+        "game_state": "post"
       },
       {
         "home_team": "New Orleans Saints",
@@ -2334,7 +2515,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772889"
+        "game_id": "401772889",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -2346,8 +2528,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772929"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772929",
+        "game_state": "post"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -2360,7 +2545,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772820"
+        "game_id": "401772820",
+        "game_state": "post"
       }
     ],
     "13": [
@@ -2375,7 +2561,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772891"
+        "game_id": "401772891",
+        "game_state": "post"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -2390,7 +2577,8 @@
         "streaming_networks": [
           "Paramount+"
         ],
-        "game_id": "401772694"
+        "game_id": "401772694",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -2402,8 +2590,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772930"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772930",
+        "game_state": "post"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -2416,7 +2607,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772621"
+        "game_id": "401772621",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -2429,7 +2621,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772785"
+        "game_id": "401772785",
+        "game_state": "post"
       },
       {
         "home_team": "Tennessee Titans",
@@ -2442,7 +2635,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772786"
+        "game_id": "401772786",
+        "game_state": "post"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -2455,7 +2649,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772787"
+        "game_id": "401772787",
+        "game_state": "post"
       },
       {
         "home_team": "Miami Dolphins",
@@ -2468,7 +2663,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772892"
+        "game_id": "401772892",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -2481,7 +2677,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772893"
+        "game_id": "401772893",
+        "game_state": "post"
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -2494,7 +2691,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772895"
+        "game_id": "401772895",
+        "game_state": "post"
       },
       {
         "home_team": "Carolina Panthers",
@@ -2507,7 +2705,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772894"
+        "game_id": "401772894",
+        "game_state": "post"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -2520,7 +2719,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772896"
+        "game_id": "401772896",
+        "game_state": "post"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -2533,7 +2733,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772789"
+        "game_id": "401772789",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -2546,7 +2747,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772788"
+        "game_id": "401772788",
+        "game_state": "post"
       },
       {
         "home_team": "Washington Commanders",
@@ -2558,8 +2760,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772931"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772931",
+        "game_state": "post"
       },
       {
         "home_team": "New England Patriots",
@@ -2572,7 +2777,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772821"
+        "game_id": "401772821",
+        "game_state": "post"
       }
     ],
     "14": [
@@ -2587,7 +2793,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772947"
+        "game_id": "401772947",
+        "game_state": "post"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -2600,7 +2807,22 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772900"
+        "game_id": "401772900",
+        "game_state": "post"
+      },
+      {
+        "home_team": "Buffalo Bills",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "BUF",
+        "away_abbrv": "CIN",
+        "location": "Orchard Park, NY",
+        "kickoff_est": "2025-12-07T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772902",
+        "game_state": "post"
       },
       {
         "home_team": "Cleveland Browns",
@@ -2613,20 +2835,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772898"
-      },
-      {
-        "home_team": "Green Bay Packers",
-        "away_team": "Chicago Bears",
-        "home_abbrv": "GB",
-        "away_abbrv": "CHI",
-        "location": "Green Bay, WI",
-        "kickoff_est": "2025-12-07T13:00:00-05:00",
-        "tv_networks": [
-          "FOX"
-        ],
-        "streaming_networks": [],
-        "game_id": "401772897"
+        "game_id": "401772898",
+        "game_state": "post"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -2639,7 +2849,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772899"
+        "game_id": "401772899",
+        "game_state": "post"
       },
       {
         "home_team": "New York Jets",
@@ -2652,7 +2863,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772790"
+        "game_id": "401772790",
+        "game_state": "post"
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -2665,7 +2877,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772792"
+        "game_id": "401772792",
+        "game_state": "post"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -2678,7 +2891,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772793"
+        "game_id": "401772793",
+        "game_state": "post"
       },
       {
         "home_team": "Baltimore Ravens",
@@ -2691,7 +2905,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772791"
+        "game_id": "401772791",
+        "game_state": "post"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -2704,20 +2919,22 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772794"
+        "game_id": "401772794",
+        "game_state": "post"
       },
       {
-        "home_team": "Buffalo Bills",
-        "away_team": "Cincinnati Bengals",
-        "home_abbrv": "BUF",
-        "away_abbrv": "CIN",
-        "location": "Orchard Park, NY",
+        "home_team": "Green Bay Packers",
+        "away_team": "Chicago Bears",
+        "home_abbrv": "GB",
+        "away_abbrv": "CHI",
+        "location": "Green Bay, WI",
         "kickoff_est": "2025-12-07T16:25:00-05:00",
         "tv_networks": [
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772902"
+        "game_id": "401772897",
+        "game_state": "post"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -2730,7 +2947,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772901"
+        "game_id": "401772901",
+        "game_state": "post"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -2742,8 +2960,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772932"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772932",
+        "game_state": "post"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -2757,7 +2978,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772822"
+        "game_id": "401772822",
+        "game_state": "post"
       }
     ],
     "15": [
@@ -2772,7 +2994,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772948"
+        "game_id": "401772948",
+        "game_state": "post"
       },
       {
         "home_team": "Chicago Bears",
@@ -2785,7 +3008,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772904"
+        "game_id": "401772904",
+        "game_state": "pre"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -2798,7 +3022,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772796"
+        "game_id": "401772796",
+        "game_state": "pre"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -2811,7 +3036,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772798"
+        "game_id": "401772798",
+        "game_state": "pre"
       },
       {
         "home_team": "New England Patriots",
@@ -2824,7 +3050,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772795"
+        "game_id": "401772795",
+        "game_state": "pre"
       },
       {
         "home_team": "New York Giants",
@@ -2837,7 +3064,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772905"
+        "game_id": "401772905",
+        "game_state": "pre"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -2850,7 +3078,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772906"
+        "game_id": "401772906",
+        "game_state": "pre"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -2863,7 +3092,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772797"
+        "game_id": "401772797",
+        "game_state": "pre"
       },
       {
         "home_team": "Houston Texans",
@@ -2876,7 +3106,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772903"
+        "game_id": "401772903",
+        "game_state": "pre"
       },
       {
         "home_team": "Denver Broncos",
@@ -2889,7 +3120,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772800"
+        "game_id": "401772800",
+        "game_state": "pre"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -2902,7 +3134,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772909"
+        "game_id": "401772909",
+        "game_state": "pre"
       },
       {
         "home_team": "New Orleans Saints",
@@ -2915,7 +3148,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772908"
+        "game_id": "401772908",
+        "game_state": "pre"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -2928,7 +3162,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772907"
+        "game_id": "401772907",
+        "game_state": "pre"
       },
       {
         "home_team": "Seattle Seahawks",
@@ -2941,7 +3176,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772799"
+        "game_id": "401772799",
+        "game_state": "pre"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -2953,8 +3189,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772933"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772933",
+        "game_state": "pre"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -2967,7 +3206,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772823"
+        "game_id": "401772823",
+        "game_state": "pre"
       }
     ],
     "16": [
@@ -2982,20 +3222,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772949"
-      },
-      {
-        "home_team": "Chicago Bears",
-        "away_team": "Green Bay Packers",
-        "home_abbrv": "CHI",
-        "away_abbrv": "GB",
-        "location": "Chicago, IL",
-        "kickoff_est": "2025-12-20T00:00:00-05:00",
-        "tv_networks": [
-          "FOX"
-        ],
-        "streaming_networks": [],
-        "game_id": "401772613"
+        "game_id": "401772949",
+        "game_state": "pre"
       },
       {
         "home_team": "Washington Commanders",
@@ -3003,12 +3231,27 @@
         "home_abbrv": "WSH",
         "away_abbrv": "PHI",
         "location": "Landover, MD",
-        "kickoff_est": "2025-12-20T00:00:00-05:00",
+        "kickoff_est": "2025-12-20T17:00:00-05:00",
         "tv_networks": [
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772612"
+        "game_id": "401772612",
+        "game_state": "pre"
+      },
+      {
+        "home_team": "Chicago Bears",
+        "away_team": "Green Bay Packers",
+        "home_abbrv": "CHI",
+        "away_abbrv": "GB",
+        "location": "Chicago, IL",
+        "kickoff_est": "2025-12-20T20:20:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772613",
+        "game_state": "pre"
       },
       {
         "home_team": "Cleveland Browns",
@@ -3021,7 +3264,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772802"
+        "game_id": "401772802",
+        "game_state": "pre"
       },
       {
         "home_team": "Dallas Cowboys",
@@ -3034,7 +3278,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772910"
+        "game_id": "401772910",
+        "game_state": "pre"
       },
       {
         "home_team": "Tennessee Titans",
@@ -3047,7 +3292,22 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772803"
+        "game_id": "401772803",
+        "game_state": "pre"
+      },
+      {
+        "home_team": "Miami Dolphins",
+        "away_team": "Cincinnati Bengals",
+        "home_abbrv": "MIA",
+        "away_abbrv": "CIN",
+        "location": "Miami Gardens, FL",
+        "kickoff_est": "2025-12-21T13:00:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772934",
+        "game_state": "pre"
       },
       {
         "home_team": "New Orleans Saints",
@@ -3060,7 +3320,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772801"
+        "game_id": "401772801",
+        "game_state": "pre"
       },
       {
         "home_team": "New York Giants",
@@ -3073,7 +3334,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772911"
+        "game_id": "401772911",
+        "game_state": "pre"
       },
       {
         "home_team": "Carolina Panthers",
@@ -3086,20 +3348,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772912"
-      },
-      {
-        "home_team": "Baltimore Ravens",
-        "away_team": "New England Patriots",
-        "home_abbrv": "BAL",
-        "away_abbrv": "NE",
-        "location": "Baltimore, MD",
-        "kickoff_est": "2025-12-21T13:00:00-05:00",
-        "tv_networks": [
-          "CBS"
-        ],
-        "streaming_networks": [],
-        "game_id": "401772804"
+        "game_id": "401772912",
+        "game_state": "pre"
       },
       {
         "home_team": "Denver Broncos",
@@ -3112,7 +3362,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772913"
+        "game_id": "401772913",
+        "game_state": "pre"
       },
       {
         "home_team": "Arizona Cardinals",
@@ -3125,7 +3376,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772914"
+        "game_id": "401772914",
+        "game_state": "pre"
       },
       {
         "home_team": "Detroit Lions",
@@ -3138,7 +3390,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772806"
+        "game_id": "401772806",
+        "game_state": "pre"
       },
       {
         "home_team": "Houston Texans",
@@ -3151,20 +3404,24 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772805"
+        "game_id": "401772805",
+        "game_state": "pre"
       },
       {
-        "home_team": "Miami Dolphins",
-        "away_team": "Cincinnati Bengals",
-        "home_abbrv": "MIA",
-        "away_abbrv": "CIN",
-        "location": "Miami Gardens, FL",
+        "home_team": "Baltimore Ravens",
+        "away_team": "New England Patriots",
+        "home_abbrv": "BAL",
+        "away_abbrv": "NE",
+        "location": "Baltimore, MD",
         "kickoff_est": "2025-12-21T20:20:00-05:00",
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772934"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772804",
+        "game_state": "pre"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -3174,10 +3431,12 @@
         "location": "Indianapolis, IN",
         "kickoff_est": "2025-12-22T20:15:00-05:00",
         "tv_networks": [
-          "ESPN"
+          "ESPN",
+          "ABC"
         ],
         "streaming_networks": [],
-        "game_id": "401772824"
+        "game_id": "401772824",
+        "game_state": "pre"
       }
     ],
     "17": [
@@ -3192,7 +3451,8 @@
         "streaming_networks": [
           "Netflix"
         ],
-        "game_id": "401772710"
+        "game_id": "401772710",
+        "game_state": "pre"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -3205,7 +3465,8 @@
         "streaming_networks": [
           "Netflix"
         ],
-        "game_id": "401772711"
+        "game_id": "401772711",
+        "game_state": "pre"
       },
       {
         "home_team": "Kansas City Chiefs",
@@ -3218,40 +3479,8 @@
         "streaming_networks": [
           "Prime Video"
         ],
-        "game_id": "401772622"
-      },
-      {
-        "home_team": "Cincinnati Bengals",
-        "away_team": "Arizona Cardinals",
-        "home_abbrv": "CIN",
-        "away_abbrv": "ARI",
-        "location": "Cincinnati, OH",
-        "kickoff_est": "2025-12-27T00:00:00-05:00",
-        "tv_networks": [],
-        "streaming_networks": [],
-        "game_id": "401772954"
-      },
-      {
-        "home_team": "Green Bay Packers",
-        "away_team": "Baltimore Ravens",
-        "home_abbrv": "GB",
-        "away_abbrv": "BAL",
-        "location": "Green Bay, WI",
-        "kickoff_est": "2025-12-27T00:00:00-05:00",
-        "tv_networks": [],
-        "streaming_networks": [],
-        "game_id": "401772953"
-      },
-      {
-        "home_team": "Las Vegas Raiders",
-        "away_team": "New York Giants",
-        "home_abbrv": "LV",
-        "away_abbrv": "NYG",
-        "location": "Las Vegas, NV",
-        "kickoff_est": "2025-12-27T00:00:00-05:00",
-        "tv_networks": [],
-        "streaming_networks": [],
-        "game_id": "401772950"
+        "game_id": "401772622",
+        "game_state": "pre"
       },
       {
         "home_team": "Los Angeles Chargers",
@@ -3259,21 +3488,41 @@
         "home_abbrv": "LAC",
         "away_abbrv": "HOU",
         "location": "Inglewood, CA",
-        "kickoff_est": "2025-12-27T00:00:00-05:00",
-        "tv_networks": [],
+        "kickoff_est": "2025-12-27T16:30:00-05:00",
+        "tv_networks": [
+          "NFL Net"
+        ],
         "streaming_networks": [],
-        "game_id": "401772951"
+        "game_id": "401772951",
+        "game_state": "pre"
       },
       {
-        "home_team": "Carolina Panthers",
-        "away_team": "Seattle Seahawks",
-        "home_abbrv": "CAR",
-        "away_abbrv": "SEA",
-        "location": "Charlotte, NC",
-        "kickoff_est": "2025-12-27T00:00:00-05:00",
+        "home_team": "Green Bay Packers",
+        "away_team": "Baltimore Ravens",
+        "home_abbrv": "GB",
+        "away_abbrv": "BAL",
+        "location": "Green Bay, WI",
+        "kickoff_est": "2025-12-27T20:00:00-05:00",
         "tv_networks": [],
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772953",
+        "game_state": "pre"
+      },
+      {
+        "home_team": "Cincinnati Bengals",
+        "away_team": "Arizona Cardinals",
+        "home_abbrv": "CIN",
+        "away_abbrv": "ARI",
+        "location": "Cincinnati, OH",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
+          "FOX"
+        ],
         "streaming_networks": [],
-        "game_id": "401772952"
+        "game_id": "401772954",
+        "game_state": "pre"
       },
       {
         "home_team": "Cleveland Browns",
@@ -3286,7 +3535,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772807"
+        "game_id": "401772807",
+        "game_state": "pre"
       },
       {
         "home_team": "Tennessee Titans",
@@ -3299,7 +3549,8 @@
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772809"
+        "game_id": "401772809",
+        "game_state": "pre"
       },
       {
         "home_team": "Indianapolis Colts",
@@ -3312,7 +3563,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772915"
+        "game_id": "401772915",
+        "game_state": "pre"
       },
       {
         "home_team": "Miami Dolphins",
@@ -3325,7 +3577,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772916"
+        "game_id": "401772916",
+        "game_state": "pre"
       },
       {
         "home_team": "New York Jets",
@@ -3335,10 +3588,39 @@
         "location": "East Rutherford, NJ",
         "kickoff_est": "2025-12-28T13:00:00-05:00",
         "tv_networks": [
+          "FOX"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772808",
+        "game_state": "pre"
+      },
+      {
+        "home_team": "Carolina Panthers",
+        "away_team": "Seattle Seahawks",
+        "home_abbrv": "CAR",
+        "away_abbrv": "SEA",
+        "location": "Charlotte, NC",
+        "kickoff_est": "2025-12-28T13:00:00-05:00",
+        "tv_networks": [
           "CBS"
         ],
         "streaming_networks": [],
-        "game_id": "401772808"
+        "game_id": "401772952",
+        "game_state": "pre"
+      },
+      {
+        "home_team": "Las Vegas Raiders",
+        "away_team": "New York Giants",
+        "home_abbrv": "LV",
+        "away_abbrv": "NYG",
+        "location": "Las Vegas, NV",
+        "kickoff_est": "2025-12-28T16:05:00-05:00",
+        "tv_networks": [
+          "CBS"
+        ],
+        "streaming_networks": [],
+        "game_id": "401772950",
+        "game_state": "pre"
       },
       {
         "home_team": "Buffalo Bills",
@@ -3351,7 +3633,8 @@
           "FOX"
         ],
         "streaming_networks": [],
-        "game_id": "401772917"
+        "game_id": "401772917",
+        "game_state": "pre"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -3363,8 +3646,11 @@
         "tv_networks": [
           "NBC"
         ],
-        "streaming_networks": [],
-        "game_id": "401772935"
+        "streaming_networks": [
+          "Peacock"
+        ],
+        "game_id": "401772935",
+        "game_state": "pre"
       },
       {
         "home_team": "Atlanta Falcons",
@@ -3377,7 +3663,8 @@
           "ESPN"
         ],
         "streaming_networks": [],
-        "game_id": "401772825"
+        "game_id": "401772825",
+        "game_state": "pre"
       }
     ],
     "18": [
@@ -3390,7 +3677,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772966"
+        "game_id": "401772966",
+        "game_state": "pre"
       },
       {
         "home_team": "Buffalo Bills",
@@ -3401,7 +3689,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772967"
+        "game_id": "401772967",
+        "game_state": "pre"
       },
       {
         "home_team": "Chicago Bears",
@@ -3412,7 +3701,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772965"
+        "game_id": "401772965",
+        "game_state": "pre"
       },
       {
         "home_team": "Cincinnati Bengals",
@@ -3423,7 +3713,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772964"
+        "game_id": "401772964",
+        "game_state": "pre"
       },
       {
         "home_team": "Denver Broncos",
@@ -3434,7 +3725,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772956"
+        "game_id": "401772956",
+        "game_state": "pre"
       },
       {
         "home_team": "Las Vegas Raiders",
@@ -3445,7 +3737,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772957"
+        "game_id": "401772957",
+        "game_state": "pre"
       },
       {
         "home_team": "Los Angeles Rams",
@@ -3456,7 +3749,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772955"
+        "game_id": "401772955",
+        "game_state": "pre"
       },
       {
         "home_team": "Minnesota Vikings",
@@ -3467,7 +3761,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772968"
+        "game_id": "401772968",
+        "game_state": "pre"
       },
       {
         "home_team": "New England Patriots",
@@ -3478,7 +3773,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772958"
+        "game_id": "401772958",
+        "game_state": "pre"
       },
       {
         "home_team": "New York Giants",
@@ -3489,7 +3785,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772963"
+        "game_id": "401772963",
+        "game_state": "pre"
       },
       {
         "home_team": "Philadelphia Eagles",
@@ -3500,7 +3797,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772959"
+        "game_id": "401772959",
+        "game_state": "pre"
       },
       {
         "home_team": "Pittsburgh Steelers",
@@ -3511,7 +3809,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772960"
+        "game_id": "401772960",
+        "game_state": "pre"
       },
       {
         "home_team": "San Francisco 49ers",
@@ -3522,7 +3821,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772961"
+        "game_id": "401772961",
+        "game_state": "pre"
       },
       {
         "home_team": "Tampa Bay Buccaneers",
@@ -3533,7 +3833,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772969"
+        "game_id": "401772969",
+        "game_state": "pre"
       },
       {
         "home_team": "Jacksonville Jaguars",
@@ -3544,7 +3845,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772970"
+        "game_id": "401772970",
+        "game_state": "pre"
       },
       {
         "home_team": "Houston Texans",
@@ -3555,7 +3857,8 @@
         "kickoff_est": "2026-01-04T00:00:00-05:00",
         "tv_networks": [],
         "streaming_networks": [],
-        "game_id": "401772962"
+        "game_id": "401772962",
+        "game_state": "pre"
       }
     ]
   },

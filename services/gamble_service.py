@@ -5,6 +5,7 @@ from discord.ext import commands
 import random
 import io
 import matplotlib.pyplot as plt
+from datetime import datetime, timedelta, timezone
 from config import RICHEST_MEMBER_ROLE_ID
 
 class GambleService:
@@ -106,9 +107,42 @@ class GambleService:
                     await interaction.response.send_message(msg, ephemeral=True)
                 return
 
+            # Rate limiting: max 3 successful loans per hour per lender
+            now = datetime.now(timezone.utc)
+
+            if not hasattr(self.state, "loan_usage"):
+                self.state.loan_usage = {}
+
+            usage = self.state.loan_usage.setdefault(lender.id, [])
+            logger.info(f"Loan usage for {lender.id}: {usage}")
+
+            # Keep only timestamps within the last hour
+            one_hour_ago = now - timedelta(hours=1)
+            usage = [ts for ts in usage if ts > one_hour_ago]
+            self.state.loan_usage[lender.id] = usage
+
+            if len(usage) >= 3:
+                oldest_relevant = min(usage)
+                next_allowed = oldest_relevant + timedelta(hours=1)
+                remaining = next_allowed - now
+                minutes_remaining = max(1, int(remaining.total_seconds() // 60))
+
+                msg = (
+                    "⏱️ You've already made **3 loans** in the last hour.\n"
+                    f"Try again in about **{minutes_remaining} minute{'s' if minutes_remaining != 1 else ''}**."
+                )
+                if interaction.response.is_done():
+                    await interaction.followup.send(msg, ephemeral=True)
+                else:
+                    await interaction.response.send_message(msg, ephemeral=True)
+                return
+
             # Perform the loan
             wallets[lender.id] -= amount
             wallets[target.id] += amount
+
+            usage.append(now)
+            self.state.loan_usage[lender.id] = usage
 
             lender_name = self.get_name(lender)
             target_name = self.get_name(target)
