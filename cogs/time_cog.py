@@ -95,5 +95,25 @@ class TimeCog(commands.Cog):
                 arg
             )
 
+    @app_commands.command(
+        name="eric",
+        description="Show how many days Eric has been sober since 12am 12/08/2025."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def eric(self, interaction: discord.Interaction):
+        from datetime import datetime, timezone
+
+        # Define Eric's sobriety start date (12:00 AM, Dec 8, 2025, UTC)
+        start_date = datetime(2025, 12, 8, 0, 0, 0, tzinfo=timezone.utc)
+
+        # Current UTC time
+        now = datetime.now(timezone.utc)
+
+        # Calculate days difference
+        days_sober = (now - start_date).days
+
+        # Send the message
+        await interaction.response.send_message(f"Eric has been sober for **{days_sober} days** 🫡")
+
 async def setup(bot):
     await bot.add_cog(TimeCog(bot))
