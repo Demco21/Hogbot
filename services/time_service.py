@@ -264,6 +264,12 @@ class TimeService:
                     }
                     for member_id, stats in raw_color_draws.items()
                 }
+                self.state.slots_progressive_jackpot = int(
+                    data.get(
+                        "slots_progressive_jackpot",
+                        getattr(self.state, "slots_progressive_jackpot", 100_000),
+                    )
+                )
 
                 
             else:
@@ -384,8 +390,8 @@ class TimeService:
                 "first_round_color_draws": {
                     str(member_id): stats
                     for member_id, stats in self.state.first_round_color_draws.items()
-                }
-
+                },
+                "slots_progressive_jackpot": getattr(self.state, "slots_progressive_jackpot", 100_000),
             }
 
             with open(TIME_DATA_FILE, "w") as file:

@@ -172,6 +172,33 @@ class GambleCog(commands.Cog):
         except Exception as e:
             logger.error(f"Error in stats command: {e}")
 
+    @app_commands.command(
+        name="slots",
+        description="Spin the Hog Pen slot machine."
+    )
+    @app_commands.describe(
+        bet="Amount to bet (between 20 and 10000 Hog Coins). Leave blank for 20."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def slots(
+        self,
+        interaction: discord.Interaction,
+        bet: app_commands.Range[int, 20, 10000] = 20,
+    ):
+        """Slash command entrypoint for /slots with adjustable bet."""
+        try:
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the designated casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            # Pass the bet value through to the SlotsService
+            await self.bot.slots_service.slots(interaction, bet)
+        except Exception as e:
+            logger.error(f"Error in slots command: {e}")
+
 
 
 async def setup(bot):
