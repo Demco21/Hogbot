@@ -43,7 +43,7 @@ class AdminCog(commands.Cog):
             if ctx.author.id != ADMIN_USER_ID:
                 ctx.send("You do not have permission to use this command.")
                 return
-            await self.bot.time_service.dump_data(ctx)
+            await self.bot.persistence_service.dump_data(ctx)
         except Exception as e:
             logger.error(f"Error in dump command: {e}")
 

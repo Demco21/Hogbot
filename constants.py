@@ -19,7 +19,7 @@ DAY_OVERRIDES = {
     "saturday": "🍺 Saturday Beers",
     "sunday": "🍺 Sunday Beers"
 }
-TIME_DATA_FILE = "data/time_data.json"
+TIME_DATA_FILE = "data/persistence_data.json"
 NFL_SCHEDULE_FILE = "data/nfl_game_dump_2025.json"
 WINNER_PHRASES_FILE = "data/winner_phrases.json"
 YAHOO_TOKEN_FILE = "data/yahoo_token.json"
@@ -28,3 +28,20 @@ YAHOO_TOKEN_FILE = "data/yahoo_token.json"
 THISWEEK_COMMAND = 'thisweek'
 LIFETIME_COMMAND = 'lifetime'
 DUMP_COMMAND = 'dump'
+
+from enum import Enum
+
+class GameSource(Enum):
+    SLOTS = "slots"
+    CEE_LO = "cee_lo"
+    RIDE_THE_BUS = "ride_the_bus"
+    LOAN = "loan"
+    BEG = "beg"
+    MY_WALLET = "my_wallet"
+
+class UpdateType(Enum):
+    INIT_BALANCE = "init_balance"
+    BET_PLACED = "bet_placed"
+    BET_WON = "bet_won"
+    BET_LOST = "bet_lost"
+    BEG = "beg"

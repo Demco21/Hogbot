@@ -9,6 +9,7 @@ from discord.ext import commands
 
 from bot_state import BotState
 from logging_config import logger
+from constants import GameSource, UpdateType
 
 
 class SlotsView(discord.ui.View):
@@ -43,7 +44,7 @@ class SlotsView(discord.ui.View):
     ]
 
     def __init__(self, player: discord.User, bet: int, bot_state: BotState, bot):
-        super().__init__(timeout=60)
+        super().__init__(timeout=45)
         self.player = player
         self.bet = bet
         self.state = bot_state
@@ -58,6 +59,18 @@ class SlotsView(discord.ui.View):
 
         # Pre-calc for weighted choices
         self._weighted_emojis, self._weights = zip(*self.WEIGHTED_SYMBOLS)
+        self._cleanup_task = asyncio.create_task(self._auto_cleanup())
+
+    async def _auto_cleanup(self):
+        try:
+            await asyncio.sleep(60)  # 2 minutes max lifetime
+        except asyncio.CancelledError:
+            # Round ended normally; just exit quietly
+            return
+
+        if hasattr(self.state, "active_slots"):
+            self.state.active_slots.discard(self.player.id)
+        self.stop()
 
     def _spin_symbol(self):
         """Return a symbol based on weights."""
@@ -347,7 +360,17 @@ class SlotsView(discord.ui.View):
                 if service:
                     await service.update_richest_member_role(guild)
                     balance = self.state.member_wallets.get(self.player.id, 0)
-                    service.add_wallet_history_entry(self.player.id, balance)
+                    service.add_wallet_history_entry(
+                        self.player.id, 
+                        balance,
+                        metadata = {
+                            "game_source": GameSource.SLOTS,
+                            "update_type": UpdateType.BET_LOST,
+                            "bet_amount": self.bet,
+                            "payout_amount": 0,
+                            "reason": "Slot machine timed out."
+                        }
+                    )
             except Exception:
                 logger.error(
                     "Failed to update richest member role on slots timeout",
@@ -356,6 +379,9 @@ class SlotsView(discord.ui.View):
         # also clear lock here
         if hasattr(self.state, "active_slots"):
             self.state.active_slots.discard(self.player.id)
+
+        if hasattr(self, "_cleanup_task") and not self._cleanup_task.done():
+            self._cleanup_task.cancel()
         self.stop()
 
     # ---------- UI: Crank Button ----------
@@ -400,166 +426,215 @@ class SlotsView(discord.ui.View):
         # Disable the button while the reels animate to prevent double-presses.
         self.disable_all_items()
 
-        # Ensure wallet container
-        wallets = getattr(self.state, "member_wallets", None)
-        if wallets is None:
-            self.state.member_wallets = {}
-            wallets = self.state.member_wallets
+        try:
+            # Ensure wallet container
+            wallets = getattr(self.state, "member_wallets", None)
+            if wallets is None:
+                self.state.member_wallets = {}
+                wallets = self.state.member_wallets
 
-        current_balance = wallets.get(self.player.id, 0)
-        jackpot_amount = getattr(self.state, "slots_progressive_jackpot", 0)
-
-        if not is_bonus_spin:
-            # ---- First (paid) Spin ----
-            self.spin_started = True
-
-            final_result = [self._spin_symbol() for _ in range(3)]
-            multiplier, outcome_text, bonus_spin, jackpot_hit = self._evaluate_spin(
-                final_result, jackpot_amount
-            )
-
-            total_payout = self.bet * multiplier
-
-            # Store bonus spin state for a future button press
-            self.bonus_spin_available = bonus_spin
-            self.bonus_spin_used = False
-
-            # Animate the first spin, keeping the button enabled afterward if a bonus was unlocked
-            await self._animate_spin(
-                interaction,
-                final_result,
-                multiplier,
-                outcome_text,
-                total_payout,
-                jackpot_hit,
-                bonus_label=None,
-                bonus_available=self.bonus_spin_available,
-            )
-
-            # If jackpot hit, add progressive pool on top
-            if jackpot_hit:
-                total_payout += jackpot_amount
-                self.state.slots_progressive_jackpot = SlotsService.JACKPOT_SEED
-
-            # Apply payout to wallet
-            if total_payout > 0:
-                new_balance = current_balance + total_payout
-                try:
-                    self.bot.gamble_service.update_wallet(self.player.id, new_balance)
-                    self.bot.gamble_service.add_wallet_history_entry(
-                        self.player.id, new_balance
-                    )
-                except Exception:
-                    logger.error(
-                        "Error updating wallet after slots win", exc_info=True
-                    )
-            else:
-                # Record the loss state in history
-                try:
-                    balance = self.state.member_wallets.get(self.player.id, 0)
-                    self.bot.gamble_service.add_wallet_history_entry(
-                        self.player.id, balance
-                    )
-                except Exception:
-                    logger.error(
-                        "Error recording wallet history after slots loss", exc_info=True
-                    )
-
-            # Trigger richest role update after spin resolves
-            try:
-                if interaction.guild is not None:
-                    await self.bot.gamble_service.update_richest_member_role(
-                        interaction.guild
-                    )
-            except Exception:
-                logger.error(
-                    "Failed to update richest member role after slots spin", exc_info=True
-                )
-
-            if self.bonus_spin_available:
-                # Allow the user to press Crank! again for the free spin
-                self.spun = False
-            else:
-                # No bonus – machine is finished for this command
-                if hasattr(self.state, "active_slots"):
-                    self.state.active_slots.discard(self.player.id)
-                self.stop()
-
-        else:
-            # ---- Bonus Spin (can chain) ----
-            # Re-read current balance and jackpot for the bonus spin
-            wallets = getattr(self.state, "member_wallets", None) or {}
             current_balance = wallets.get(self.player.id, 0)
             jackpot_amount = getattr(self.state, "slots_progressive_jackpot", 0)
 
-            bonus_result = [self._spin_symbol() for _ in range(3)]
-            b_mult, b_text, b_bonus, b_jackpot_hit = self._evaluate_spin(
-                bonus_result, jackpot_amount
-            )
-            bonus_total_payout = self.bet * b_mult
+            if not is_bonus_spin:
+                # ---- First (paid) Spin ----
+                self.spin_started = True
 
-            # Update bonus spin state based on this bonus result
-            # If we hit another triple clover/star, we get another bonus spin.
-            self.bonus_spin_available = b_bonus
-            self.bonus_spin_used = not b_bonus
+                final_result = [self._spin_symbol() for _ in range(3)]
+                multiplier, outcome_text, bonus_spin, jackpot_hit = self._evaluate_spin(
+                    final_result, jackpot_amount
+                )
 
-            await self._animate_spin(
-                interaction,
-                bonus_result,
-                b_mult,
-                b_text,
-                bonus_total_payout,
-                b_jackpot_hit,
-                bonus_label="Bonus Spin",
-                bonus_available=self.bonus_spin_available,
-            )
+                total_payout = self.bet * multiplier
 
-            if b_jackpot_hit:
-                bonus_total_payout += jackpot_amount
-                self.state.slots_progressive_jackpot = SlotsService.JACKPOT_SEED
+                # Store bonus spin state for a future button press
+                self.bonus_spin_available = bonus_spin
+                self.bonus_spin_used = False
 
-            if bonus_total_payout > 0:
-                new_balance = current_balance + bonus_total_payout
+                # Animate the first spin, keeping the button enabled afterward if a bonus was unlocked
+                await self._animate_spin(
+                    interaction,
+                    final_result,
+                    multiplier,
+                    outcome_text,
+                    total_payout,
+                    jackpot_hit,
+                    bonus_label=None,
+                    bonus_available=self.bonus_spin_available,
+                )
+
+                # If jackpot hit, add progressive pool on top
+                if jackpot_hit:
+                    total_payout += jackpot_amount
+                    self.state.slots_progressive_jackpot = SlotsService.JACKPOT_SEED
+
+                # Apply payout to wallet
+                if total_payout > 0:
+                    new_balance = current_balance + total_payout
+                    try:
+                        self.bot.gamble_service.update_wallet(self.player.id, new_balance)
+                        self.bot.gamble_service.add_wallet_history_entry(
+                            self.player.id, 
+                            new_balance,
+                            metadata = {
+                                "game_source": GameSource.SLOTS,
+                                "update_type": UpdateType.BET_WON,
+                                "bet_amount": self.bet,
+                                "payout_amount": total_payout,
+                                "reason": final_result
+                            }
+                        )
+                    except Exception:
+                        logger.error(
+                            "Error updating wallet after slots win", exc_info=True
+                        )
+                else:
+                    # Record the loss state in history
+                    try:
+                        balance = self.state.member_wallets.get(self.player.id, 0)
+                        self.bot.gamble_service.add_wallet_history_entry(
+                            self.player.id, 
+                            balance,
+                            metadata = {
+                                "game_source": GameSource.SLOTS,
+                                "update_type": UpdateType.BET_LOST,
+                                "bet_amount": self.bet,
+                                "payout_amount": 0,
+                                "reason": final_result
+                            }
+                        )
+                    except Exception:
+                        logger.error(
+                            "Error recording wallet history after slots loss", exc_info=True
+                        )
+
+                # Trigger richest role update after spin resolves
                 try:
-                    self.bot.gamble_service.update_wallet(self.player.id, new_balance)
-                    self.bot.gamble_service.add_wallet_history_entry(
-                        self.player.id, new_balance
-                    )
+                    if interaction.guild is not None:
+                        await self.bot.gamble_service.update_richest_member_role(
+                            interaction.guild
+                        )
                 except Exception:
                     logger.error(
-                        "Error updating wallet after slots bonus win", exc_info=True
+                        "Failed to update richest member role after slots spin", exc_info=True
                     )
+
+                if self.bonus_spin_available:
+                    # Allow the user to press Crank! again for the free spin
+                    self.spun = False
+                else:
+                    # No bonus – machine is finished for this command
+                    if hasattr(self.state, "active_slots"):
+                        self.state.active_slots.discard(self.player.id)
+
+                    if hasattr(self, "_cleanup_task") and not self._cleanup_task.done():
+                        self._cleanup_task.cancel()
+                    
+                    self.stop()
+
             else:
+                # ---- Bonus Spin (can chain) ----
+                # Re-read current balance and jackpot for the bonus spin
+                wallets = getattr(self.state, "member_wallets", None) or {}
+                current_balance = wallets.get(self.player.id, 0)
+                jackpot_amount = getattr(self.state, "slots_progressive_jackpot", 0)
+
+                bonus_result = [self._spin_symbol() for _ in range(3)]
+                b_mult, b_text, b_bonus, b_jackpot_hit = self._evaluate_spin(
+                    bonus_result, jackpot_amount
+                )
+                bonus_total_payout = self.bet * b_mult
+
+                # Update bonus spin state based on this bonus result
+                # If we hit another triple clover/star, we get another bonus spin.
+                self.bonus_spin_available = b_bonus
+                self.bonus_spin_used = not b_bonus
+
+                await self._animate_spin(
+                    interaction,
+                    bonus_result,
+                    b_mult,
+                    b_text,
+                    bonus_total_payout,
+                    b_jackpot_hit,
+                    bonus_label="Bonus Spin",
+                    bonus_available=self.bonus_spin_available,
+                )
+
+                if b_jackpot_hit:
+                    bonus_total_payout += jackpot_amount
+                    self.state.slots_progressive_jackpot = SlotsService.JACKPOT_SEED
+
+                if bonus_total_payout > 0:
+                    new_balance = current_balance + bonus_total_payout
+                    try:
+                        self.bot.gamble_service.update_wallet(self.player.id, new_balance)
+                        self.bot.gamble_service.add_wallet_history_entry(
+                            self.player.id, 
+                            new_balance,
+                            metadata = {
+                                "game_source": GameSource.SLOTS,
+                                "update_type": UpdateType.BET_WON,
+                                "bet_amount": self.bet,
+                                "payout_amount": bonus_total_payout,
+                                "reason": bonus_result
+                            }
+                        )
+                    except Exception:
+                        logger.error(
+                            "Error updating wallet after slots bonus win", exc_info=True
+                        )
+                else:
+                    try:
+                        balance = self.state.member_wallets.get(self.player.id, 0)
+                        self.bot.gamble_service.add_wallet_history_entry(
+                            self.player.id, 
+                            balance,
+                            metadata = {
+                                "game_source": GameSource.SLOTS,
+                                "update_type": UpdateType.BET_LOST,
+                                "bet_amount": self.bet,
+                                "payout_amount": 0,
+                                "reason": bonus_result
+                            }
+                        )
+                    except Exception:
+                        logger.error(
+                            "Error recording wallet history after slots bonus loss",
+                            exc_info=True,
+                        )
+
                 try:
-                    balance = self.state.member_wallets.get(self.player.id, 0)
-                    self.bot.gamble_service.add_wallet_history_entry(
-                        self.player.id, balance
-                    )
+                    if interaction.guild is not None:
+                        await self.bot.gamble_service.update_richest_member_role(
+                            interaction.guild
+                        )
                 except Exception:
                     logger.error(
-                        "Error recording wallet history after slots bonus loss",
+                        "Failed to update richest member role after slots bonus spin",
                         exc_info=True,
                     )
 
-            try:
-                if interaction.guild is not None:
-                    await self.bot.gamble_service.update_richest_member_role(
-                        interaction.guild
-                    )
-            except Exception:
-                logger.error(
-                    "Failed to update richest member role after slots bonus spin",
-                    exc_info=True,
-                )
+                if self.bonus_spin_available:
+                    # Allow chaining another bonus spin
+                    self.spun = False
+                else:
+                    # No more bonus spins – fully done
+                    if hasattr(self.state, "active_slots"):
+                        self.state.active_slots.discard(self.player.id)
 
-            if self.bonus_spin_available:
-                # Allow chaining another bonus spin
-                self.spun = False
-            else:
-                # No more bonus spins – fully done
+                    if hasattr(self, "_cleanup_task") and not self._cleanup_task.done():
+                        self._cleanup_task.cancel()
+                    
+                    self.stop()
+        except Exception:
+            logger.error("Unhandled error in crank_button", exc_info=True)
+            await interaction.followup.send("An unexpected error occurred. Try again later.", ephemeral=True)
+        finally:
+            # Ensure cleanup if the view is stuck in a bad state
+            if not self.bonus_spin_available or self.bonus_spin_used:
                 if hasattr(self.state, "active_slots"):
                     self.state.active_slots.discard(self.player.id)
-                self.stop()
 
 
 class SlotsService:
@@ -631,7 +706,12 @@ class SlotsService:
             try:
                 self.bot.gamble_service.update_wallet(user.id, wallets[user.id])
                 self.bot.gamble_service.add_wallet_history_entry(
-                    user.id, wallets[user.id]
+                    user.id, 
+                    wallets[user.id],
+                    metadata = {
+                        "game_source": GameSource.SLOTS,
+                        "update_type": UpdateType.INIT_BALANCE,
+                    }
                 )
             except Exception:
                 logger.error(
@@ -686,7 +766,15 @@ class SlotsService:
             # Deduct bet up front like a real machine
             new_balance = wallet_balance - bet_amount
             self.bot.gamble_service.update_wallet(user.id, new_balance)
-            self.bot.gamble_service.add_wallet_history_entry(user.id, new_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                user.id, 
+                new_balance,
+                metadata = {
+                    "game_source": GameSource.SLOTS,
+                    "update_type": UpdateType.BET_PLACED,
+                    "bet_amount": bet_amount,
+                }
+            )
 
             # Feed a slice of every bet into the progressive jackpot
             try:
@@ -707,11 +795,6 @@ class SlotsService:
             embed = view._base_embed(description=description)
             await interaction.response.send_message(embed=embed, view=view)
             view.message = await interaction.original_response()
-
-            logger.info(
-                f"User {user} ({user.id}) started a slots spin with bet {bet_amount}. "
-                f"Balance after bet: {new_balance}. Jackpot: {jackpot}"
-            )
         except Exception:
             # If anything goes wrong starting the game, release their lock
             if hasattr(self.state, "active_slots"):

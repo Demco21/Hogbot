@@ -7,7 +7,6 @@ class BotState:
         self.this_week_time_sums = {}
         self.hogbot_start_date = None
         self.bot_state = 1
-        self.approvals = {}
         self.current_chancellor_id = None
         self.yahoo_token = None
         self.roster_messages = {}
@@ -16,7 +15,6 @@ class BotState:
         self.current_nfl_season = 2025
         self.nfl_season_started = False
         self.nfl_games_msgs = {}
-        self.pvp_disabled_members = {}
         self.member_wallets = {}
         self.balance_history = {}
         self.first_round_color_draws = {}

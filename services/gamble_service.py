@@ -7,13 +7,15 @@ import io
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta, timezone
 from config import RICHEST_MEMBER_ROLE_ID
+from typing import Optional, Dict, Any
+from constants import GameSource, UpdateType
 
 class GambleService:
     def __init__(self, bot_state: BotState, bot):
         self.state = bot_state
         self.bot = bot
 
-    def get_name(self, member: discord.abc.User) -> str:
+    def get_name(self, member: discord.abc.User):
         # Escape underscores so Discord doesn't do italics
         escaped_name = member.name.replace("_", "\\_")
         return escaped_name
@@ -33,7 +35,6 @@ class GambleService:
 
             roll_result = random.randint(from_value, to_value)
 
-            # Determine correct article ("a" or "an")
             first_digit = str(roll_result)[0]
             article = "an" if first_digit in {"8"} else "a"
 
@@ -348,7 +349,16 @@ class GambleService:
 
             # Default starting balance if not found
             if user.id not in wallets:
-                wallets[user.id] = 0
+                new_balance = 1000
+                self.update_wallet(user.id, new_balance)
+                self.bot.gamble_service.add_wallet_history_entry(
+                    user.id, 
+                    new_balance,
+                    metadata = {
+                        "game_source": GameSource.BEG,
+                        "update_type": UpdateType.BEG,
+                    }
+                )
 
             current_balance = wallets[user.id]
 
@@ -366,9 +376,16 @@ class GambleService:
 
             # Give a random amount between 1 and 50
             beg_amount = random.randint(50, 200)
-            self.add_to_wallet(user.id, beg_amount)
+            self.update_wallet(user.id, beg_amount)
+            self.bot.gamble_service.add_wallet_history_entry(
+                user.id, 
+                beg_amount,
+                metadata = {
+                    "game_source": GameSource.BEG,
+                    "update_type": UpdateType.BEG,
+                }
+            )
             new_balance = wallets[user.id]
-            self.add_wallet_history_entry(user.id, new_balance)
 
             # Funny, slightly edgy messages
             messages = [
@@ -404,47 +421,59 @@ class GambleService:
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
 
-    def update_wallet(self, member_id: int, amount: int):
-        """Update a member's wallet to a certain amount."""
+    def update_wallet(
+        self,
+        member_id: int,
+        amount: int
+    ):
+        """
+        Update a member's wallet to a certain amount, optionally updating history.
+        """
         if not hasattr(self.state, "member_wallets"):
             self.state.member_wallets = {}
 
         wallets = self.state.member_wallets
+        old_amount = wallets.get(member_id, 0)
+        difference = amount - old_amount
+
         wallets[member_id] = amount
 
-    def add_to_wallet(self, member_id: int, amount: int):
-        """Add a certain amount to a member's wallet."""
-        if not hasattr(self.state, "member_wallets"):
-            self.state.member_wallets = {}
-
-        wallets = self.state.member_wallets
-        if member_id not in wallets:
-            wallets[member_id] = 0
-
-        wallets[member_id] += amount
-
-    def subtract_from_wallet(self, member_id: int, amount: int):
-        """Subtract a certain amount from a member's wallet."""
-        if not hasattr(self.state, "member_wallets"):
-            self.state.member_wallets = {}
-
-        wallets = self.state.member_wallets
-        if member_id not in wallets:
-            wallets[member_id] = 0
-
-        wallets[member_id] -= amount
-        if wallets[member_id] < 0:
-            wallets[member_id] = 0
-
-    def add_wallet_history_entry(self, member_id: int, amount: int):
+    def add_wallet_history_entry(
+        self, 
+        member_id: int, 
+        balance: int,
+        metadata: Optional[Dict[str, Any]],
+    ):
         """Add an entry to a member's balance history."""
-        if not hasattr(self.state, "balance_history"):
-            self.state.balance_history = {}
 
-        history = self.state.balance_history.setdefault(member_id, [])
-        history.append(amount)
-        if len(history) > 100:
-            history.pop(0)  # keep only last 100
+        username = None
+        try:
+            if hasattr(self.bot, "get_user"):
+                user = self.bot.get_user(member_id)
+                username = user.name if user else "Unknown"
+            elif hasattr(self.state, "guild") and self.state.guild:
+                member = self.state.guild.get_member(member_id)
+                username = member.display_name if member else "Unknown"
+        except Exception:
+            username = "Unknown"
+
+        logger.info(
+            "wallet history entry added: "
+            f"member_name={username}, member_id={member_id}, "
+            f"balance: {balance}, "
+            f"game_source={getattr(metadata.get('game_source'), 'value', metadata.get('game_source', 'N/A'))}, "
+            f"update_type={getattr(metadata.get('update_type'), 'value', metadata.get('update_type', 'N/A'))}, "
+            f"extra={ {k:v for k,v in metadata.items() if k not in ['game_source','update_type']} if metadata else 'None' }"
+        )
+
+        if metadata.get("update_type") != UpdateType.BET_PLACED:
+            if not hasattr(self.state, "balance_history"):
+                self.state.balance_history = {}
+
+            history = self.state.balance_history.setdefault(member_id, [])
+            history.append(balance)
+            if len(history) > 100:
+                history.pop(0)  # keep only last 100
 
     async def show_balance_graph(self, interaction: discord.Interaction, member: discord.Member):
         """Generate and display a line graph of a player's balance history."""
@@ -519,5 +548,29 @@ class GambleService:
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
 
+    async def my_wallet(self, interaction: discord.Interaction):
+        """
+        Entry point for the /mywallet slash command.
+        Shows the user's current Hog Coin balance.
+        """
+        if interaction.user.id in self.state.member_wallets:
+            wallet_balance = self.state.member_wallets[interaction.user.id]
+        else:
+            wallet_balance = 1000
+            self.update_wallet(interaction.user.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                interaction.user.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.MY_WALLET,
+                    "update_type": UpdateType.INIT_BALANCE,
+                }
+            )
+
+        msg = f"Your current Hog Coin balance is: 🪙 **{wallet_balance}**"
+        if interaction.response.is_done():
+            await interaction.followup.send(msg, ephemeral=True)
+        else:
+            await interaction.response.send_message(msg, ephemeral=True)
 
 __all__ = ['GambleService']

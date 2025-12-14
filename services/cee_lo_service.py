@@ -3,7 +3,7 @@ from logging_config import logger
 import discord
 from discord.ext import commands
 import random
-
+from constants import GameSource, UpdateType
 
 class CeeLoView(discord.ui.View):
     """
@@ -67,7 +67,16 @@ class CeeLoView(discord.ui.View):
     def _ensure_wallet(self, member_id: int):
         wallets = self._wallets()
         if member_id not in wallets:
-            self.bot.gamble_service.update_wallet(member_id, 1000)
+            new_balance = 1000
+            self.bot.gamble_service.update_wallet(member_id, new_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                member_id, 
+                new_balance,
+                metadata = {
+                    "game_source": GameSource.CEE_LO,
+                    "update_type": UpdateType.INIT_BALANCE,
+                }
+            )
         return wallets[member_id]
 
     def _build_lobby_embed(self):
@@ -608,10 +617,28 @@ class CeeLoView(discord.ui.View):
 
         # Record wallet history for all participants (if your GambleService supports this).
         try:
-            self.bot.gamble_service.add_wallet_history_entry(winner.id, wallets[winner.id])
+            self.bot.gamble_service.add_wallet_history_entry(
+                winner.id, 
+                wallets[winner.id],
+                metadata = {
+                    "game_source": GameSource.CEE_LO,
+                    "update_type": UpdateType.BET_WON,
+                    "pot_amount": self.pot,
+                    "buy_in_amount": self.buy_in,
+                }
+            )
             for member in self.participants:
                 if member.id != winner.id:
-                    self.bot.gamble_service.add_wallet_history_entry(member.id, wallets.get(member.id, 1000))
+                    self.bot.gamble_service.add_wallet_history_entry(
+                        member.id, 
+                        wallets.get(member.id, 1000),
+                        metadata = {
+                            "game_source": GameSource.CEE_LO,
+                            "update_type": UpdateType.BET_LOST,
+                            "pot_amount": self.pot,
+                            "buy_in_amount": self.buy_in,
+                        }
+                    )
         except Exception:
             logger.warning("Failed to record wallet history in _auto_win_payout_and_finish.", exc_info=True)
 
@@ -702,10 +729,28 @@ class CeeLoView(discord.ui.View):
 
         # Record wallet history for everyone
         try:
-            self.bot.gamble_service.add_wallet_history_entry(best_id, wallets[best_id])
+            self.bot.gamble_service.add_wallet_history_entry(
+                best_id, 
+                wallets[best_id],
+                metadata = {
+                    "game_source": GameSource.CEE_LO,
+                    "update_type": UpdateType.BET_WON,
+                    "pot_amount": self.pot,
+                    "buy_in_amount": self.buy_in,
+                }
+            )
             for member in self.participants:
                 if member.id != best_id:
-                    self.bot.gamble_service.add_wallet_history_entry(member.id, wallets.get(member.id, 1000))
+                    self.bot.gamble_service.add_wallet_history_entry(
+                        member.id, 
+                        wallets.get(member.id, 1000),
+                        metadata = {
+                            "game_source": GameSource.CEE_LO,
+                            "update_type": UpdateType.BET_LOST,
+                            "pot_amount": self.pot,
+                            "buy_in_amount": self.buy_in,
+                        }
+                    )
         except Exception:
             logger.warning("Failed to record wallet history in _decide_winner_and_payout.", exc_info=True)
 

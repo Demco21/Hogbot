@@ -12,6 +12,7 @@ from services.gamble_service import GambleService
 from services.ride_the_bus_service import RideTheBusService
 from services.cee_lo_service import CeeLoService
 from services.slots_service import SlotsService
+from services.persistence_service import PersistenceService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -34,6 +35,7 @@ class HogBot(commands.Bot):
         self.ride_the_bus_service = RideTheBusService(self.state, self)
         self.cee_lo_service = CeeLoService(self.state, self)
         self.slots_service = SlotsService(self.state, self)
+        self.persistence_service = PersistenceService(self.state, self)
         self.synced = False
 
     async def setup_hook(self):
@@ -67,7 +69,7 @@ async def on_ready():
         logger.info(f'Starting bot {bot.user}')
         setup_scheduler(bot)
         logger.info(f'Set up scheduler')
-        await bot.time_service.restore_data()
+        await bot.persistence_service.restore_data()
         await bot.nfl_service.set_nfl_bot_states()
         logger.info(f'Restored data')
     except Exception as e:
@@ -90,7 +92,7 @@ def setup_scheduler(bot):
 
     # Misc
     change_channel_job = bot.channel_change_service.change_channel_name
-    dump_data_job = bot.time_service.dump_data
+    dump_data_job = bot.persistence_service.dump_data
     scheduler.add_job(change_channel_job, CronTrigger(hour=0, minute=0, timezone=timezone('America/New_York')))
     scheduler.add_job(dump_data_job, CronTrigger(hour='*', minute=2, timezone=timezone('America/New_York')))
     scheduler.start()

@@ -4,6 +4,7 @@ from logging_config import logger
 import discord
 from discord.ext import commands
 import random
+from constants import GameSource, UpdateType
 
 class RideTheBusView(discord.ui.View):
     """
@@ -141,7 +142,17 @@ class RideTheBusView(discord.ui.View):
             try:
                 await self._update_richest_member_after_game(guild)
                 wallet_balance = self.state.member_wallets[self.player.id]
-                self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+                self.bot.gamble_service.add_wallet_history_entry(
+                    self.player.id, 
+                    wallet_balance,
+                    metadata = {
+                        "game_source": GameSource.RIDE_THE_BUS,
+                        "update_type": UpdateType.BET_LOST,
+                        "bet_amount": self.bet,
+                        "payout_amount": 0,
+                        "reason": "Game timed out"
+                    }
+                )
             except Exception:
                 logger.error("Failed to update richest member role on timeout", exc_info=True)
 
@@ -211,7 +222,19 @@ class RideTheBusView(discord.ui.View):
             await interaction.response.edit_message(embed=embed, view=None)
             await self._update_richest_member_after_game(interaction.guild)
             wallet_balance = self.state.member_wallets[self.player.id]
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_LOST,
+                    "choice": guess,
+                    "actual": actual_color,
+                    "bet_amount": self.bet,
+                    "payout_amount": 0,
+                    "reason": "wrong color guess"
+                }
+            )
             self.stop()
 
     # ---------- Round 2: Higher / Lower ----------
@@ -278,7 +301,19 @@ class RideTheBusView(discord.ui.View):
             await interaction.response.edit_message(embed=embed, view=None)
             await self._update_richest_member_after_game(interaction.guild)
             wallet_balance = self.state.member_wallets[self.player.id]
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_LOST,
+                    "choice": guess,
+                    "actual": self.format_card(second),
+                    "bet_amount": self.bet,
+                    "payout_amount": 0,
+                    "reason": "overunder tie"
+                }
+            )
             self.stop()
             return
 
@@ -303,7 +338,19 @@ class RideTheBusView(discord.ui.View):
             await interaction.response.edit_message(embed=embed, view=None)
             await self._update_richest_member_after_game(interaction.guild)
             wallet_balance = self.state.member_wallets[self.player.id]
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_LOST,
+                    "choice": guess,
+                    "actual": "higher" if is_higher else "lower",
+                    "bet_amount": self.bet,
+                    "payout_amount": 0,
+                    "reason": "wrong higher guess" if guess == "higher" else "wrong lower guess"
+                }
+            )
             self.stop()
 
     # ---------- Round 3: Inside / Outside ----------
@@ -378,7 +425,19 @@ class RideTheBusView(discord.ui.View):
             await interaction.response.edit_message(embed=embed, view=None)
             await self._update_richest_member_after_game(interaction.guild)
             wallet_balance = self.state.member_wallets[self.player.id]
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_LOST,
+                    "choice": guess,
+                    "actual": self.format_card(third),
+                    "bet_amount": self.bet,
+                    "payout_amount": 0,
+                    "reason": "inside/outside match"
+                }
+            )
             self.stop()
             return
 
@@ -404,7 +463,19 @@ class RideTheBusView(discord.ui.View):
             await interaction.response.edit_message(embed=embed, view=None)
             await self._update_richest_member_after_game(interaction.guild)
             wallet_balance = self.state.member_wallets[self.player.id]
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_LOST,
+                    "choice": guess,
+                    "actual": "inside" if inside else "outside",
+                    "bet_amount": self.bet,
+                    "payout_amount": 0,
+                    "reason": "wrong inside guess" if guess == "inside" else "wrong outside guess"
+                }
+            )
             self.stop()
 
     # ---------- Round 4: Guess the Suit ----------
@@ -461,8 +532,22 @@ class RideTheBusView(discord.ui.View):
             self.current_multiplier = 8
             wallet_balance = self.state.member_wallets[self.player.id]
             winnings = self.potential_payout(self.current_multiplier)
-            self.bot.gamble_service.update_wallet(self.player.id, wallet_balance + winnings)
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance + winnings)
+            new_balance = wallet_balance + winnings
+            self.bot.gamble_service.update_wallet(self.player.id, new_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                new_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_WON,
+                    "choice": suit_symbol,
+                    "actual": fourth["suit"],
+                    "round": "4",
+                    "bet_amount": self.bet,
+                    "payout_amount": winnings,
+                    "reason": "correct suit"
+                }
+            )
             desc += (
                 "\n🎉 **Jackpot!** You guessed correctly.\n\n"
                 f"**Final Multiplier**: 🪙x{self.current_multiplier}\n"
@@ -473,7 +558,20 @@ class RideTheBusView(discord.ui.View):
             desc += "\n❌ Wrong suit. You **lose** your bet."
             embed = self._base_embed(desc, win=False, game_over=True)
             wallet_balance = self.state.member_wallets[self.player.id]
-            self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                self.player.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_LOST,
+                    "choice": suit_symbol,
+                    "actual": fourth["suit"],
+                    "round": "4",
+                    "bet_amount": self.bet,
+                    "payout_amount": 0,
+                    "reason": "wrong suit"
+                }
+            )
 
         self.disable_all_items()
         await interaction.response.edit_message(embed=embed, view=None)
@@ -485,8 +583,20 @@ class RideTheBusView(discord.ui.View):
             return
         wallet_balance = self.state.member_wallets[self.player.id]
         winnings = self.potential_payout(self.current_multiplier)
-        self.bot.gamble_service.update_wallet(self.player.id, wallet_balance + winnings)
-        self.bot.gamble_service.add_wallet_history_entry(self.player.id, wallet_balance + winnings)
+        new_balance = wallet_balance + winnings
+        self.bot.gamble_service.update_wallet(self.player.id, new_balance)
+        self.bot.gamble_service.add_wallet_history_entry(
+            self.player.id, 
+            new_balance,
+            metadata = {
+                "game_source": GameSource.RIDE_THE_BUS,
+                "update_type": UpdateType.BET_WON,
+                "choice": "cashout",
+                "round": self.stage,
+                "bet_amount": self.bet,
+                "payout_amount": winnings,
+            }
+        )
         desc = (
             f"You chose to **cash out**.\n\n"
             f"**Final Multiplier**: 🪙x{self.current_multiplier}\n"
@@ -541,7 +651,17 @@ class RideTheBusService:
         else:
             wallet_balance = 1000
             self.bot.gamble_service.update_wallet(interaction.user.id, wallet_balance)
-            self.bot.gamble_service.add_wallet_history_entry(interaction.user.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                interaction.user.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.INIT_BALANCE,
+                    "choice": "game_start",
+                    "round": "1",
+                    "bet_amount": self.bet,
+                }
+            )
         if bet > wallet_balance:
             msg = f"You don't have enough **Hog Coins** to make that bet. Your current balance is 🪙 {wallet_balance}."
             if interaction.response.is_done():
@@ -553,12 +673,22 @@ class RideTheBusService:
         try:
             wallet_balance -= bet
             self.bot.gamble_service.update_wallet(interaction.user.id, wallet_balance)
+            self.bot.gamble_service.add_wallet_history_entry(
+                interaction.user.id, 
+                wallet_balance,
+                metadata = {
+                    "game_source": GameSource.RIDE_THE_BUS,
+                    "update_type": UpdateType.BET_PLACED,
+                    "bet_amount": bet,
+                    "choice": "game_start",
+                    "round": "1",
+                }
+            )
             view = RideTheBusView(interaction.user, bet, self.state, self.bot)
             embed = view.build_intro_embed()
             await interaction.response.send_message(embed=embed, view=view)
             # Save message reference for timeout handling
             view.message = await interaction.original_response()
-            logger.info(f"User {interaction.user} started Ride the Bus with bet {bet}")
         except Exception:
             logger.error("Error starting Ride the Bus game", exc_info=True)
             error_msg = "An error occurred while starting Ride the Bus. Please try again."
@@ -566,23 +696,5 @@ class RideTheBusService:
                 await interaction.followup.send(error_msg, ephemeral=True)
             else:
                 await interaction.response.send_message(error_msg, ephemeral=True)
-    
-    async def my_wallet(self, interaction: discord.Interaction):
-        """
-        Entry point for the /mywallet slash command.
-        Shows the user's current Hog Coin balance.
-        """
-        if interaction.user.id in self.state.member_wallets:
-            wallet_balance = self.state.member_wallets[interaction.user.id]
-        else:
-            wallet_balance = 1000
-            self.bot.gamble_service.update_wallet(interaction.user.id, wallet_balance)
-            self.bot.gamble_service.add_wallet_history_entry(interaction.user.id, wallet_balance)
-
-        msg = f"Your current Hog Coin balance is: 🪙 **{wallet_balance}**"
-        if interaction.response.is_done():
-            await interaction.followup.send(msg, ephemeral=True)
-        else:
-            await interaction.response.send_message(msg, ephemeral=True)
 
 __all__ = ['RideTheBusService']

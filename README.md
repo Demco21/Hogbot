@@ -26,6 +26,9 @@ HogBot tracks time spent in Discord voice channels, appoints a weekly “Chancel
   - Schedules routine data dumps for persistence.  
   - Rotating file-based logging with backups.  
 
+- **Casino**
+  - Casino games including Ride The Bus, Slots, and Cee Lo
+
 ---
 
 ## 📂 Project Structure  
@@ -36,15 +39,18 @@ HogBot tracks time spent in Discord voice channels, appoints a weekly “Chancel
 ├── cogs/                    # Command definitions
 │   ├── time_cog.py          # Voice tracking commands
 │   ├── admin_cog.py         # Admin commands
-│   ├── pvp_cog.py           # PVP and move commands
 ├── services/                # Core bot services
 │   ├── time_service.py      # Voice activity tracking
+│   ├── persistence_service.py # Service for dumping and restoring persistent data
 │   ├── channel_change_service.py # Channel renamer
 │   ├── chancellor_service.py     # Chancellor role logic
 │   ├── nfl_service.py       # NFL schedules/weeks
 │   ├── espn_service.py      # ESPN API integration
 │   ├── yahoo_ff_service.py  # Yahoo Fantasy API integration
-│   ├── pvp_service.py       # Toggle PvP mode and move members
+│   ├── gamble_service.py    # Global service for casino games
+│   ├── ride_the_bus_service.py # Service for playing Ride The Bus casino game
+│   ├── slots_service.py     # Service for playing slots casino game
+│   ├── cee_lo_service.py    # Service for playing Cee Lo casino game
 ├── data/                    # Logs and persistent data
 │   └── hogbot.log           # Rotating log file
 ```
@@ -80,14 +86,14 @@ CHANCELLOR_ROLE_ID=
 HOGBOT_USER_ID=
 HOGBOT_SERVER_ID=
 CHANGE_CHANNEL_ID=
+CASINO_CHANNEL_ID=
+ADMIN_USER_ID=
 NFL_SCHEDULE_CHANNEL_ID=
 FANTASY_FOOTBALL_CHANNEL_ID=
 ADMIN_USER_ID=
 YAHOO_CLIENT_ID=
 YAHOO_CLIENT_SECRET=
 YAHOO_LEAGUE_KEY=
-PVP_DISABLED_ROLE_ID=
-PVP_ENABLED_ROLE_ID=
 GIANTS_EMOJI_ID=
 JETS_EMOJI_ID=
 BILLS_EMOJI_ID=
@@ -148,10 +154,6 @@ kill [PID]
 - `!lifetime [voice|muted|deafened|streaming|username]`  
 - `!dump` (admin only, forces data dump)
 
-### PvP
-- `!move @member [channel name]`
-- `!disablepvp`
-
 ### Yahoo Fantasy (Admin Only)
 - `!auth` – authorize Yahoo Fantasy
 - `!matchups` / `!matchupsupd`  
@@ -171,4 +173,3 @@ kill [PID]
 - **Chancellor**: Appointed weekly on Sunday mornings.  
 - **Channel Rename**: Midnight rename.  
 - **Data Dump**: Hourly persistence.
-- **PvP Check**: Every minute check all members with PvP disabled and re-enable if longer than defined threshold

@@ -13,7 +13,6 @@ class GambleCog(commands.Cog):
         """Utility method to check if command is used in the allowed channel."""
         return interaction.channel and interaction.channel.id == CASINO_CHANNEL_ID
 
-
     @app_commands.command(
         name="roll",
         description="Rolls a die from 1 - 100 by default."
@@ -59,9 +58,9 @@ class GambleCog(commands.Cog):
     @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
     async def my_wallet(self, interaction: discord.Interaction):
         try:
-            await self.bot.ride_the_bus_service.my_wallet(interaction)
+            await self.bot.gamble_service.my_wallet(interaction)
         except Exception as e:
-            logger.error(f"Error in ridethebus command: {e}")
+            logger.error(f"Error in mywallet command: {e}")
 
     
     @app_commands.command(
@@ -198,8 +197,6 @@ class GambleCog(commands.Cog):
             await self.bot.slots_service.slots(interaction, bet)
         except Exception as e:
             logger.error(f"Error in slots command: {e}")
-
-
 
 async def setup(bot):
     await bot.add_cog(GambleCog(bot))
