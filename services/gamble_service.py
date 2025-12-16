@@ -287,11 +287,11 @@ class GambleService:
                 # Special indicator for the #1 seed
                 if rank == 1:
                     line = (
-                        f"**#{rank}** 👑 {member.mention} — 🪙 **{balance}** "
+                        f"**#{rank}** 👑 {member.mention} — 🪙 **{balance:,}** "
                         f"*({role_name})*"
                     )
                 else:
-                    line = f"**#{rank}** {member.mention} — 🪙 **{balance}**"
+                    line = f"**#{rank}** {member.mention} — 🪙 **{balance:,}**"
 
                 lines.append(line)
                 rank += 1
@@ -366,7 +366,7 @@ class GambleService:
             if current_balance > 0:
                 msg = (
                     f"🫳 {user.mention}, you're not desperate enough *yet*.\n"
-                    f"You still have 🪙 **{current_balance}** Hog Coins."
+                    f"You still have 🪙 **{current_balance:,}** Hog Coins."
                 )
                 if interaction.response.is_done():
                     await interaction.followup.send(msg, ephemeral=True)
@@ -389,20 +389,20 @@ class GambleService:
 
             # Funny, slightly edgy messages
             messages = [
-                f"🤲 {user.mention} begged outside the casino... a kind stranger took pity and dropped **{beg_amount} Hog Coins** into your cup.",
-                f"💍 {user.mention} pawned their wedding ring for **{beg_amount} Hog Coins**. Time to gamble it all away again!",
-                f"😔 {user.mention} mumbled, *'spare some change for the slots?'* — and somehow got **{beg_amount} Hog Coins**.",
-                f"🎰 {user.mention} swept the casino floor for coins and found **{beg_amount} Hog Coins** under the slot machine.",
-                f"🐖 {user.mention} squealed for mercy and the Hog Gods blessed you with **{beg_amount} Hog Coins**. Try not to lose them in 2 minutes.",
-                f"🧎 {user.mention} groveled before the casino door — **{beg_amount} Hog Coins** jingled into your cup. Pathetic, but effective.",
-                f"🤡 {user.mention} performed a little dance for the high rollers and earned **{beg_amount} Hog Coins** in pity tips.",
-                f"🎣 {user.mention} fished **{beg_amount} Hog Coins** out of the fountain. Smells like chlorine and shame.",
-                f"♻️ {user.mention} recycled empty bottles behind the casino for **{beg_amount} Hog Coins**. Recycling *and* relapsing.",
-                f"🐀 {user.mention} wrestled a rat in the alley for a dropped coin pouch. You earned **{beg_amount} Hog Coins**, and tetanus.",
-                f"🎟️ {user.mention} sold fake concert tickets in the casino lobby for **{beg_amount} Hog Coins**. You’re not proud of it.",
+                f"🤲 {user.mention} begged outside the casino... a kind stranger took pity and dropped **{beg_amount:,} Hog Coins** into your cup.",
+                f"💍 {user.mention} pawned their wedding ring for **{beg_amount:,} Hog Coins**. Time to gamble it all away again!",
+                f"😔 {user.mention} mumbled, *'spare some change for the slots?'* — and somehow got **{beg_amount:,} Hog Coins**.",
+                f"🎰 {user.mention} swept the casino floor for coins and found **{beg_amount:,} Hog Coins** under the slot machine.",
+                f"🐖 {user.mention} squealed for mercy and the Hog Gods blessed you with **{beg_amount:,} Hog Coins**. Try not to lose them in 2 minutes.",
+                f"🧎 {user.mention} groveled before the casino door — **{beg_amount:,} Hog Coins** jingled into your cup. Pathetic, but effective.",
+                f"🤡 {user.mention} performed a little dance for the high rollers and earned **{beg_amount:,} Hog Coins** in pity tips.",
+                f"🎣 {user.mention} fished **{beg_amount:,} Hog Coins** out of the fountain. Smells like chlorine and shame.",
+                f"♻️ {user.mention} recycled empty bottles behind the casino for **{beg_amount:,} Hog Coins**. Recycling *and* relapsing.",
+                f"🐀 {user.mention} wrestled a rat in the alley for a dropped coin pouch. You earned **{beg_amount:,} Hog Coins**, and tetanus.",
+                f"🎟️ {user.mention} sold fake concert tickets in the casino lobby for **{beg_amount:,} Hog Coins**. You’re not proud of it.",
             ]
 
-            msg = random.choice(messages) + f"\n\n**New Balance:** 🪙 **{new_balance}**"
+            msg = random.choice(messages) + f"\n\n**New Balance:** 🪙 **{new_balance:,}**"
 
             if interaction.response.is_done():
                 await interaction.followup.send(msg)
@@ -498,8 +498,8 @@ class GambleService:
                 red_pct = (red_count / total_round1) * 100.0
                 black_pct = (black_count / total_round1) * 100.0
                 color_line = (
-                    f"RTB Rnd 1 – R: {red_count} ({red_pct:.1f}%) | "
-                    f"B: {black_count} ({black_pct:.1f}%)"
+                    f"RTB Rnd 1 – R: {red_count:,} ({red_pct:.1f}%) | "
+                    f"B: {black_count:,} ({black_pct:.1f}%)"
                 )
             else:
                 color_line = "RTB Rnd 1 – no data yet"
@@ -567,7 +567,7 @@ class GambleService:
                 }
             )
 
-        msg = f"Your current Hog Coin balance is: 🪙 **{wallet_balance}**"
+        msg = f"Your current Hog Coin balance is: 🪙 **{wallet_balance:,}**"
         if interaction.response.is_done():
             await interaction.followup.send(msg, ephemeral=True)
         else:

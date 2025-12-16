@@ -83,8 +83,8 @@ class CeeLoView(discord.ui.View):
         wallets = self._wallets()
         desc_lines = [
             f"**Host**: {self.host.mention}",
-            f"**Buy-in**: 🪙 **{self.buy_in}** per player",
-            f"**Current Pot**: 🪙 **{self.pot}**",
+            f"**Buy-in**: 🪙 **{self.buy_in:,}** per player",
+            f"**Current Pot**: 🪙 **{self.pot:,}**",
             "",
             f"**Players ({len(self.participants)}):**",
         ]
@@ -102,8 +102,8 @@ class CeeLoView(discord.ui.View):
     def _build_game_embed(self):
         wallets = self._wallets()
         lines = [
-            f"**Buy-in**: 🪙 **{self.buy_in}** per player",
-            f"**Pot**: 🪙 **{self.pot}**",
+            f"**Buy-in**: 🪙 **{self.buy_in:,}** per player",
+            f"**Pot**: 🪙 **{self.pot:,}**",
             "",
             "**Players & Results:**"
         ]
@@ -644,7 +644,7 @@ class CeeLoView(discord.ui.View):
 
         desc = (
             f"{winner.mention} rolled {self._format_dice(dice)} — {score['label']}!\n\n"
-            f"🎉 **Automatic win!** They take the pot of 🪙 **{self.pot}**."
+            f"🎉 **Automatic win!** They take the pot of 🪙 **{self.pot:,}**."
         )
 
         # Append everyone's results to the final message
@@ -759,7 +759,7 @@ class CeeLoView(discord.ui.View):
             f"The round is over!\n\n"
             f"🏆 Winner: {winner.mention if winner else f'<@{best_id}>'}\n"
             f"Winning roll: {self._format_dice(list(score['dice']))} — {score['label']}\n\n"
-            f"They win the pot of 🪙 **{self.pot}**."
+            f"They win the pot of 🪙 **{self.pot:,}**."
         )
 
         # Append everyone's results to the final message
@@ -812,7 +812,7 @@ class CeeLoService:
         if wallets[host_id] < buy_in:
             msg = (
                 f"You don't have enough **Hog Coins** to create this lobby.\n"
-                f"Required: 🪙 **{buy_in}**, Your balance: 🪙 **{wallets[host_id]}**"
+                f"Required: 🪙 **{buy_in:,}**, Your balance: 🪙 **{wallets[host_id]:,}**"
             )
             if interaction.response.is_done():
                 await interaction.followup.send(msg, ephemeral=True)

@@ -98,23 +98,23 @@ class RideTheBusView(discord.ui.View):
             description=f"**Player**: {self.player.mention}\n\n" + description,
             color=color
         )
-        embed.add_field(name="Bet", value=f"🪙 {str(self.bet)}", inline=True)
+        embed.add_field(name="Bet", value=f"🪙 {self.bet:,}", inline=True)
         # first round, no win/loss yet
         if self.stage == 1 and win is not True and game_over is not True:
             embed.add_field(name="Cashout Value", value=f"🪙 0", inline=True)
-            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
+            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]:,}", inline=True)
         # first round, lost
         elif self.stage == 1 and win is not True and game_over is True:
             embed.add_field(name="Final Payout", value=f"🪙 0", inline=True)
-            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
+            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]:,}", inline=True)
         # ongoing game, show cashout value
         elif not game_over:
-            embed.add_field(name="Cashout Value", value=f"🪙 {self.potential_payout(self.current_multiplier)}", inline=True)
-            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
+            embed.add_field(name="Cashout Value", value=f"🪙 {self.potential_payout(self.current_multiplier):,}", inline=True)
+            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]:,}", inline=True)
         # game over, show final payout if any
         elif game_over is True:
-            embed.add_field(name="Final Payout", value=f"🪙 {self.potential_payout(self.current_multiplier)}", inline=True)
-            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]}", inline=True)
+            embed.add_field(name="Final Payout", value=f"🪙 {self.potential_payout(self.current_multiplier):,}", inline=True)
+            embed.add_field(name="Balance", value=f"🪙 {self.state.member_wallets[self.player.id]:,}", inline=True)
         embed.add_field(name="Cards so far", value=self.cards_summary(), inline=False)
         return embed
 

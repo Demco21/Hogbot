@@ -98,11 +98,11 @@ class SlotsView(discord.ui.View):
         # Show bet and current balance if known
         wallets = getattr(self.state, "member_wallets", None) or {}
         balance = wallets.get(self.player.id, 0)
-        embed.add_field(name="Bet", value=f"🪙 {self.bet}", inline=True)
-        embed.add_field(name="Balance", value=f"🪙 {balance}", inline=True)
+        embed.add_field(name="Bet", value=f"🪙 {self.bet:,}", inline=True)
+        embed.add_field(name="Balance", value=f"🪙 {balance:,}", inline=True)
 
         jackpot = getattr(self.state, "slots_progressive_jackpot", 0)
-        embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot}", inline=False)
+        embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot:,}", inline=False)
 
         return embed
 
@@ -301,12 +301,12 @@ class SlotsView(discord.ui.View):
             description=f"**Player:** {self.player.mention}\n\n{desc}",
             color=color,
         )
-        final_embed.add_field(name="Bet", value=f"🪙 {self.bet}", inline=True)
-        final_embed.add_field(name="Payout", value=f"🪙 {total_payout}", inline=True)
-        final_embed.add_field(name="Balance", value=f"🪙 {balance + total_payout}", inline=True)
+        final_embed.add_field(name="Bet", value=f"🪙 {self.bet:,}", inline=True)
+        final_embed.add_field(name="Payout", value=f"🪙 {total_payout:,}", inline=True)
+        final_embed.add_field(name="Balance", value=f"🪙 {balance + total_payout:,}", inline=True)
 
         jackpot_after = getattr(self.state, "slots_progressive_jackpot", 0)
-        final_embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot_after}", inline=False)
+        final_embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot_after:,}", inline=False)
 
         if bonus_available:
             footer_text = "🍀 Bonus unlocked! Press **Crank!** again to use your free spin."
@@ -750,7 +750,7 @@ class SlotsService:
         if wallet_balance < bet_amount:
             msg = (
                 f"You're too broke to spin right now, {user.mention}.\n"
-                f"Your bet is 🪙 **{bet_amount}**, but you only have 🪙 **{wallet_balance}**.\n"
+                f"Your bet is 🪙 **{bet_amount:,}**, but you only have 🪙 **{wallet_balance:,}**.\n"
                 "Try /beg to scrounge up some Hog Coins."
             )
             if interaction.response.is_done():
