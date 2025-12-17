@@ -45,3 +45,5 @@ class UpdateType(Enum):
     BET_WON = "bet_won"
     BET_LOST = "bet_lost"
     BEG = "beg"
+    ROUND_WON = "round_won"
+    ROUND_LOST = "round_lost"

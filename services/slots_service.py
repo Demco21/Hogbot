@@ -274,7 +274,7 @@ class SlotsView(discord.ui.View):
             text = (
                 "🎉 **JACKPOT!**\n🎉 **JACKPOT!**\n🎉 **JACKPOT!**\n\n"
                 "Triple **HOGS** on the line! The **Hog Gods** are pleased. 🐷🐷🐷\n"
-                f"You scoop the entire pot of 🪙 **{jackpot_amount}** on top of your payout!"
+                f"You scoop the entire pot of 🪙 **{jackpot_amount:,}** on top of your payout!"
             )
             return 20, text, bonus_spin, jackpot_hit
 
@@ -397,12 +397,13 @@ class SlotsView(discord.ui.View):
             description=f"**Player:** {self.player.mention}\n\n{desc}",
             color=color,
         )
+        jackpot_amount = getattr(self.state, "slots_progressive_jackpot", 0)
+        new_balance = balance + total_payout + jackpot_amount if jackpot_won else balance + total_payout
+        jackpot_payout_msg = " + 💰 Jackpot Pool" if jackpot_won else ""
         final_embed.add_field(name="Bet", value=f"🪙 {self.bet:,}", inline=True)
-        final_embed.add_field(name="Payout", value=f"🪙 {total_payout:,}", inline=True)
-        final_embed.add_field(name="Balance", value=f"🪙 {balance + total_payout:,}", inline=True)
-
-        jackpot_after = getattr(self.state, "slots_progressive_jackpot", 0)
-        final_embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot_after:,}", inline=False)
+        final_embed.add_field(name="Payout", value=f"🪙 {total_payout:,}{jackpot_payout_msg}", inline=True)
+        final_embed.add_field(name="Balance", value=f"🪙 {new_balance:,}", inline=True)
+        final_embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot_amount:,}", inline=False)
 
         if bonus_available:
             footer_text = "🍀 Bonus unlocked! Press **Crank!** again to use your free spin."

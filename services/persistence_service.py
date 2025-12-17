@@ -71,6 +71,37 @@ class PersistenceService:
                         getattr(self.state, "slots_progressive_jackpot", 100_000),
                     )
                 )
+
+                raw_wrapped = data.get("wrapped", None)
+                if raw_wrapped is None:
+                    self.state.wrapped = {"members": {}, "richest": {"current_member_id": None, "current_started_at_ts": None, "durations_seconds": {}}}
+                else:
+                    members_raw = raw_wrapped.get("members", {}) or {}
+                    richest_raw = raw_wrapped.get("richest", {}) or {}
+
+                    # convert member ids back to ints
+                    members_parsed = {
+                        int(member_id): stats
+                        for member_id, stats in members_raw.items()
+                    }
+
+                    durations_raw = richest_raw.get("durations_seconds", {}) or {}
+                    durations_parsed = {
+                        int(member_id): int(seconds)
+                        for member_id, seconds in durations_raw.items()
+                    }
+
+                    current_member_id = richest_raw.get("current_member_id", None)
+                    current_started_at_ts = richest_raw.get("current_started_at_ts", None)
+
+                    self.state.wrapped = {
+                        "members": members_parsed,
+                        "richest": {
+                            "current_member_id": int(current_member_id) if current_member_id is not None else None,
+                            "current_started_at_ts": float(current_started_at_ts) if current_started_at_ts is not None else None,
+                            "durations_seconds": durations_parsed,
+                        }
+                    }
                 
             else:
                 logger.warning(f"file {filepath} does not exist, creating new data file")
@@ -117,6 +148,21 @@ class PersistenceService:
                     for member_id, stats in self.state.first_round_color_draws.items()
                 },
                 "slots_progressive_jackpot": getattr(self.state, "slots_progressive_jackpot", 100_000),
+                "wrapped": {
+                    "members": {
+                        str(member_id): stats
+                        for member_id, stats in getattr(self.state, "wrapped", {}).get("members", {}).items()
+                    },
+                    "richest": {
+                        "current_member_id": getattr(self.state, "wrapped", {}).get("richest", {}).get("current_member_id", None),
+                        "current_started_at_ts": getattr(self.state, "wrapped", {}).get("richest", {}).get("current_started_at_ts", None),
+                        "durations_seconds": {
+                            str(member_id): seconds
+                            for member_id, seconds in getattr(self.state, "wrapped", {}).get("richest", {}).get("durations_seconds", {}).items()
+                        },
+                    },
+                },
+
             }
 
             with open(TIME_DATA_FILE, "w") as file:
