@@ -100,7 +100,7 @@ class GambleService:
             if amount > lender_balance:
                 msg = (
                     f"You don't have enough **Hog Coins** to loan that amount.\n"
-                    f"Your current balance is 🪙 **{lender_balance}**."
+                    f"Your current balance is 🪙 **{lender_balance:,}**."
                 )
                 if interaction.response.is_done():
                     await interaction.followup.send(msg, ephemeral=True)
@@ -150,8 +150,8 @@ class GambleService:
 
             msg = (
                 f"✅ **Loan completed!**\n\n"
-                f"You loaned 🪙 **{amount}** Hog Coins to **{target.mention}**.\n\n"
-                f"**Your New Balance: 🪙 {wallets[lender.id]}**\n"
+                f"You loaned 🪙 **{amount:,}** Hog Coins to **{target.mention}**.\n\n"
+                f"**Your New Balance: 🪙 {wallets[lender.id]:,}**\n"
             )
 
             if interaction.response.is_done():
@@ -160,8 +160,8 @@ class GambleService:
                 await interaction.response.send_message(msg, ephemeral=True)
 
             target_msg = (
-                f"✅ You received a loan of 🪙 **{amount}** Hog Coins from **{lender.display_name}**!\n\n"
-                f"**Your New Balance: 🪙 **{wallets[target.id]}**\n"
+                f"✅ You received a loan of 🪙 **{amount:,}** Hog Coins from **{lender.display_name}**!\n\n"
+                f"**Your New Balance: 🪙 **{wallets[target.id]:,}**\n"
             )
             
             await target.send(target_msg)
