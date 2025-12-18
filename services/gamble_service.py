@@ -211,7 +211,6 @@ class GambleService:
             # Top wallet isn't in this guild (e.g. DMs / another guild)
             return
 
-        # ---- Wrapped: track richest durations ----
         try:
             self._ensure_wrapped_initialized()
             richest = self.state.wrapped["richest"]
@@ -281,7 +280,6 @@ class GambleService:
                     await interaction.response.send_message(msg, ephemeral=True)
                 return
 
-            # Ensure wallets dict exists
             if not hasattr(self.state, "member_wallets") or not self.state.member_wallets:
                 msg = "No Hog Coin data yet. Go gamble something first. 🐷"
                 if interaction.response.is_done():
@@ -311,10 +309,8 @@ class GambleService:
             for user_id, balance in sorted_wallets:
                 member = guild.get_member(user_id)
                 if member is None:
-                    # Skip users that aren't in this guild
                     continue
 
-                # Special indicator for the #1 seed
                 if rank == 1:
                     line = (
                         f"**#{rank}** 👑 {member.mention} — 🪙 **{balance:,}** "
@@ -370,8 +366,6 @@ class GambleService:
         """Allows a broke player to beg for a random amount (1–50) of Hog Coins once they hit 0."""
         try:
             user = interaction.user
-
-            # Ensure wallets dict exists
             if not hasattr(self.state, "member_wallets"):
                 self.state.member_wallets = {}
 
@@ -417,7 +411,6 @@ class GambleService:
             )
             new_balance = wallets[user.id]
 
-            # Funny, slightly edgy messages
             messages = [
                 f"🤲 {user.mention} begged outside the casino... a kind stranger took pity and dropped **{beg_amount:,} Hog Coins** into your cup.",
                 f"💍 {user.mention} pawned their wedding ring for **{beg_amount:,} Hog Coins**. Time to gamble it all away again!",
@@ -476,13 +469,11 @@ class GambleService:
     ):
         """Add an entry to a member's balance history AND update Hog Pen Wrapped aggregates."""
 
-        # 1) Always update Wrapped aggregates (never let it crash gameplay)
         try:
             self._update_wrapped_from_event(member_id=member_id, balance=balance, metadata=metadata)
         except Exception:
             logger.error("Wrapped stats update failed (non-fatal).", exc_info=True)
 
-        # 2) Existing logging (kept)
         username = None
         try:
             if hasattr(self.bot, "get_user"):
@@ -505,8 +496,7 @@ class GambleService:
             f"extra={ {k:v for k,v in metadata.items() if k not in ['game_source','update_type']} if metadata else 'None' }"
         )
 
-        # 3) Existing balance_history behavior (kept exactly)
-        if metadata.get("update_type") != UpdateType.BET_PLACED:
+        if metadata.get("update_type") != UpdateType.BET_PLACED and metadata.get("update_type") != UpdateType.ROUND_WON:
             if not hasattr(self.state, "balance_history"):
                 self.state.balance_history = {}
 
@@ -531,8 +521,7 @@ class GambleService:
             total = wins + losses
             return f"W: **{wins:,}** ({_pct(wins, total)}) | L: **{losses:,}** ({_pct(losses, total)})"
 
-        def _rtb_round1_color_stats_line(user_id: int) -> str:
-            """Ride the Bus — Round 1 (Red/Black) line for the RTB section."""
+        def _rtb_round1_color_stats_line(user_id: int):
             color_stats_all = getattr(self.state, "first_round_color_draws", {}) or {}
             stats = color_stats_all.get(user_id, {}) or {}
 
@@ -541,100 +530,110 @@ class GambleService:
             total = red + black
 
             if total <= 0:
-                return "• Round 1 Color: _no data yet_"
+                return "Round 1 Color: _no data yet_"
 
             return (
-                "• Round 1 Color: "
-                f"Red **{red:,}** ({_pct(red, total)})  •  "
+                "Round 1 Color: "
+                f"Red **{red:,}** ({_pct(red, total)}) • "
                 f"Black **{black:,}** ({_pct(black, total)})"
             )
 
-        def _build_wrapped_text(user_id: int):
-            """Clean, readable 'Hog Pen Wrapped' embed text."""
-            try:
-                wrapped = getattr(self.state, "wrapped", {}) or {}
-                members = wrapped.get("members", {}) or {}
-                wm = members.get(user_id)
-                if not wm:
-                    return ""
+        def _build_wrapped_fields(user_id: int):
+            """
+            Returns:
+            - summary_value: str | None
+            - game_fields: list[tuple[str, str]]  (name, value)
+            """
+            wrapped = getattr(self.state, "wrapped", {}) or {}
+            members = wrapped.get("members", {}) or {}
+            wm = members.get(user_id)
+            if not wm:
+                return None, []
 
-                lines: list[str] = []
+            # ---- Stat Summary field (compact + scannable)
+            hwb = int(wm.get("high_water_balance", 0) or 0)
 
-                # ── Header ───────────────────────────────
-                lines.append("**📊 Stat Summary**")
-                lines.append("────────────────────")
+            hb = wm.get("highest_bet", {}) or {}
+            hb_amt = int(hb.get("amount", 0) or 0)
+            hb_game = hb.get("game") or "N/A"
 
-                lines.append(f"🪙 **High Water Balance:** {int(wm.get('high_water_balance', 0) or 0):,}")
+            hp = wm.get("highest_payout", {}) or {}
+            hp_amt = int(hp.get("amount", 0) or 0)
+            hp_game = hp.get("game") or "N/A"
 
-                hb = wm.get("highest_bet", {}) or {}
-                lines.append(
-                    f"🎯 **Highest Bet:** {int(hb.get('amount', 0) or 0):,} "
-                    f"({hb.get('game') or 'N/A'})"
+            hl = wm.get("highest_loss", {}) or {}
+            hl_amt = int(hl.get("amount", 0) or 0)
+            hl_game = hl.get("game") or "N/A"
+
+            beg = int(wm.get("beg_count", 0) or 0)
+
+            if interaction.user.id in self.state.member_wallets:
+                wallet_balance = self.state.member_wallets[interaction.user.id]
+            else:
+                wallet_balance = 1000
+                self.update_wallet(interaction.user.id, wallet_balance)
+                self.bot.gamble_service.add_wallet_history_entry(
+                    interaction.user.id, 
+                    wallet_balance,
+                    metadata = {
+                        "game_source": GameSource.MY_WALLET,
+                        "update_type": UpdateType.INIT_BALANCE,
+                    }
                 )
 
-                hp = wm.get("highest_payout", {}) or {}
-                lines.append(
-                    f"💰 **Highest Payout:** {int(hp.get('amount', 0) or 0):,} "
-                    f"({hp.get('game') or 'N/A'})"
-                )
+            summary_value = "\n".join(
+                [
+                    f"🪙 **Current Balance** {wallet_balance:,}",
+                    f"🪙 **Highest Balance:** {hwb:,}",
+                    f"🎯 **Highest Bet:** {hb_amt:,} ({hb_game})",
+                    f"💰 **Highest Payout:** {hp_amt:,} ({hp_game})",
+                    f"💀 **Biggest Loss:** {hl_amt:,} ({hl_game})",
+                    f"🙏 **Beg Count:** {beg:,}",
+                ]
+            )
 
-                hl = wm.get("highest_loss", {}) or {}
-                lines.append(
-                    f"💀 **Biggest Loss:** {int(hl.get('amount', 0) or 0):,} "
-                    f"({hl.get('game') or 'N/A'})"
-                )
+            # ---- Per-game fields (one field per game)
+            games = wm.get("games", {}) or {}
+            rtb_key = getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus")
 
-                lines.append(f"🙏 **Beg Count:** {int(wm.get('beg_count', 0) or 0):,}")
+            game_fields: list[tuple[str, str]] = []
 
-                # ── Games ────────────────────────────────
-                games = wm.get("games", {}) or {}
-                if not games:
-                    return "\n".join(lines)
+            for game_key, gs in games.items():
+                gs = gs or {}
 
-                lines.append("")
-                lines.append("**🎮 Game Performance**")
-                lines.append("────────────────────")
+                wins = int(gs.get("wins", 0) or 0)
+                losses = int(gs.get("losses", 0) or 0)
+                played = int(gs.get("played", 0) or 0)
+                best = int(gs.get("best_win_streak", 0) or 0)
+                worst = int(gs.get("worst_losing_streak", 0) or 0)
 
-                rtb_key = getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus")
+                display_name = {
+                    rtb_key: "🚌 Ride the Bus",
+                    "slots": "🎲 Slots",
+                    "cee_lo": "🎲 Cee-Lo",
+                }.get(game_key, game_key.replace("_", " ").title())
 
-                for game_key, gs in games.items():
-                    gs = gs or {}
+                value_lines = [
+                    f"Played: **{played:,}**",
+                    _wl_line(wins, losses),
+                    f"Best Win Streak: **{best:,}**",
+                    f"Worst Loss Streak: **{worst:,}**",
+                ]
 
-                    wins = int(gs.get("wins", 0) or 0)
-                    losses = int(gs.get("losses", 0) or 0)
-                    played = int(gs.get("played", 0) or 0)
-                    best = int(gs.get("best_win_streak", 0) or 0)
+                if game_key == rtb_key:
+                    value_lines.append(_rtb_round1_color_stats_line(user_id))
 
-                    # Friendly display names
-                    display_name = {
-                        rtb_key: "🚌 Ride the Bus",
-                        "slots": "🎲 Slots",
-                        "cee_lo": "🎲 Cee-Lo",
-                    }.get(game_key, game_key.replace("_", " ").title())
+                    rounds = gs.get("rounds", {}) or {}
+                    for r in ("1", "2", "3", "4"):
+                        rs = rounds.get(r, {}) or {}
+                        rw = int(rs.get("wins", 0) or 0)
+                        rl = int(rs.get("losses", 0) or 0)
+                        if rw + rl > 0:
+                            value_lines.append(f"↳ Round {r}: {_wl_line(rw, rl)}")
 
-                    lines.append("")
-                    lines.append(f"**{display_name}**")
-                    lines.append(f"• Played: **{played:,}**")
-                    lines.append(f"• {_wl_line(wins, losses)}")
-                    lines.append(f"• Best Win Streak: **{best:,}**")
+                game_fields.append((display_name, "\n".join(value_lines).strip()))
 
-                    # RTB extra breakdown
-                    if game_key == rtb_key:
-                        # Round 1 color distribution (belongs HERE, not at the top)
-                        lines.append(_rtb_round1_color_stats_line(user_id))
-
-                        rounds = gs.get("rounds", {}) or {}
-                        for r in ("1", "2", "3", "4"):
-                            rs = rounds.get(r, {}) or {}
-                            rw = int(rs.get("wins", 0) or 0)
-                            rl = int(rs.get("losses", 0) or 0)
-                            if rw + rl > 0:
-                                lines.append(f"  ↳ Round {r}: {_wl_line(rw, rl)}")
-
-                return "\n".join(lines)
-
-            except Exception:
-                return ""
+            return summary_value, game_fields
 
         try:
             user_id = member.id
@@ -648,40 +647,40 @@ class GambleService:
                 )
                 return
 
-            # Build Wrapped stats text (embed-only)
-            wrapped_text = _build_wrapped_text(user_id)
-
             # Create the plot
             plt.figure(figsize=(6, 3))
             plt.plot(history, marker="o", linewidth=2)
 
-            title_line1 = f"{member.display_name}'s Hog Coin Progression"
-            plt.title(title_line1)
-
+            plt.title(f"{member.display_name}'s Hog Coin Progression")
             plt.xlabel("Round")
             plt.ylabel("Balance")
             plt.grid(True, alpha=0.3)
             plt.tight_layout()
 
-            # Save to bytes
             buffer = io.BytesIO()
             plt.savefig(buffer, format="png")
             buffer.seek(0)
             plt.close()
 
-            # Build the embed
             file = discord.File(buffer, filename="stats.png")
-
-            description_lines = []
-            if wrapped_text:
-                description_lines += ["", wrapped_text]
 
             embed = discord.Embed(
                 title=f"📈 {member.display_name}'s Hog Coin Stats",
-                description="\n".join(description_lines).strip(),
                 color=discord.Color.green(),
             )
             embed.set_image(url="attachment://stats.png")
+
+            summary_value, game_fields = _build_wrapped_fields(user_id)
+
+            if summary_value:
+                embed.add_field(name="📊 Stat Summary", value=summary_value, inline=False)
+
+            if game_fields:
+                for name, value in game_fields:
+                    # Field values must be <= 1024 chars; trim safely if needed
+                    if len(value) > 1024:
+                        value = value[:1020] + "…"
+                    embed.add_field(name=name, value=value, inline=False)
 
             if interaction.response.is_done():
                 await interaction.followup.send(embed=embed, file=file)
@@ -770,6 +769,7 @@ class GambleService:
                 "losses": 0,
                 "cur_win_streak": 0,
                 "best_win_streak": 0,
+                "worst_losing_streak": 0,
 
                 # RTB: per-round win/loss (Round 1-4)
                 "rounds": {
@@ -881,12 +881,15 @@ class GambleService:
         if update_type == UpdateType.BET_WON or update_key.lower() == "bet_won":
             game_stats["wins"] = int(game_stats.get("wins", 0) or 0) + 1
 
-            # streak
+            # win streak
             game_stats["cur_win_streak"] = int(game_stats.get("cur_win_streak", 0) or 0) + 1
             game_stats["best_win_streak"] = max(
                 int(game_stats.get("best_win_streak", 0) or 0),
                 int(game_stats.get("cur_win_streak", 0) or 0),
             )
+
+            # reset losing streak
+            game_stats["cur_losing_streak"] = 0
 
             # Highest payout
             hp = member.get("highest_payout", {"amount": 0, "game": None})
@@ -904,7 +907,14 @@ class GambleService:
         if update_type == UpdateType.BET_LOST or update_key.lower() == "bet_lost":
             game_stats["losses"] = int(game_stats.get("losses", 0) or 0) + 1
 
-            # reset streak
+            # losing streak
+            game_stats["cur_losing_streak"] = int(game_stats.get("cur_losing_streak", 0) or 0) + 1
+            game_stats["worst_losing_streak"] = max(
+                int(game_stats.get("worst_losing_streak", 0) or 0),
+                int(game_stats.get("cur_losing_streak", 0) or 0),
+            )
+
+            # reset win streak
             game_stats["cur_win_streak"] = 0
 
             # Highest loss (your bet is the loss amount in your current games)
