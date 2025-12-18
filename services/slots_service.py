@@ -556,6 +556,9 @@ class SlotsView(discord.ui.View):
                                     "bet_amount": self.bet,
                                     "payout_amount": total_payout,
                                     "reason": final_result,
+                                    "multiplier": multiplier,
+                                    "bonus_spin": bonus_spin,
+                                    "jackpot_hit": jackpot_hit,
                                 },
                             )
                         except Exception:
@@ -634,6 +637,9 @@ class SlotsView(discord.ui.View):
                                     "bet_amount": self.bet,
                                     "payout_amount": bonus_total_payout,
                                     "reason": bonus_result,
+                                    "multiplier": b_mult,
+                                    "bonus_spin": b_bonus,
+                                    "jackpot_hit": b_jackpot_hit,
                                 },
                             )
                         except Exception:

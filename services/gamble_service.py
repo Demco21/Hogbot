@@ -550,7 +550,6 @@ class GambleService:
             if not wm:
                 return None, []
 
-            # ---- Stat Summary field (compact + scannable)
             hwb = int(wm.get("high_water_balance", 0) or 0)
 
             hb = wm.get("highest_bet", {}) or {}
@@ -567,13 +566,13 @@ class GambleService:
 
             beg = int(wm.get("beg_count", 0) or 0)
 
-            if interaction.user.id in self.state.member_wallets:
-                wallet_balance = self.state.member_wallets[interaction.user.id]
+            if user_id in self.state.member_wallets:
+                wallet_balance = self.state.member_wallets[user_id]
             else:
                 wallet_balance = 1000
-                self.update_wallet(interaction.user.id, wallet_balance)
+                self.update_wallet(user_id, wallet_balance)
                 self.bot.gamble_service.add_wallet_history_entry(
-                    interaction.user.id, 
+                    user_id, 
                     wallet_balance,
                     metadata = {
                         "game_source": GameSource.MY_WALLET,
@@ -592,7 +591,6 @@ class GambleService:
                 ]
             )
 
-            # ---- Per-game fields (one field per game)
             games = wm.get("games", {}) or {}
             rtb_key = getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus")
 
@@ -609,7 +607,7 @@ class GambleService:
 
                 display_name = {
                     rtb_key: "🚌 Ride the Bus",
-                    "slots": "🎲 Slots",
+                    "slots": "🎰 Slots",
                     "cee_lo": "🎲 Cee-Lo",
                 }.get(game_key, game_key.replace("_", " ").title())
 
@@ -619,6 +617,13 @@ class GambleService:
                     f"Best Win Streak: **{best:,}**",
                     f"Worst Loss Streak: **{worst:,}**",
                 ]
+
+                slots_key = getattr(GameSource.SLOTS, "value", "slots")
+                if game_key == slots_key:
+                    bonus_spins = int(gs.get("bonus_spin", 0) or 0)
+                    jackpot_hits = int(gs.get("jackpot_hit", 0) or 0)
+                    value_lines.append(f"Bonus Spins: **{bonus_spins:,}**")
+                    value_lines.append(f"Jackpot Hits: **{jackpot_hits:,}**")
 
                 if game_key == rtb_key:
                     value_lines.append(_rtb_round1_color_stats_line(user_id))
@@ -771,6 +776,9 @@ class GambleService:
                 "best_win_streak": 0,
                 "worst_losing_streak": 0,
 
+                "bonus_spin": 0,
+                "jackpot_hit": 0,
+
                 # RTB: per-round win/loss (Round 1-4)
                 "rounds": {
                     "1": {"wins": 0, "losses": 0},
@@ -779,7 +787,7 @@ class GambleService:
                     "4": {"wins": 0, "losses": 0},
                 },
 
-                # RTB-only (kept here for convenience; harmless for other games)
+                # RTB-only
                 "wins_8x": 0,
                 "highest_8x_bet": 0,
                 "highest_8x_payout": 0,
@@ -881,22 +889,25 @@ class GambleService:
         if update_type == UpdateType.BET_WON or update_key.lower() == "bet_won":
             game_stats["wins"] = int(game_stats.get("wins", 0) or 0) + 1
 
-            # win streak
             game_stats["cur_win_streak"] = int(game_stats.get("cur_win_streak", 0) or 0) + 1
             game_stats["best_win_streak"] = max(
                 int(game_stats.get("best_win_streak", 0) or 0),
                 int(game_stats.get("cur_win_streak", 0) or 0),
             )
 
-            # reset losing streak
             game_stats["cur_losing_streak"] = 0
 
-            # Highest payout
             hp = member.get("highest_payout", {"amount": 0, "game": None})
             if payout_amount > int(hp.get("amount", 0) or 0):
                 member["highest_payout"] = {"amount": payout_amount, "game": game_key}
 
-            # RTB: 8x is the Round 4 suit win (your metadata sets round="4" there)
+            slots_key = getattr(GameSource.SLOTS, "value", "slots")
+            if game_key == slots_key:
+                if bool(metadata.get("bonus_spin")):
+                    game_stats["bonus_spin"] = int(game_stats.get("bonus_spin", 0) or 0) + 1
+                if bool(metadata.get("jackpot_hit")):
+                    game_stats["jackpot_hit"] = int(game_stats.get("jackpot_hit", 0) or 0) + 1
+
             if game_key == getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus") and round_key == "4":
                 game_stats["wins_8x"] = int(game_stats.get("wins_8x", 0) or 0) + 1
                 game_stats["highest_8x_bet"] = max(int(game_stats.get("highest_8x_bet", 0) or 0), bet_amount)
