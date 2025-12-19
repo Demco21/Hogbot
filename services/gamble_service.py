@@ -572,12 +572,12 @@ class GambleService:
                 wallet_balance = 1000
                 self.update_wallet(user_id, wallet_balance)
                 self.bot.gamble_service.add_wallet_history_entry(
-                    user_id, 
+                    user_id,
                     wallet_balance,
-                    metadata = {
+                    metadata={
                         "game_source": GameSource.MY_WALLET,
                         "update_type": UpdateType.INIT_BALANCE,
-                    }
+                    },
                 )
 
             summary_value = "\n".join(
@@ -592,12 +592,19 @@ class GambleService:
             )
 
             games = wm.get("games", {}) or {}
+            slots_key = getattr(GameSource.SLOTS, "value", "slots")
+            cee_lo_key = getattr(GameSource.CEE_LO, "value", "cee_lo")
             rtb_key = getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus")
+
+            allowed_game_keys = {slots_key, cee_lo_key, rtb_key}
 
             game_fields: list[tuple[str, str]] = []
 
-            for game_key, gs in games.items():
-                gs = gs or {}
+            for game_key in (slots_key, rtb_key, cee_lo_key):
+                if game_key not in games:
+                    continue
+
+                gs = games.get(game_key) or {}
 
                 wins = int(gs.get("wins", 0) or 0)
                 losses = int(gs.get("losses", 0) or 0)
@@ -607,8 +614,8 @@ class GambleService:
 
                 display_name = {
                     rtb_key: "🚌 Ride the Bus",
-                    "slots": "🎰 Slots",
-                    "cee_lo": "🎲 Cee-Lo",
+                    slots_key: "🎰 Slots",
+                    cee_lo_key: "🎲 Cee-Lo",
                 }.get(game_key, game_key.replace("_", " ").title())
 
                 value_lines = [
@@ -618,7 +625,6 @@ class GambleService:
                     f"Worst Loss Streak: **{worst:,}**",
                 ]
 
-                slots_key = getattr(GameSource.SLOTS, "value", "slots")
                 if game_key == slots_key:
                     bonus_spins = int(gs.get("bonus_spin", 0) or 0)
                     jackpot_hits = int(gs.get("jackpot_hit", 0) or 0)
@@ -643,7 +649,6 @@ class GambleService:
         try:
             user_id = member.id
 
-            # Ensure history exists
             history = (self.state.balance_history.get(user_id) or []) if hasattr(self.state, "balance_history") else []
             if not history:
                 await interaction.response.send_message(
@@ -652,7 +657,6 @@ class GambleService:
                 )
                 return
 
-            # Create the plot
             plt.figure(figsize=(6, 3))
             plt.plot(history, marker="o", linewidth=2)
 
@@ -682,7 +686,6 @@ class GambleService:
 
             if game_fields:
                 for name, value in game_fields:
-                    # Field values must be <= 1024 chars; trim safely if needed
                     if len(value) > 1024:
                         value = value[:1020] + "…"
                     embed.add_field(name=name, value=value, inline=False)
@@ -807,7 +810,6 @@ class GambleService:
         """
         self._ensure_wrapped_initialized()
 
-        # Defensive: allow metadata=None without exploding
         metadata = metadata or {}
 
         game_source = metadata.get("game_source")
@@ -816,19 +818,12 @@ class GambleService:
         if game_source is None or update_type is None:
             return
 
-        try:
-            if GameSource(game_source) not in {
-                GameSource.RIDE_THE_BUS,
-                GameSource.SLOTS,
-                GameSource.CEE_LO,
-            }:
-                return
-        except ValueError:
-            return
+        # Normalize to raw values (handles Enum instances cleanly)
+        gs_val = getattr(game_source, "value", game_source)
+        ut_val = getattr(update_type, "value", update_type)
 
-        # Normalize to strings for keys (your enums have .value)
-        game_key = getattr(game_source, "value", str(game_source)) if game_source is not None else "unknown"
-        update_key = getattr(update_type, "value", str(update_type)) if update_type is not None else "unknown"
+        game_key = str(gs_val) if gs_val is not None else "unknown"
+        update_key = str(ut_val) if ut_val is not None else "unknown"
 
         bet_amount = int(metadata.get("bet_amount", 0) or 0)
         payout_amount = int(metadata.get("payout_amount", 0) or 0)
@@ -841,62 +836,58 @@ class GambleService:
         try:
             member["high_water_balance"] = max(int(member.get("high_water_balance", 0) or 0), int(balance))
         except Exception:
-            # Never let stats break the game
             pass
 
-        # Begs
+        # Begs should ALWAYS count, regardless of game_source
         if update_type == UpdateType.BEG or update_key.lower() == "beg":
             member["beg_count"] = int(member.get("beg_count", 0) or 0) + 1
-            # also count as "played" for beg if you want it to show up in per-game totals
-            game_stats = self._wrapped_game_stats(member, game_key)
-            game_stats["played"] = int(game_stats.get("played", 0) or 0) + 1
             return
 
-        # Track per-game played/win/loss/streaks
+        # Only track per-game stats for actual games
+        allowed_games = {
+            getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus"),
+            getattr(GameSource.SLOTS, "value", "slots"),
+            getattr(GameSource.CEE_LO, "value", "cee_lo"),
+        }
+        if game_key not in allowed_games:
+            return
+
         game_stats = self._wrapped_game_stats(member, game_key)
 
         # ---------------- RTB per-round win/loss ----------------
-        # We want per-round rates even if the player later loses on a later round.
-        # Round wins are logged as UpdateType.ROUND_WON for rounds 1-3.
-        # Round 4 "suit" win is logged as UpdateType.BET_WON with round=4 (choice != cashout).
         if game_key == getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus") and round_key in {"1", "2", "3", "4"}:
             try:
-                rounds = game_stats.setdefault("rounds", {
-                    "1": {"wins": 0, "losses": 0},
-                    "2": {"wins": 0, "losses": 0},
-                    "3": {"wins": 0, "losses": 0},
-                    "4": {"wins": 0, "losses": 0},
-                })
+                rounds = game_stats.setdefault(
+                    "rounds",
+                    {
+                        "1": {"wins": 0, "losses": 0},
+                        "2": {"wins": 0, "losses": 0},
+                        "3": {"wins": 0, "losses": 0},
+                        "4": {"wins": 0, "losses": 0},
+                    },
+                )
                 if round_key not in rounds:
                     rounds[round_key] = {"wins": 0, "losses": 0}
 
-                # Per-round WIN
                 if update_type == UpdateType.ROUND_WON or update_key.lower() == "round_won":
                     rounds[round_key]["wins"] = int(rounds[round_key].get("wins", 0) or 0) + 1
 
-                # Per-round LOSS (any BET_LOST with a round)
                 elif update_type == UpdateType.BET_LOST or update_key.lower() == "bet_lost":
                     rounds[round_key]["losses"] = int(rounds[round_key].get("losses", 0) or 0) + 1
 
-                # Per-round WIN for the suit guess (Round 4) which is logged as BET_WON
                 elif (update_type == UpdateType.BET_WON or update_key.lower() == "bet_won") and round_key == "4":
-                    # Cashout BET_WON should NOT count as a round win (you already got ROUND_WON for prior rounds)
                     if str(metadata.get("choice", "")).lower() != "cashout":
                         rounds["4"]["wins"] = int(rounds["4"].get("wins", 0) or 0) + 1
             except Exception:
-                # Never break stats on weird payloads
                 pass
-
         # ---------------------------------------------------------
 
         if update_type == UpdateType.BET_PLACED or update_key.lower() == "bet_placed":
             game_stats["played"] = int(game_stats.get("played", 0) or 0) + 1
 
-            # Highest bet
             hb = member.get("highest_bet", {"amount": 0, "game": None})
             if bet_amount > int(hb.get("amount", 0) or 0):
                 member["highest_bet"] = {"amount": bet_amount, "game": game_key}
-
             return
 
         if update_type == UpdateType.BET_WON or update_key.lower() == "bet_won":
@@ -907,7 +898,6 @@ class GambleService:
                 int(game_stats.get("best_win_streak", 0) or 0),
                 int(game_stats.get("cur_win_streak", 0) or 0),
             )
-
             game_stats["cur_losing_streak"] = 0
 
             hp = member.get("highest_payout", {"amount": 0, "game": None})
@@ -925,27 +915,22 @@ class GambleService:
                 game_stats["wins_8x"] = int(game_stats.get("wins_8x", 0) or 0) + 1
                 game_stats["highest_8x_bet"] = max(int(game_stats.get("highest_8x_bet", 0) or 0), bet_amount)
                 game_stats["highest_8x_payout"] = max(int(game_stats.get("highest_8x_payout", 0) or 0), payout_amount)
-
             return
 
         if update_type == UpdateType.BET_LOST or update_key.lower() == "bet_lost":
             game_stats["losses"] = int(game_stats.get("losses", 0) or 0) + 1
 
-            # losing streak
             game_stats["cur_losing_streak"] = int(game_stats.get("cur_losing_streak", 0) or 0) + 1
             game_stats["worst_losing_streak"] = max(
                 int(game_stats.get("worst_losing_streak", 0) or 0),
                 int(game_stats.get("cur_losing_streak", 0) or 0),
             )
 
-            # reset win streak
             game_stats["cur_win_streak"] = 0
 
-            # Highest loss (your bet is the loss amount in your current games)
             hl = member.get("highest_loss", {"amount": 0, "game": None})
             if bet_amount > int(hl.get("amount", 0) or 0):
                 member["highest_loss"] = {"amount": bet_amount, "game": game_key}
-
             return
 
 __all__ = ['GambleService']
