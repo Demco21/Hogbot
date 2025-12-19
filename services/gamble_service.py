@@ -813,6 +813,19 @@ class GambleService:
         game_source = metadata.get("game_source")
         update_type = metadata.get("update_type")
 
+        if game_source is None or update_type is None:
+            return
+
+        try:
+            if GameSource(game_source) not in {
+                GameSource.RIDE_THE_BUS,
+                GameSource.SLOTS,
+                GameSource.CEE_LO,
+            }:
+                return
+        except ValueError:
+            return
+
         # Normalize to strings for keys (your enums have .value)
         game_key = getattr(game_source, "value", str(game_source)) if game_source is not None else "unknown"
         update_key = getattr(update_type, "value", str(update_type)) if update_type is not None else "unknown"
