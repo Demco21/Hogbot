@@ -18,22 +18,40 @@ class SlotsView(discord.ui.View):
     Interactive view for a one-shot slot machine spin.
     """
 
+    # SYMBOLS: List[Tuple[str, str]] = [
+    #     ("🐷", "Hog"),
+    #     ("🍒", "Cherry"),
+    #     ("🍋", "Lemon"),
+    #     ("🔔", "Bell"),
+    #     ("⭐", "Star"),
+    #     ("🍀", "Clover"),
+    # ]
+
+    # WEIGHTED_SYMBOLS: List[Tuple[str, int]] = [
+    #     ("🐷", 1),  # rare
+    #     ("⭐", 2),
+    #     ("🔔", 3),
+    #     ("🍀", 3),
+    #     ("🍒", 4),
+    #     ("🍋", 6),  # common
+    # ]
+
     SYMBOLS: List[Tuple[str, str]] = [
         ("🐷", "Hog"),
-        ("🍒", "Cherry"),
-        ("🍋", "Lemon"),
+        ("🎅", "Cherry"),
+        ("🎁", "Lemon"),
         ("🔔", "Bell"),
-        ("⭐", "Star"),
-        ("🍀", "Clover"),
+        ("🎄", "Tree"),
+        ("❄️", "Snowflake"),
     ]
 
     WEIGHTED_SYMBOLS: List[Tuple[str, int]] = [
         ("🐷", 1),  # rare
-        ("⭐", 2),
+        ("🎄", 2),
         ("🔔", 3),
-        ("🍀", 3),
-        ("🍒", 4),
-        ("🍋", 6),  # common
+        ("❄️", 3),
+        ("🎅", 4),
+        ("🎁", 6),  # common
     ]
 
     VIEW_TIMEOUT_SECONDS = 45
@@ -278,19 +296,19 @@ class SlotsView(discord.ui.View):
             )
             return 20, text, bonus_spin, jackpot_hit
 
-        if s1 == s2 == s3 == "⭐":
+        if s1 == s2 == s3 == "🎄":
             bonus_spin = True
             text = (
-                "🌟 **Starlit Win!**\n🌟 **Starlit Win!**\n🌟 **Starlit Win!**\n\n"
-                "Triple ⭐⭐⭐ across the board.\n"
+                "🎄 *Christmas Tree Win!**\n🎄 **Christmas Tree Win!**\n🎄 **Christmas Tree Win!**\n\n"
+                "Triple 🎄🎄🎄 across the board.\n"
                 "You earn a **bonus spin** and a solid payout."
             )
             return 8, text, bonus_spin, jackpot_hit
 
-        if s1 == s2 == s3 == "🍀":
+        if s1 == s2 == s3 == "❄️":
             bonus_spin = True
             text = (
-                "🍀 **Lucky Clover!**\n🍀 **Lucky Clover!**\n🍀 **Lucky Clover!**\n\n"
+                "❄️ **Lucky Snowflake!**\n❄️ **Lucky Snowflake!**\n❄️ **Lucky Snowflake!**\n\n"
                 "Triple clovers shimmer on the reels.\n"
                 "You feel the Hog Gods smile — **bonus spin** unlocked!"
             )
@@ -406,7 +424,7 @@ class SlotsView(discord.ui.View):
         final_embed.add_field(name="Jackpot Pool", value=f"🪙 {jackpot_amount:,}", inline=False)
 
         if bonus_available:
-            footer_text = "🍀 Bonus unlocked! Press **Crank!** again to use your free spin."
+            footer_text = "❄️ Bonus unlocked! Press **Crank!** again to use your free spin."
             self._enable_all_items()
         else:
             footer_text = "Use /slots again to spin a new machine."
@@ -821,7 +839,7 @@ class SlotsService:
                 "Each bet is added towards the **progressive jackpot**.\n"
                 "Press **Crank!** to spin the reels.\n\n"
                 "**Jackpot:** 🐷🐷🐷\n"
-                "**Bonus Spins:** ⭐⭐⭐ or 🍀🍀🍀"
+                "**Bonus Spins:** 🎄🎄🎄 or ❄️❄️❄️"
             )
             embed = view._base_embed(description=description)
             await interaction.response.send_message(embed=embed, view=view)
