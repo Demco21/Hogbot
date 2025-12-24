@@ -41,6 +41,7 @@ class GameSource(Enum):
     LOAN = "loan"
     BEG = "beg"
     MY_WALLET = "my_wallet"
+    BLACKJACK = "blackjack"
 
 class UpdateType(Enum):
     INIT_BALANCE = "init_balance"
@@ -50,3 +51,4 @@ class UpdateType(Enum):
     BEG = "beg"
     ROUND_WON = "round_won"
     ROUND_LOST = "round_lost"
+    BET_PUSH = "bet_push"

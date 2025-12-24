@@ -3,7 +3,7 @@ import random
 import discord
 
 from bot_state import BotState
-from constants import GameSource, UpdateType
+from constants import GameSource, UpdateType, FIRST_BET_BALANCE
 from logging_config import logger
 
 

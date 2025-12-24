@@ -13,6 +13,7 @@ from services.ride_the_bus_service import RideTheBusService
 from services.cee_lo_service import CeeLoService
 from services.slots_service import SlotsService
 from services.persistence_service import PersistenceService
+from services.blackjack_service import BlackjackService
 from config import DISCORD_TOKEN
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -36,6 +37,7 @@ class HogBot(commands.Bot):
         self.cee_lo_service = CeeLoService(self.state, self)
         self.slots_service = SlotsService(self.state, self)
         self.persistence_service = PersistenceService(self.state, self)
+        self.blackjack_service = BlackjackService(self.state, self)
         self.synced = False
 
     async def setup_hook(self):

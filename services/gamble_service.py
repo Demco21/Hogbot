@@ -595,12 +595,13 @@ class GambleService:
             slots_key = getattr(GameSource.SLOTS, "value", "slots")
             cee_lo_key = getattr(GameSource.CEE_LO, "value", "cee_lo")
             rtb_key = getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus")
+            bj_key = getattr(GameSource.BLACKJACK, "value", "blackjack")
 
             allowed_game_keys = {slots_key, cee_lo_key, rtb_key}
 
             game_fields: list[tuple[str, str]] = []
 
-            for game_key in (slots_key, rtb_key, cee_lo_key):
+            for game_key in (slots_key, rtb_key, cee_lo_key, bj_key):
                 if game_key not in games:
                     continue
 
@@ -616,6 +617,7 @@ class GambleService:
                     rtb_key: "🚌 Ride the Bus",
                     slots_key: "🎰 Slots",
                     cee_lo_key: "🎲 Cee-Lo",
+                    bj_key: "🃏 Blackjack",
                 }.get(game_key, game_key.replace("_", " ").title())
 
                 value_lines = [
@@ -641,6 +643,13 @@ class GambleService:
                         rl = int(rs.get("losses", 0) or 0)
                         if rw + rl > 0:
                             value_lines.append(f"↳ Round {r}: {_wl_line(rw, rl)}")
+
+                if game_key == bj_key:
+                    ddw = int(gs.get("double_down_wins", 0) or 0)
+                    ddl = int(gs.get("double_down_losses", 0) or 0)
+                    bjw = int(gs.get("blackjack_wins", 0) or 0)
+                    value_lines.append(f"Double Downs: {_wl_line(ddw, ddl)}")
+                    value_lines.append(f"Blackjacks Won: **{bjw:,}**")
 
                 game_fields.append((display_name, "\n".join(value_lines).strip()))
 
@@ -794,6 +803,12 @@ class GambleService:
                 "wins_8x": 0,
                 "highest_8x_bet": 0,
                 "highest_8x_payout": 0,
+
+                # Blackjack-only
+                "double_down_wins": 0,
+                "double_down_losses": 0,
+                "blackjack_wins": 0,
+
             }
 
         return games[game_key]
@@ -848,7 +863,9 @@ class GambleService:
             getattr(GameSource.RIDE_THE_BUS, "value", "ride_the_bus"),
             getattr(GameSource.SLOTS, "value", "slots"),
             getattr(GameSource.CEE_LO, "value", "cee_lo"),
+            getattr(GameSource.BLACKJACK, "value", "blackjack"),
         }
+
         if game_key not in allowed_games:
             return
 
@@ -915,6 +932,14 @@ class GambleService:
                 game_stats["wins_8x"] = int(game_stats.get("wins_8x", 0) or 0) + 1
                 game_stats["highest_8x_bet"] = max(int(game_stats.get("highest_8x_bet", 0) or 0), bet_amount)
                 game_stats["highest_8x_payout"] = max(int(game_stats.get("highest_8x_payout", 0) or 0), payout_amount)
+
+            bj_key = getattr(GameSource.BLACKJACK, "value", "blackjack")
+            if game_key == bj_key:
+                if bool(metadata.get("double_down")):
+                    game_stats["double_down_wins"] = int(game_stats.get("double_down_wins", 0) or 0) + 1
+                if bool(metadata.get("blackjack")):
+                    game_stats["blackjack_wins"] = int(game_stats.get("blackjack_wins", 0) or 0) + 1
+
             return
 
         if update_type == UpdateType.BET_LOST or update_key.lower() == "bet_lost":
@@ -931,6 +956,12 @@ class GambleService:
             hl = member.get("highest_loss", {"amount": 0, "game": None})
             if bet_amount > int(hl.get("amount", 0) or 0):
                 member["highest_loss"] = {"amount": bet_amount, "game": game_key}
+
+            bj_key = getattr(GameSource.BLACKJACK, "value", "blackjack")
+            if game_key == bj_key:
+                if bool(metadata.get("double_down")):
+                    game_stats["double_down_losses"] = int(game_stats.get("double_down_losses", 0) or 0) + 1
+            
             return
 
 __all__ = ['GambleService']

@@ -198,5 +198,26 @@ class GambleCog(commands.Cog):
         except Exception as e:
             logger.error(f"Error in slots command: {e}")
 
+    @app_commands.command(
+        name="blackjack",
+        description="Play a solo hand of American casino blackjack."
+    )
+    @app_commands.describe(
+        bet="Amount to bet (minimum 100 Hog Coins)."
+    )
+    @app_commands.guilds(discord.Object(id=HOGBOT_SERVER_ID))
+    async def blackjack(self, interaction: discord.Interaction, bet: int = 100):
+        try:
+            if not self.is_in_allowed_channel(interaction):
+                await interaction.response.send_message(
+                    "🚫 This command can only be used in the designated casino channel.",
+                    ephemeral=True
+                )
+                return
+
+            await self.bot.blackjack_service.blackjack(interaction, bet)
+        except Exception as e:
+            logger.error(f"Error in blackjack command: {e}")
+
 async def setup(bot):
     await bot.add_cog(GambleCog(bot))
