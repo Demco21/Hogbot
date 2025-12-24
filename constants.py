@@ -29,6 +29,9 @@ THISWEEK_COMMAND = 'thisweek'
 LIFETIME_COMMAND = 'lifetime'
 DUMP_COMMAND = 'dump'
 
+# Casino
+FIRST_BET_BALANCE = 10000
+
 from enum import Enum
 
 class GameSource(Enum):

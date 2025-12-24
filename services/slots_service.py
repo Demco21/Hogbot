@@ -10,7 +10,7 @@ from discord.ext import commands
 
 from bot_state import BotState
 from logging_config import logger
-from constants import GameSource, UpdateType
+from constants import GameSource, UpdateType, FIRST_BET_BALANCE
 
 
 class SlotsView(discord.ui.View):
@@ -728,7 +728,7 @@ class SlotsService:
     MAX_BET = 10_000
     DEFAULT_BET = 100
 
-    JACKPOT_SEED = 100_000
+    JACKPOT_SEED = 5_000_000
     JACKPOT_PERCENT = 1  # 100% of bet to jackpot (as written)
 
     def __init__(self, bot_state: BotState, bot):
@@ -763,7 +763,7 @@ class SlotsService:
 
         wallets = self.state.member_wallets
         if user.id not in wallets:
-            wallets[user.id] = 1000
+            wallets[user.id] = FIRST_BET_BALANCE
             try:
                 self.bot.gamble_service.update_wallet(user.id, wallets[user.id])
                 self.bot.gamble_service.add_wallet_history_entry(

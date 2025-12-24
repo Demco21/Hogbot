@@ -675,7 +675,7 @@ class RideTheBusService:
         if interaction.user.id in self.state.member_wallets:
             wallet_balance = self.state.member_wallets[interaction.user.id]
         else:
-            wallet_balance = 1000
+            wallet_balance = FIRST_BET_BALANCE
             self.bot.gamble_service.update_wallet(interaction.user.id, wallet_balance)
             self.bot.gamble_service.add_wallet_history_entry(
                 interaction.user.id,

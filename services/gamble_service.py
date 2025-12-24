@@ -90,9 +90,9 @@ class GambleService:
 
             # Default starting balance (same behavior as RideTheBusService)
             if lender.id not in wallets:
-                wallets[lender.id] = 1000
+                wallets[lender.id] = FIRST_BET_BALANCE
             if target.id not in wallets:
-                wallets[target.id] = 1000
+                wallets[target.id] = FIRST_BET_BALANCE
 
             lender_balance = wallets[lender.id]
             target_balance = wallets[target.id]
@@ -373,7 +373,7 @@ class GambleService:
 
             # Default starting balance if not found
             if user.id not in wallets:
-                new_balance = 1000
+                new_balance = FIRST_BET_BALANCE
                 self.update_wallet(user.id, new_balance)
                 self.bot.gamble_service.add_wallet_history_entry(
                     user.id, 
@@ -569,7 +569,7 @@ class GambleService:
             if user_id in self.state.member_wallets:
                 wallet_balance = self.state.member_wallets[user_id]
             else:
-                wallet_balance = 1000
+                wallet_balance = FIRST_BET_BALANCE
                 self.update_wallet(user_id, wallet_balance)
                 self.bot.gamble_service.add_wallet_history_entry(
                     user_id,
@@ -712,7 +712,7 @@ class GambleService:
         if interaction.user.id in self.state.member_wallets:
             wallet_balance = self.state.member_wallets[interaction.user.id]
         else:
-            wallet_balance = 1000
+            wallet_balance = FIRST_BET_BALANCE
             self.update_wallet(interaction.user.id, wallet_balance)
             self.bot.gamble_service.add_wallet_history_entry(
                 interaction.user.id, 

@@ -3,7 +3,7 @@ from logging_config import logger
 import discord
 from discord.ext import commands
 import random
-from constants import GameSource, UpdateType
+from constants import GameSource, UpdateType, FIRST_BET_BALANCE
 
 class CeeLoView(discord.ui.View):
     """
@@ -67,7 +67,7 @@ class CeeLoView(discord.ui.View):
     def _ensure_wallet(self, member_id: int):
         wallets = self._wallets()
         if member_id not in wallets:
-            new_balance = 1000
+            new_balance = FIRST_BET_BALANCE
             self.bot.gamble_service.update_wallet(member_id, new_balance)
             self.bot.gamble_service.add_wallet_history_entry(
                 member_id, 
@@ -288,7 +288,7 @@ class CeeLoView(discord.ui.View):
         if not self.game_started:
             wallets = self._wallets()
             for member in self.participants:
-                wallets[member.id] = wallets.get(member.id, 1000) + self.buy_in
+                wallets[member.id] = wallets.get(member.id, FIRST_BET_BALANCE) + self.buy_in
 
         if self.message:
             try:
@@ -412,7 +412,7 @@ class CeeLoView(discord.ui.View):
 
         wallets = self._wallets()
         # Refund the buy-in for this lobby
-        wallets[user.id] = wallets.get(user.id, 1000) + self.buy_in
+        wallets[user.id] = wallets.get(user.id, FIRST_BET_BALANCE) + self.buy_in
         self.pot -= self.buy_in
 
         idx = self.participant_ids.index(user.id)
@@ -422,7 +422,7 @@ class CeeLoView(discord.ui.View):
         # If host leaves, end lobby and refund everyone else too
         if user.id == self.host.id:
             for member in self.participants:
-                wallets[member.id] = wallets.get(member.id, 1000) + self.buy_in
+                wallets[member.id] = wallets.get(member.id, FIRST_BET_BALANCE) + self.buy_in
             self.pot = 0
             self.clear_items()
 
@@ -483,7 +483,7 @@ class CeeLoView(discord.ui.View):
         # Refund everyone
         wallets = self._wallets()
         for member in self.participants:
-            wallets[member.id] = wallets.get(member.id, 1000) + self.buy_in
+            wallets[member.id] = wallets.get(member.id, FIRST_BET_BALANCE) + self.buy_in
         self.pot = 0
 
         self.clear_items()
@@ -612,7 +612,7 @@ class CeeLoView(discord.ui.View):
         score: dict
     ):
         wallets = self._wallets()
-        winner_balance = wallets.get(winner.id, 1000)
+        winner_balance = wallets.get(winner.id, FIRST_BET_BALANCE)
         wallets[winner.id] = winner_balance + self.pot
 
         # Record wallet history for all participants (if your GambleService supports this).
@@ -631,7 +631,7 @@ class CeeLoView(discord.ui.View):
                 if member.id != winner.id:
                     self.bot.gamble_service.add_wallet_history_entry(
                         member.id, 
-                        wallets.get(member.id, 1000),
+                        wallets.get(member.id, FIRST_BET_BALANCE),
                         metadata = {
                             "game_source": GameSource.CEE_LO,
                             "update_type": UpdateType.BET_LOST,
@@ -679,7 +679,7 @@ class CeeLoView(discord.ui.View):
     async def _refund_all_and_finish(self, interaction: discord.Interaction, reason: str):
         wallets = self._wallets()
         for member in self.participants:
-            wallets[member.id] = wallets.get(member.id, 1000) + self.buy_in
+            wallets[member.id] = wallets.get(member.id, FIRST_BET_BALANCE) + self.buy_in
 
         desc = reason
         desc += self._build_final_results_summary()
@@ -724,7 +724,7 @@ class CeeLoView(discord.ui.View):
 
         winner = interaction.guild.get_member(best_id) if interaction.guild else None
         wallets = self._wallets()
-        winner_balance = wallets.get(best_id, 1000)
+        winner_balance = wallets.get(best_id, FIRST_BET_BALANCE)
         wallets[best_id] = winner_balance + self.pot
 
         # Record wallet history for everyone
@@ -743,7 +743,7 @@ class CeeLoView(discord.ui.View):
                 if member.id != best_id:
                     self.bot.gamble_service.add_wallet_history_entry(
                         member.id, 
-                        wallets.get(member.id, 1000),
+                        wallets.get(member.id, FIRST_BET_BALANCE),
                         metadata = {
                             "game_source": GameSource.CEE_LO,
                             "update_type": UpdateType.BET_LOST,
@@ -807,7 +807,7 @@ class CeeLoService:
         host_id = interaction.user.id
 
         if host_id not in wallets:
-            wallets[host_id] = 1000
+            wallets[host_id] = FIRST_BET_BALANCE
 
         if wallets[host_id] < buy_in:
             msg = (
