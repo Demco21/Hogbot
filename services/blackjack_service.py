@@ -364,7 +364,7 @@ class BlackjackView(discord.ui.View):
             if player_pending and (idx - 1) == self.active_hand_idx and not game_over:
                 hand_cards = f"{hand_cards}  ❓"
 
-            lines.append(f"\n{marker}**Hand {idx}:** {hand_cards} {tag}{status}")
+            lines.append(f"\n{marker}**Hand:** {hand_cards} {tag}{status}")
 
 
         desc = "\n".join(lines)
